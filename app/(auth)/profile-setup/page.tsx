@@ -1,0 +1,172 @@
+'use client';
+
+import { updateProfile } from '@/modules/auth/actions';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { useState, useEffect } from 'react';
+import { toast } from 'sonner';
+import { createClient } from '@/lib/supabase/client';
+
+export default function ProfileSetupPage() {
+  const [loading, setLoading] = useState(false);
+  const [products, setProducts] = useState<{ id: string; name: string; code: string }[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState('');
+  const [selectedPersona, setSelectedPersona] = useState('');
+
+  const personas = [
+    '0-2 years experience',
+    '3-5 years experience',
+    '5-8 years experience',
+    '8-10 years experience',
+    '10+ years experience',
+    'Tech Lead / Architect',
+  ];
+
+  useEffect(() => {
+    async function loadProducts() {
+      const supabase = createClient();
+      const { data } = await supabase
+        .from('products')
+        .select('id, name, code')
+        .order('code');
+      if (data) {
+        setProducts(data);
+      }
+    }
+    loadProducts();
+  }, []);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+
+    const formData = new FormData(e.currentTarget);
+    formData.set('preferredProductId', selectedProduct);
+    formData.set('assumedPersona', selectedPersona);
+
+    try {
+      const result = await updateProfile(formData);
+      if (!result.success) {
+        toast.error(result.error || 'Failed to update profile');
+        setLoading(false);
+      }
+      // Success will redirect via server action
+    } catch (error) {
+      toast.error('An unexpected error occurred');
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+      <Card className="w-full max-w-lg">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl font-bold">Complete Your Profile</CardTitle>
+          <CardDescription>
+            Help us personalize your Guidewire training experience
+          </CardDescription>
+        </CardHeader>
+        <form onSubmit={handleSubmit}>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="firstName">First Name</Label>
+                <Input
+                  id="firstName"
+                  name="firstName"
+                  placeholder="John"
+                  required
+                  disabled={loading}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="lastName">Last Name</Label>
+                <Input
+                  id="lastName"
+                  name="lastName"
+                  placeholder="Doe"
+                  required
+                  disabled={loading}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="assumedPersona">Assumed Experience Level</Label>
+              <Select
+                value={selectedPersona}
+                onValueChange={setSelectedPersona}
+                required
+                disabled={loading}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select your target experience level" />
+                </SelectTrigger>
+                <SelectContent>
+                  {personas.map((persona) => (
+                    <SelectItem key={persona} value={persona}>
+                      {persona}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <p className="text-xs text-muted-foreground">
+                This is the experience level you&apos;re aiming to achieve through training
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="preferredProduct">Preferred Product</Label>
+              <Select
+                value={selectedProduct}
+                onValueChange={setSelectedProduct}
+                required
+                disabled={loading || products.length === 0}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select your primary focus" />
+                </SelectTrigger>
+                <SelectContent>
+                  {products.map((product) => (
+                    <SelectItem key={product.id} value={product.id}>
+                      {product.name} ({product.code})
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <p className="text-xs text-muted-foreground">
+                You can always learn other products later
+              </p>
+            </div>
+          </CardContent>
+          <CardFooter>
+            <Button 
+              type="submit" 
+              className="w-full" 
+              disabled={loading || !selectedProduct || !selectedPersona}
+            >
+              {loading ? 'Setting up...' : 'Complete Setup'}
+            </Button>
+          </CardFooter>
+        </form>
+      </Card>
+    </div>
+  );
+}
+
