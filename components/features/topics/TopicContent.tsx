@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -22,15 +22,17 @@ export default function TopicContent({ topic, userId }: TopicContentProps) {
   );
   const [loading, setLoading] = useState(false);
   const [timeSpent, setTimeSpent] = useState(0);
+  
+  // Use ref to persist startTime across re-renders
+  const startTimeRef = useRef<number>(Date.now());
 
   const isCompleted = Boolean(topic.completion?.completed_at);
   const hasVideo = Boolean(topic.content.video_url);
   const hasSlides = Boolean(topic.content.slides_url);
   const hasNotes = Boolean(topic.content.notes);
 
-  // Track time spent
+  // Mark topic as started (runs once per topic)
   useEffect(() => {
-    // Mark topic as started when user views it
     if (!topic.completion) {
       // Async IIFE pattern to properly handle async operation in useEffect
       (async () => {
@@ -42,14 +44,20 @@ export default function TopicContent({ topic, userId }: TopicContentProps) {
         }
       })();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [topic.id, userId]); // Intentionally not including topic.completion to avoid re-running on completion
 
-    const startTime = Date.now();
+  // Track time spent (separate effect with persistent ref)
+  useEffect(() => {
+    // Reset start time only when topic changes (not on completion state change)
+    startTimeRef.current = Date.now();
+    
     const interval = setInterval(() => {
-      setTimeSpent(Math.floor((Date.now() - startTime) / 1000));
+      setTimeSpent(Math.floor((Date.now() - startTimeRef.current) / 1000));
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [topic.id, topic.completion, userId]);
+  }, [topic.id]); // Only reset timer when topic changes, not on completion
 
   const handleMarkComplete = async () => {
     setLoading(true);

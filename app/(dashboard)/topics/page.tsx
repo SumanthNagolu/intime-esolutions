@@ -1,15 +1,8 @@
 import { createClient } from '@/lib/supabase/server';
 import { getTopicsByProduct } from '@/modules/topics/queries';
 import TopicsList from '@/components/features/topics/TopicsList';
+import ProductFilter from '@/components/features/topics/ProductFilter';
 import { Badge } from '@/components/ui/badge';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import Link from 'next/link';
 
 export default async function TopicsPage({
   searchParams,
@@ -59,27 +52,11 @@ export default async function TopicsPage({
           </p>
         </div>
 
-        {/* Product Filter */}
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-medium">Filter:</span>
-          <Select defaultValue={searchParams.product || 'all'}>
-            <SelectTrigger className="w-[200px]">
-              <SelectValue placeholder="All Products" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">
-                <Link href="/topics">All Products</Link>
-              </SelectItem>
-              {products?.map((product) => (
-                <SelectItem key={product.id} value={product.code}>
-                  <Link href={`/topics?product=${product.code}`}>
-                    {product.name} ({product.code})
-                  </Link>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+        {/* Product Filter - Now a client component */}
+        <ProductFilter 
+          products={products || []} 
+          currentProduct={searchParams.product}
+        />
       </div>
 
       {/* Stats */}
@@ -103,4 +80,3 @@ export default async function TopicsPage({
     </div>
   );
 }
-
