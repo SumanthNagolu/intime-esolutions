@@ -1,0 +1,73 @@
+# Cursor Rules for Guidewire Training Platform
+
+## Code Standards
+- Use functional components with hooks (no class components)
+- TypeScript strict mode always
+- Early returns for error handling
+- Functions under 20 lines when possible
+- Comprehensive error boundaries
+
+## Project Patterns
+- File naming: kebab-case for files, PascalCase for components
+- API responses: { success: boolean, data?: any, error?: string }
+- Always implement loading states
+- Use Supabase Row Level Security
+- Stream AI responses for perceived performance
+
+## Tech Stack
+- Next.js 15 with App Router (NOT Pages Router)
+- TypeScript strict mode
+- Tailwind CSS + shadcn/ui
+- Supabase for backend
+- Vercel AI SDK for streaming
+- GPT-4o-mini as primary AI model
+
+## Cursor Specific
+- Read files before editing (@file references)
+- Ask before running terminal commands
+- Stop after 3 failed attempts
+- Test database queries before implementing
+
+## Never Do
+- Store API keys in client code
+- Skip error handling
+- Use 'any' type without justification
+- Make database queries without RLS
+- Build microservices (modular monolith only)
+- Use Pages Router (App Router only)
+
+## Always Do
+- Validate inputs with Zod
+- Implement loading and error states
+- Use early returns for errors
+- Keep functions focused and small
+- Follow the API response pattern
+- Stream AI responses
+- Track token usage for cost monitoring
+- Check prerequisites server-side
+
+## AI Integration Rules
+- Context limit: 12 messages (6 pairs)
+- Response limit: 500 tokens for mentor, 200 for quick
+- Use Socratic method (never give direct answers)
+- Store all conversations with token tracking
+- Rate limit: 50 queries per user per day
+
+## Database Rules
+- All tables MUST have RLS policies
+- Index on (user_id, topic_id) for completions
+- Use materialized views for aggregated stats
+- JSONB for flexible data (prerequisites, content)
+
+## File Organization
+- /app - Next.js routes
+- /modules - Business logic
+- /lib - Utilities
+- /components/ui - shadcn components
+- /components/features - Feature components
+- /providers - React context providers
+
+## Vision Alignment
+Every feature must help students get JOBS, not just certificates.
+Sequential learning is non-negotiable.
+AI must maintain trainer's quality standards.
