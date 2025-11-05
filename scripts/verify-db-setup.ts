@@ -35,10 +35,13 @@ const main = async () => {
   });
 
   // Check 2: Products table
+  type Product = { code: string; name: string };
+
   const { data: products, error: productsError } = await supabase
     .from('products')
     .select('code, name')
-    .eq('code', 'CC');
+    .eq('code', 'CC')
+    .returns<Product[]>();
 
   if (productsError) {
     console.error('❌ Failed to query products table:', productsError.message);
