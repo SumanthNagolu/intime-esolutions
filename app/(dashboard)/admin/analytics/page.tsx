@@ -24,9 +24,9 @@ export default async function AnalyticsPage() {
     .from('user_profiles')
     .select('role')
     .eq('id', user.id)
-    .single();
+    .single<{ role: string }>();
 
-  if (profileError || profile?.role !== 'admin') {
+  if (profileError || !profile || profile.role !== 'admin') {
     redirect('/dashboard');
   }
 

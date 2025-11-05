@@ -23,9 +23,9 @@ export default async function AdminPage() {
     .from('user_profiles')
     .select('role')
     .eq('id', user.id)
-    .single();
+    .single<{ role: string }>();
 
-  if (profileError || profile?.role !== 'admin') {
+  if (profileError || !profile || profile.role !== 'admin') {
     redirect('/dashboard');
   }
 
