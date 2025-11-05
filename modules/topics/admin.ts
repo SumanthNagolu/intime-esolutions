@@ -118,9 +118,12 @@ export async function bulkUpsertTopics(
     productMap.set(product.code, product.id);
   }
 
+  type ExistingTopic = { id: string };
+
   const { data: existingTopics, error: existingError } = await client
     .from('topics')
-    .select('id');
+    .select('id')
+    .returns<ExistingTopic[]>();
 
   if (existingError) {
     return {
