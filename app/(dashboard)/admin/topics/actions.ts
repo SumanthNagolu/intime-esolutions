@@ -31,13 +31,13 @@ const ensureAdminContext = async (): Promise<AdminContext> => {
     return { success: false, error: 'Unauthorized: Please sign in.' };
   }
 
-  const { data: profile } = await supabase
+  const { data: profile, error: profileError } = await supabase
     .from('user_profiles')
     .select('role')
     .eq('id', user.id)
     .single();
 
-  if (profile?.role !== 'admin') {
+  if (profileError || profile?.role !== 'admin') {
     return { success: false, error: 'Only admins can import topics.' };
   }
 

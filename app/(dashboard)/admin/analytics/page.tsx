@@ -20,13 +20,13 @@ export default async function AnalyticsPage() {
   }
 
   // Check if user is admin
-  const { data: profile } = await supabase
+  const { data: profile, error: profileError } = await supabase
     .from('user_profiles')
     .select('role')
     .eq('id', user.id)
     .single();
 
-  if (profile?.role !== 'admin') {
+  if (profileError || profile?.role !== 'admin') {
     redirect('/dashboard');
   }
 
