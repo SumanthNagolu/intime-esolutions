@@ -89,10 +89,20 @@ export async function getTopicsByProduct(
   }
 
   // Get user's completions
+  type Completion = {
+    id: string;
+    topic_id: string;
+    user_id: string;
+    completion_percentage: number;
+    completed_at: string | null;
+    time_spent_seconds: number;
+  };
+
   const { data: completions } = await supabase
     .from('topic_completions')
     .select('*')
-    .eq('user_id', userId);
+    .eq('user_id', userId)
+    .returns<Completion[]>();
 
   const completionMap = new Map(
     completions?.map((c) => [c.topic_id, c]) || []
