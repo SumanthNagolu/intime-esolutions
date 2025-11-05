@@ -73,6 +73,81 @@ CREATE TABLE IF NOT EXISTS user_profiles (
 CREATE INDEX IF NOT EXISTS idx_user_profiles_email ON user_profiles(email);
 CREATE INDEX IF NOT EXISTS idx_user_profiles_role ON user_profiles(role);
 
+-- Learner reminder preferences
+CREATE TABLE IF NOT EXISTS learner_reminder_settings (
+  user_id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  opted_in BOOLEAN DEFAULT false,
+  last_opt_in_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Reminder delivery logs
+CREATE TABLE IF NOT EXISTS learner_reminder_logs (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  reminder_type VARCHAR(50) NOT NULL,
+  delivered_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  notes TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_reminder_logs_user ON learner_reminder_logs(user_id, delivered_at DESC);
+
+ALTER TABLE learner_reminder_settings ENABLE ROW LEVEL SECURITY;
+ALTER TABLE learner_reminder_logs ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Users can view reminder settings" ON learner_reminder_settings
+  FOR SELECT
+  USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can manage reminder settings" ON learner_reminder_settings
+  FOR INSERT
+  WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Users can update reminder settings" ON learner_reminder_settings
+  FOR UPDATE
+  USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can view reminder logs" ON learner_reminder_logs
+  FOR SELECT
+  USING (auth.uid() = user_id);
+
+CREATE POLICY "Service role inserts reminder logs" ON learner_reminder_logs
+  FOR INSERT
+  WITH CHECK (auth.role() = 'service_role');
+
+-- Beta feedback entries
+CREATE TABLE IF NOT EXISTS beta_feedback_entries (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  sentiment TEXT CHECK (sentiment IN ('positive', 'neutral', 'negative')),
+  confidence_level TEXT CHECK (confidence_level IN ('low', 'medium', 'high')),
+  biggest_win TEXT,
+  biggest_blocker TEXT,
+  help_requested TEXT,
+  submitted_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_feedback_user_submitted_at
+  ON beta_feedback_entries(user_id, submitted_at DESC);
+
+ALTER TABLE beta_feedback_entries ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Users can manage own feedback" ON beta_feedback_entries
+  FOR ALL
+  USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Admins can view feedback" ON beta_feedback_entries
+  FOR SELECT
+  USING (
+    EXISTS (
+      SELECT 1 FROM user_profiles
+      WHERE id = auth.uid() AND role = 'admin'
+    )
+  );
+
 -- ============================================================================
 -- PROGRESS TRACKING
 -- ============================================================================
@@ -470,6 +545,9 @@ CREATE TRIGGER update_ai_conversations_updated_at BEFORE UPDATE ON ai_conversati
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 CREATE TRIGGER update_quiz_questions_updated_at BEFORE UPDATE ON quiz_questions
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_learner_reminder_settings_updated_at BEFORE UPDATE ON learner_reminder_settings
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 -- ============================================================================

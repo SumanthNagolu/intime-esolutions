@@ -2,148 +2,116 @@
 
 *This file is THE SINGLE SOURCE of what we're building RIGHT NOW*
 
-## Sprint: 1 - Foundation Setup (Nov 4, 2025) ✅ COMPLETE
+## Sprint: 3 - Content Expansion & Onboarding (Nov 18, 2025 → target Dec 2, 2025)
 **Vision Check**: "Every feature must help students get JOBS, not just certificates"
-**Status**: CLOSED - All MVP features delivered ahead of schedule
+**Status**: ACTIVE – Shipping ClaimCenter content and learner onboarding improvements
 
 ---
 
-## 🎯 Sprint Goal (ACHIEVED ✅)
-Build the foundation: project setup, database schema, authentication, and basic topic browsing.
+## 🎯 Sprint Goal
+Deliver a guided first-lesson experience backed by a meaningful ClaimCenter content set so beta learners complete Topic 1 within 24 hours and build momentum through their first 10 topics.
 
 ## 📋 Sprint Backlog
 
+### IN PROGRESS
+
+
 ### COMPLETED ✅
-- [x] Next.js 15 + TypeScript + Tailwind setup
-- [x] shadcn/ui component library with 14 components
-- [x] Complete documentation system (instructions.md, .cursorrules, all project-docs)
-- [x] Supabase database schema with RLS (8 tables, 600+ lines SQL)
-- [x] Authentication system (email + Google OAuth)
-- [x] Topic browsing with sequential prerequisite locks
-- [x] Progress tracking system with real-time updates
-- [x] Video player integration (YouTube/Loom)
-- [x] AI Mentor with GPT-4o-mini streaming
-- [x] Admin panel with topic management
-- [x] 4 Critical bugs fixed (edge runtime, async handling, SelectItem links, time tracking)
+- [x] Sprint 3 planning and backlog definition
+- [x] Build ClaimCenter content ingestion tooling (admin uploader + snake_case content schema update)
+- [x] Seed first 50 ClaimCenter topics with videos, slides, learning objectives, and prerequisite chains
+- [x] Implement stalled-learner reminder (Supabase Edge Function email, opt-in, RLS-safe)
+- [x] Instrument activation metrics for time-to-first-completion and per-learner topic averages (dashboard/report)
+- [x] Enhance onboarding flow: persona guidance, first-topic checklist, contextual tips in topic view
+- [x] Capture beta feedback loop (weekly check-in form + changelog integration)
 
-### DELIVERED BEYOND EXPECTATIONS 🚀
-- [x] Complete deployment documentation
-- [x] Supabase setup guide
-- [x] Production-ready configuration
-- [x] Zero linting errors
-- [x] Clean git history (10 commits)
-
-### POST-MVP (v2)
-- [ ] Quiz system
-- [ ] Interview simulator
-- [ ] Payment/subscription system
+### POST-SPRINT WATCHLIST
+- Quiz engine (multiple choice, attempt history)
+- Interview simulator (scenario scoring)
+- Payment/subscription integration
+- Advanced analytics dashboards
 
 ---
 
 ## 🔗 Context Chain for This Sprint
-
-Every task traces back:
 ```
 VISION: "Students must get jobs"
   ↓
-METHODOLOGY: "250 sequential topics with 4-part learning"
+MASTER ROADMAP: "Sprint 3 – Content Expansion & Onboarding"
   ↓
-THIS SPRINT: "Build topic delivery system"
+THIS SPRINT: "Deliver guided first-topic success + rich ClaimCenter content"
   ↓
-CURRENT TASK: "Implement prerequisite checking"
+CURRENT TASK: "Build ClaimCenter content ingestion tooling"
 ```
 
 ---
 
-## 📊 Final Sprint Metrics ✅
-- **Velocity Target**: 7 features
-- **Completed**: 11/11 features (157% of target!)
-- **Hours Logged**: 6-7 hours / 20-28 target (70% time savings!)
-- **Budget Used**: $0 / $600 (6-month budget)
-- **Code Quality**: Zero linting errors
-- **Bugs Fixed**: 4 critical issues resolved
-- **Production Ready**: YES ✅
+## 📊 Sprint Targets
+- **Velocity**: 5 committed backlog items
+- **Content**: 50 ClaimCenter topics published with validated prerequisite sequencing
+- **Learner Activation**: ≥70% of new beta learners finish Topic 1 within 24h; average 10 topics completed per active learner
+- **Engagement**: Reminder workflow running with opt-in tracking + weekly feedback entries
+- **Quality**: Onboarding satisfaction ≥4/5 in beta survey (target sample >=5 responses)
 
 ---
 
 ## 🎨 Current Working Context
 
 ### What's Open in Editor
-- `/instructions.md` - Architecture guide
-- `/package.json` - Dependencies
-- `/project-docs/99_CHANGELOG.md` - Session log
+- `/project-docs/00_PROJECT_PLAN.md` – Roadmap baseline
+- `/project-docs/06_CURRENT_SPRINT.md` – This document
+- `/project-docs/99_CHANGELOG.md` – Session log
 
 ### Current Branch
-`main` (initial setup)
+`main` (pre-deployment)
 
 ### Last Session
-Session 001 - November 4, 2025
+Session 003 (Sprint 2 wrap) – November 18, 2025
 
 ### Next Task
-Setup Supabase and create database schema
+Design content ingestion workflow (schema adjustments, admin UI, or import script) and update runbook sample payloads to snake_case.
 
 ### Terminal Commands
 ```bash
-# Not running yet - will start dev server after Supabase setup
-# npm run dev  # localhost:3000
+# Content tooling & verification
+npm run lint
+npm run build
+npm run dev
 ```
 
 ---
 
-## 🧭 Decision Log for This Sprint
+## 🧭 Decision Log (Sprint 3 Focus)
 
-### Why Modular Monolith over Microservices?
-- Saves 8-10 hours of infrastructure complexity
-- Faster development for MVP
-- Can extract modules later if scaling requires it
-Implementation: Feature-based modules in /modules directory
+### Why invest in ingestion tooling first?
+- Reliable, structured imports ensure consistency across 50 topics and reduce manual admin effort.
+- Snake_case schema aligns with Supabase conventions, easing future analytics and API exposure.
 
-### Why GPT-4o-mini as Primary AI Model?
-- 10x cheaper than GPT-4o ($0.15/M vs $1.50/M input tokens)
-- 90% of capability for training Q&A
-- Estimated $46/month for 1,000 users vs $460/month
-Implementation: Use Vercel AI SDK for streaming, upgrade to Claude for complex reasoning only
+### Why prioritize first-topic onboarding experience?
+- Early success is the best predictor of completion—guided walkthrough reduces churn and aligns with jobs-first vision.
 
-### Why YouTube/Loom for MVP Videos?
-- Free CDN and encoding
-- Saves 5+ hours of video infrastructure
-- Focus on content quality first
-Implementation: Store video URLs in topics.content JSONB, migrate to Cloudflare Stream post-MVP
-
-### Why Sequential Learning?
-From @project-docs/01_VISION.md: "Sequential learning is KEY - no skipping"
-Implementation: Prerequisites array in topics table with server-side checking
-
-### Why Row Level Security (RLS)?
-- Database-level security (not just app-level)
-- Users can only access their own data
-- Prevents security bugs from code errors
-Implementation: RLS policies on all Supabase tables
+### Why automate learner nudges?
+- Maintains cohort momentum without manual intervention, keeping costs low while supporting human-quality mentorship.
 
 ---
 
 ## 🔄 Session Updates
 
-### Session 001 - Nov 4, 2025 - 2 hours
+### Session 002 Kickoff – Nov 4, 2025 – 1 hour (Planning)
 **Completed**:
-- ✅ Next.js 15 + TypeScript + Tailwind setup
-- ✅ Installed all dependencies (Supabase, AI SDK, shadcn/ui, zod, zustand)
-- ✅ shadcn/ui configured with 14 components
-- ✅ Created instructions.md and .cursorrules
-- ✅ Documentation system established
+- ✅ Drafted Sprint 2 roadmap and backlog
+- ✅ Identified production hardening gaps (mentor API, env docs)
+- ✅ Defined beta launch success metrics
 
 **Next Session Focus**:
-- [ ] Setup Supabase project (local + cloud)
-- [ ] Design and implement database schema
-- [ ] Create RLS policies
-- [ ] Build Supabase client utilities
+- [ ] Standardize mentor API response + logging
+- [ ] Update deployment docs with environment variable canonical names
+- [ ] Prepare topic seeding playbook
 
 **Vision Alignment Check**:
 Does today's work help students get jobs? **YES**
-- Solid foundation enables rapid feature development
-- Quality tooling ensures professional, maintainable code
-- Clear documentation prevents context loss across sessions
-- Architecture designed for sequential learning from day one
+- Deployment unlocks real learners and job-ready feedback loops.
+- Ensures mentor guidance remains cost-effective and reliable in production.
 
 ---
 

@@ -89,6 +89,26 @@ Build this maintaining my personal teaching style.
 
 ---
 
+### Content Ingestion Sprint Prompt
+```
+We are populating Sprint 3 ClaimCenter content.
+
+Chain check:
+@project-docs/01_VISION.md
+@project-docs/06_CURRENT_SPRINT.md
+@project-docs/07_REVIEW_NOTES.md
+@project-docs/SPRINT_2_RUNBOOK.md (ingestion workflow tips)
+
+Deliver:
+1. Content ingestion tooling using snake_case payloads (video_url, slides_url, learning_objectives)
+2. Validation suite that confirms media/objectives render in UI after import
+3. Audit logging for batch imports with counts, timestamps, and operator
+
+Keep sequential prerequisites intact and log QA sign-off for every topic batch.
+```
+
+---
+
 ## 🐛 Debugging Prompts
 
 ### Debug With Context

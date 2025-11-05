@@ -4,7 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
-import { ArrowLeft, Upload, Plus } from 'lucide-react';
+import { ArrowLeft, Plus } from 'lucide-react';
+import { TopicUploadForm } from '@/components/features/admin/TopicUploadForm';
 
 export default async function AdminTopicsPage() {
   const supabase = await createClient();
@@ -65,37 +66,48 @@ export default async function AdminTopicsPage() {
         </div>
 
         <div className="flex gap-2">
-          <Button variant="outline">
-            <Upload className="mr-2 h-4 w-4" />
-            Upload CSV
-          </Button>
-          <Button>
+          <Button disabled>
             <Plus className="mr-2 h-4 w-4" />
             Add Topic
           </Button>
         </div>
       </div>
 
-      {/* CSV Upload Instructions */}
+      {/* Bulk Upload */}
       <Card>
         <CardHeader>
-          <CardTitle>Bulk Upload via CSV</CardTitle>
+          <CardTitle>Bulk Upload Topics</CardTitle>
           <CardDescription>
-            Upload multiple topics at once using a CSV file
+            Import ClaimCenter topics from JSON or seed via CLI for large batches.
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="bg-gray-50 p-4 rounded-lg border">
-            <p className="text-sm font-medium mb-2">CSV Format:</p>
-            <code className="text-xs bg-white p-2 rounded block overflow-x-auto">
-              product_code,position,title,description,duration_minutes,prerequisites,video_url,slides_url,notes,learning_objectives
-            </code>
-          </div>
-          <div className="text-sm text-gray-600">
-            <p className="font-medium mb-2">Example:</p>
-            <code className="text-xs bg-white p-2 rounded block overflow-x-auto">
-              CC,1,&quot;Introduction to ClaimCenter&quot;,&quot;Learn the basics...&quot;,60,&quot;[]&quot;,https://youtube.com/...,https://slides.com/...,&quot;Notes here&quot;,&quot;[&apos;Objective 1&apos;]&apos;&quot;
-            </code>
+        <CardContent className="space-y-6">
+          <TopicUploadForm />
+
+          <div className="space-y-3 rounded-lg border bg-gray-50 p-4 text-sm text-gray-600">
+            <p className="font-medium">JSON Schema</p>
+            <pre className="block overflow-x-auto whitespace-pre rounded bg-white p-3 text-xs">
+{`{
+  "product_code": "CC",
+  "position": 1,
+  "title": "Topic title",
+  "description": "Summary",
+  "duration_minutes": 30,
+  "prerequisites": ["topic-id"],
+  "content": {
+    "video_url": "https://…",
+    "slides_url": "https://…",
+    "learning_objectives": ["Objective 1"]
+  }
+}`}
+            </pre>
+            <p>
+              Use the sample file at <code>data/claimcenter-topics.json</code> or run
+              <code className="mx-1 rounded bg-white px-2 py-1">npm run seed:claimcenter</code>
+              after setting <code className="mx-1 rounded bg-white px-2 py-1">NEXT_PUBLIC_SUPABASE_URL</code>
+              and
+              <code className="mx-1 rounded bg-white px-2 py-1">SUPABASE_SERVICE_ROLE_KEY</code>.
+            </p>
           </div>
         </CardContent>
       </Card>

@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowLeft, Clock } from 'lucide-react';
+import { type PersonaKey } from '@/modules/onboarding/persona-guidance';
 
 export default async function TopicDetailPage({
   params,
@@ -64,6 +65,22 @@ export default async function TopicDetailPage({
       </div>
     );
   }
+
+  const [{ data: profile }, { count: totalCompleted }] = await Promise.all([
+    supabase
+      .from('user_profiles')
+      .select('assumed_persona, first_name')
+      .eq('id', user.id)
+      .maybeSingle(),
+    supabase
+      .from('topic_completions')
+      .select('*', { count: 'only', head: true })
+      .eq('user_id', user.id)
+      .not('completed_at', 'is', null),
+  ]);
+
+  const persona = (profile?.assumed_persona as PersonaKey | null) ?? null;
+  const firstName = profile?.first_name ?? null;
 
   const isCompleted = Boolean(topic.completion?.completed_at);
   const completionPercentage = topic.completion?.completion_percentage || 0;
@@ -140,7 +157,13 @@ export default async function TopicDetailPage({
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Main Content */}
         <div className="lg:col-span-2">
-          <TopicContent topic={topic} userId={user.id} />
+          <TopicContent
+            topic={topic}
+            userId={user.id}
+            persona={persona ?? undefined}
+            firstName={firstName ?? undefined}
+            totalCompleted={totalCompleted || 0}
+          />
         </div>
 
         {/* AI Mentor Sidebar */}

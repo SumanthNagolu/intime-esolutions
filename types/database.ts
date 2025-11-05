@@ -82,6 +82,87 @@ export interface Database {
           updated_at?: string;
         };
       };
+      learner_reminder_logs: {
+        Row: {
+          id: string;
+          user_id: string;
+          reminder_type: string;
+          delivered_at: string | null;
+          notes: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          reminder_type: string;
+          delivered_at?: string | null;
+          notes?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          reminder_type?: string;
+          delivered_at?: string | null;
+          notes?: string | null;
+          created_at?: string;
+        };
+      };
+      learner_reminder_settings: {
+        Row: {
+          user_id: string;
+          opted_in: boolean;
+          last_opt_in_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          user_id: string;
+          opted_in?: boolean;
+          last_opt_in_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          user_id?: string;
+          opted_in?: boolean;
+          last_opt_in_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      beta_feedback_entries: {
+        Row: {
+          id: string;
+          user_id: string;
+          sentiment: string | null;
+          confidence_level: string | null;
+          biggest_win: string | null;
+          biggest_blocker: string | null;
+          help_requested: string | null;
+          submitted_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          sentiment?: string | null;
+          confidence_level?: string | null;
+          biggest_win?: string | null;
+          biggest_blocker?: string | null;
+          help_requested?: string | null;
+          submitted_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          sentiment?: string | null;
+          confidence_level?: string | null;
+          biggest_win?: string | null;
+          biggest_blocker?: string | null;
+          help_requested?: string | null;
+          submitted_at?: string;
+        };
+      };
       user_profiles: {
         Row: {
           id: string;

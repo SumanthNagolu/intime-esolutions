@@ -1,4 +1,6 @@
-# Sprint 2 - Deployment & Launch
+# Sprint 2 - Deployment & Launch *(Archived)*
+
+> **Note:** Sprint 2 has wrapped. For Sprint 3 kickoff use `project-docs/10_SPRINT_3_START_PROMPT.md`.
 
 **Use this prompt to start the next session with any AI agent (or continue in a new chat):**
 
@@ -47,6 +49,7 @@ I'm continuing development on the **Guidewire Training Platform** - an AI-powere
 6. `database/SETUP.md` - Supabase setup instructions
 7. `DEPLOYMENT.md` - Vercel deployment guide
 8. `SESSION_001_SUMMARY.md` - Detailed session summary
+9. `project-docs/SPRINT_2_RUNBOOK.md` - Ops runbook (env, seeding, beta monitoring)
 
 ---
 

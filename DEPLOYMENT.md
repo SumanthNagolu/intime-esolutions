@@ -2,6 +2,8 @@
 
 This guide covers deploying the Guidewire Training Platform to production.
 
+> For a step-by-step operational checklist (admin promotion, content seeding, beta monitoring), see `project-docs/SPRINT_2_RUNBOOK.md`.
+
 ## Architecture
 
 - **Frontend & API**: Vercel (Next.js)
@@ -18,19 +20,28 @@ This guide covers deploying the Guidewire Training Platform to production.
 
 ## Step 1: Prepare Environment Variables
 
-Create a file with all your environment variables:
+Duplicate `env.example` to `.env.local` (or configure variables in your deployment target) and fill in the values below. `SUPABASE_SERVICE_ROLE_KEY` is the canonical service key name used across the codebase.
 
 ```env
 # Supabase (from your Supabase project settings)
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
-SUPABASE_SERVICE_ROLE_KEY=your_service_key_here
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key_here
 
 # OpenAI (from https://platform.openai.com/api-keys)
-OPENAI_API_KEY=sk-your_openai_key_here
+OPENAI_API_KEY=your_openai_api_key
 
 # App URL (update after deployment)
 NEXT_PUBLIC_APP_URL=https://your-domain.vercel.app
+
+# Reminder automation (emails + cron)
+REMINDER_CRON_SECRET=super_secret_value
+REMINDER_THRESHOLD_HOURS=48
+REMINDER_MIN_HOURS=24
+RESEND_API_KEY=your_resend_api_key
+REMINDER_EMAIL_FROM="Guidewire Mentor Team <mentor@yourdomain.com>"
+# Optional (required when the Supabase Edge Function triggers the cron endpoint)
+REMINDER_CRON_TARGET_URL=https://your-domain.vercel.app/api/reminders/cron
 ```
 
 ## Step 2: Push Code to GitHub
@@ -131,7 +142,48 @@ Test these critical flows:
 - [ ] Topic management works
 - [ ] Non-admins are blocked
 
-## Step 7: Add Custom Domain (Optional)
+### Content Seeding & Validation
+- [ ] Run `npm run seed:claimcenter` locally (requires `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`)
+- [ ] Confirm `topics` table contains the new ClaimCenter entries in Supabase
+- [ ] Visit the dashboard and topics list to ensure seeded content renders without gaps
+
+## Step 7: Configure Reminder Automation
+
+Reminder emails rely on the `/api/reminders/cron` endpoint and the Supabase Edge Function in `supabase/functions/reminder-cron`. Deploy it and schedule execution after your Vercel build succeeds.
+
+### 1. Deploy the Edge Function
+
+```bash
+# From the project root
+supabase functions deploy reminder-cron --no-verify-jwt
+
+# Configure secrets for the function runtime
+supabase secrets set \
+  REMINDER_CRON_SECRET=super_secret_value \
+  REMINDER_CRON_TARGET_URL=https://your-domain.vercel.app/api/reminders/cron
+```
+
+> `REMINDER_CRON_SECRET` must match the value configured in Vercel. The Edge Function forwards this header when it calls into the Next.js API.
+
+### 2. Schedule the Cron Trigger
+
+```bash
+# Run hourly at the top of the hour
+supabase functions schedule create reminder-cron --cron "0 * * * *"
+
+# List schedules to confirm
+supabase functions schedule list
+```
+
+Adjust the cron expression per your cadence (e.g., `"0 13 * * MON"` for Mondays at 1pm UTC). If you prefer an external scheduler (GitHub Actions, Zapier, etc.), call `POST https://your-domain.vercel.app/api/reminders/cron` with an `x-cron-secret` header instead of using the Edge Function.
+
+### 3. Verify Delivery
+
+- Confirm `RESEND_API_KEY` and `REMINDER_EMAIL_FROM` are set in Vercel → Environment Variables (Preview + Production)
+- Trigger the schedule manually: `supabase functions invoke reminder-cron --no-verify-jwt --body '{}'`
+- Check Supabase → Database → Tables → `learner_reminder_logs` for a new row and tail the function logs if errors occur.
+
+## Step 8: Add Custom Domain (Optional)
 
 1. In Vercel: Settings → Domains
 2. Add your domain: `training.yourdomain.com`

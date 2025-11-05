@@ -22,21 +22,17 @@ import {
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { createClient } from '@/lib/supabase/client';
+import {
+  personaOptions,
+  personaPlaybooks,
+  type PersonaKey,
+} from '@/modules/onboarding/persona-guidance';
 
 export default function ProfileSetupPage() {
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState<{ id: string; name: string; code: string }[]>([]);
   const [selectedProduct, setSelectedProduct] = useState('');
-  const [selectedPersona, setSelectedPersona] = useState('');
-
-  const personas = [
-    '0-2 years experience',
-    '3-5 years experience',
-    '5-8 years experience',
-    '8-10 years experience',
-    '10+ years experience',
-    'Tech Lead / Architect',
-  ];
+  const [selectedPersona, setSelectedPersona] = useState<PersonaKey | ''>('');
 
   useEffect(() => {
     async function loadProducts() {
@@ -58,7 +54,7 @@ export default function ProfileSetupPage() {
 
     const formData = new FormData(e.currentTarget);
     formData.set('preferredProductId', selectedProduct);
-    formData.set('assumedPersona', selectedPersona);
+    formData.set('assumedPersona', selectedPersona ?? '');
 
     try {
       const result = await updateProfile(formData);
@@ -119,7 +115,7 @@ export default function ProfileSetupPage() {
                   <SelectValue placeholder="Select your target experience level" />
                 </SelectTrigger>
                 <SelectContent>
-                  {personas.map((persona) => (
+                  {personaOptions.map((persona) => (
                     <SelectItem key={persona} value={persona}>
                       {persona}
                     </SelectItem>
@@ -129,6 +125,21 @@ export default function ProfileSetupPage() {
               <p className="text-xs text-muted-foreground">
                 This is the experience level you&apos;re aiming to achieve through training
               </p>
+              {selectedPersona && personaPlaybooks[selectedPersona] && (
+                <div className="rounded-lg border border-indigo-100 bg-indigo-50/60 p-4">
+                  <p className="text-sm font-medium text-indigo-900">
+                    {personaPlaybooks[selectedPersona].headline}
+                  </p>
+                  <ul className="mt-2 space-y-1 text-xs text-indigo-800">
+                    {personaPlaybooks[selectedPersona].steps.map((checkpoint) => (
+                      <li key={checkpoint} className="flex items-start gap-2">
+                        <span aria-hidden className="mt-1 h-1.5 w-1.5 rounded-full bg-indigo-500" />
+                        <span>{checkpoint}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
 
             <div className="space-y-2">

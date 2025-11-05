@@ -1,21 +1,34 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { toast } from 'sonner';
 import { markTopicStarted, updateTopicProgress } from '@/modules/topics/queries';
 import type { TopicWithProgress } from '@/modules/topics/queries';
-import { CheckCircle, FileText, Video } from 'lucide-react';
+import { CheckCircle, CheckCircle2, Circle, FileText, Video } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import {
+  personaPlaybooks,
+  type PersonaKey,
+} from '@/modules/onboarding/persona-guidance';
 
 interface TopicContentProps {
   topic: TopicWithProgress;
   userId: string;
+  persona?: PersonaKey;
+  firstName?: string;
+  totalCompleted: number;
 }
 
-export default function TopicContent({ topic, userId }: TopicContentProps) {
+export default function TopicContent({
+  topic,
+  userId,
+  persona,
+  firstName,
+  totalCompleted,
+}: TopicContentProps) {
   const router = useRouter();
   const [completionPercentage, setCompletionPercentage] = useState(
     topic.completion?.completion_percentage || 0
@@ -30,6 +43,44 @@ export default function TopicContent({ topic, userId }: TopicContentProps) {
   const hasVideo = Boolean(topic.content.video_url);
   const hasSlides = Boolean(topic.content.slides_url);
   const hasNotes = Boolean(topic.content.notes);
+  const productName = topic.products?.name ?? 'ClaimCenter';
+  const personaCard = persona ? personaPlaybooks[persona] : undefined;
+  const isFirstTopic = totalCompleted === 0 && !isCompleted;
+
+  const checklist = useMemo(
+    () => [
+      {
+        label: 'Watch the lesson with intent',
+        description: 'Pause after each section and jot down how it applies to your projects.',
+        disabled: false,
+      },
+      {
+        label: 'Review slides & supporting docs',
+        description: hasSlides
+          ? 'Capture two insights from the slides that you can explain to a peer.'
+          : 'Skim the transcript or rewatch key moments to reinforce your understanding.',
+        disabled: false,
+      },
+      {
+        label: 'Ask the mentor one “why” question',
+        description: 'Use the AI mentor to test your understanding or clarify workflow nuance.',
+        disabled: false,
+      },
+    ],
+    [hasSlides]
+  );
+
+  const [checklistState, setChecklistState] = useState<boolean[]>(() =>
+    checklist.map(() => false)
+  );
+
+  useEffect(() => {
+    setChecklistState(checklist.map(() => false));
+  }, [checklist]);
+
+  const toggleChecklist = (index: number) => {
+    setChecklistState((prev) => prev.map((value, idx) => (idx === index ? !value : value)));
+  };
 
   // Mark topic as started (runs once per topic)
   useEffect(() => {
@@ -88,6 +139,48 @@ export default function TopicContent({ topic, userId }: TopicContentProps) {
 
   return (
     <div className="space-y-6">
+      {isFirstTopic ? (
+        <div className="rounded-lg border border-emerald-200 bg-emerald-50/70 p-4 text-sm text-emerald-900">
+          <p className="font-semibold">
+            {firstName ? `Let’s lock in your first win, ${firstName}!` : 'Let’s lock in your first win!'}
+          </p>
+          <p className="mt-1">
+            Work through every step below and you&apos;ll unlock the next topic before the end of today.
+            Capture one quote, one workflow, and one “why” question as you go.
+          </p>
+        </div>
+      ) : (
+        <div className="rounded-lg border border-sky-100 bg-sky-50/60 p-4 text-sm text-sky-900">
+          <p className="font-medium">
+            Master this {productName} topic and you&apos;ll be one step closer to unlocking the next
+            prerequisite.
+          </p>
+          <p className="mt-1">
+            Keep stacking interview stories—write down action items after each lesson so you can
+            teach it back tomorrow.
+          </p>
+        </div>
+      )}
+
+      {personaCard && (
+        <Card className="border border-amber-200 bg-amber-50/60">
+          <CardHeader>
+            <CardTitle className="text-amber-900">Persona Focus: {persona}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm font-medium text-amber-900">{personaCard.headline}</p>
+            <ul className="mt-3 space-y-2 text-xs text-amber-900">
+              {personaCard.steps.map((step) => (
+                <li key={step} className="flex items-start gap-2">
+                  <span aria-hidden className="mt-1 h-1.5 w-1.5 rounded-full bg-amber-500" />
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Video Section */}
       {hasVideo && (
         <Card>
@@ -173,6 +266,43 @@ export default function TopicContent({ topic, userId }: TopicContentProps) {
         </Card>
       )}
 
+      {/* Learning Checklist */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Learning Checklist</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="text-sm text-gray-600">
+            Track micro-wins during this lesson. Ticking each step primes you to apply the
+            concept on real projects.
+          </div>
+          <ul className="space-y-3">
+            {checklist.map((item, index) => {
+              const completed = checklistState[index];
+              return (
+                <li key={item.label}>
+                  <button
+                    type="button"
+                    onClick={() => toggleChecklist(index)}
+                    className="flex w-full items-start gap-3 rounded-lg border border-gray-200 bg-white p-3 text-left transition hover:border-indigo-200 hover:shadow-sm"
+                  >
+                    {completed ? (
+                      <CheckCircle2 className="mt-1 h-5 w-5 text-indigo-600" />
+                    ) : (
+                      <Circle className="mt-1 h-5 w-5 text-gray-300" />
+                    )}
+                    <div className="space-y-1">
+                      <p className="text-sm font-medium text-gray-900">{item.label}</p>
+                      <p className="text-xs text-gray-600">{item.description}</p>
+                    </div>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </CardContent>
+      </Card>
+
       {/* Progress Section */}
       <Card>
         <CardHeader>
@@ -189,10 +319,10 @@ export default function TopicContent({ topic, userId }: TopicContentProps) {
 
           {!isCompleted && (
             <div className="space-y-3">
-              <p className="text-sm text-gray-600">
-                Once you&apos;ve watched the video and reviewed the materials, mark this topic
-                as complete to unlock the next topics.
-              </p>
+              <div className="rounded-lg bg-gray-50 p-3 text-sm text-gray-700">
+                Lock in what you learned: mark complete once you can articulate the core
+                workflow and next steps without notes.
+              </div>
               <Button
                 onClick={handleMarkComplete}
                 disabled={loading || isCompleted}

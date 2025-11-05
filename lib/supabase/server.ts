@@ -1,9 +1,10 @@
 // Supabase client for server-side use (Server Components, Route Handlers, Server Actions)
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import { cookies } from 'next/headers';
 import type { Database } from '@/types/database';
 
-export async function createClient() {
+export async function createClient(): Promise<SupabaseClient<Database>> {
   const cookieStore = await cookies();
 
   return createServerClient<Database>(
@@ -31,7 +32,7 @@ export async function createClient() {
 }
 
 // Admin client with service role key (use sparingly and only in secure server contexts)
-export function createAdminClient() {
+export function createAdminClient(): SupabaseClient<Database> {
   return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,

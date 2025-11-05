@@ -305,4 +305,140 @@ Platform ready to train first batch of students and get them hired!
 Does today's work help students get jobs? [YES/NO - Why]
 
 ---
+
 ```
+
+## Session 002 - November 4, 2025 (Sprint 2 Kickoff)
+
+### 🎯 Sprint Goal
+Activate Sprint 2: Deployment & Launch. Confirm production readiness gaps, align roadmap, and prepare beta deployment playbook.
+
+### ✅ Completed
+1. **Roadmap Consolidation**
+   - Authored `project-docs/00_PROJECT_PLAN.md` with long-range sprint breakdown (Sprints 1-6).
+   - Documented Sprint 2 backlog, exit criteria, and metrics in `project-docs/06_CURRENT_SPRINT.md`.
+
+2. **Review Updates**
+   - Appended Sprint 2 kickoff focus + action log to `project-docs/07_REVIEW_NOTES.md`.
+   - Logged new session context in `project-docs/99_CHANGELOG.md`.
+
+### 📝 Planned Deliverables (Sprint 2)
+- Production AI mentor route with `{ success, data, error }` contract, rate limiting, and token logging.
+- Supabase/OpenAI environment configuration documented and wired to Vercel.
+- Seed dataset of 5-10 ClaimCenter topics with sequential lock validation and admin runbook.
+- Beta launch checklist covering invites, monitoring, feedback capture, and cost guardrails.
+
+### 🚧 Next Actions
+1. Implement mentor API response hardening + logging.
+2. Update environment docs (`DEPLOYMENT.md`, `.env.example`) with canonical variable names.
+3. Prepare content seeding utilities/checklists and beta monitoring workflows.
+
+### 🔗 Vision Alignment
+Deploying to production enables real learners to progress toward Guidewire roles; sprint priorities protect sequential mastery and cost controls to sustain mission delivery.
+
+---
+
+## Session 003 - November 18, 2025 (Sprint 2 Wrap)
+
+### 🎯 Sprint Goal
+Close out Sprint 2 by hardening the AI mentor endpoint, aligning environment configuration, and equipping operations for beta launch.
+
+### ✅ Completed
+1. **AI Mentor Production Contract**
+   - Added Zod validation and JSON error helper to `app/api/ai/mentor/route.ts`.
+   - Implemented per-user quota checks via `getMentorUsageWindow` and surfaced rate-limit headers.
+   - Captured OpenAI usage metadata (prompt/completion/total tokens) for cost tracking.
+
+2. **Cost & Usage Instrumentation**
+   - Persisted token usage metadata in `ai_messages.metadata`.
+   - Exposed `DAILY_MENTOR_MESSAGE_LIMIT` and usage helpers in `modules/ai-mentor/queries.ts`.
+   - Added `types/ai.d.ts` shim so callbacks support `onFinal` usage payloads.
+
+3. **Environment & Deployment Docs**
+   - Standardized `SUPABASE_SERVICE_ROLE_KEY` across `env.example` and `DEPLOYMENT.md`.
+   - Authored `project-docs/SPRINT_2_RUNBOOK.md` for admin promotion, content seeding, beta monitoring.
+   - Synced roadmap context in `project-docs/00_PROJECT_PLAN.md` for post-launch sprints.
+
+4. **Beta Launch Readiness**
+   - Added quota headers (`X-RateLimit-Limit`, `X-RateLimit-Remaining`) to mentor responses.
+   - Documented daily usage queries and feedback loops in the runbook.
+   - Prepared invite + monitoring checklist for first cohort.
+
+### 📝 Key Artifacts
+- `app/api/ai/mentor/route.ts`
+- `modules/ai-mentor/queries.ts`
+- `types/ai.d.ts`
+- `env.example`
+- `DEPLOYMENT.md`
+- `project-docs/SPRINT_2_RUNBOOK.md`
+- `project-docs/07_REVIEW_NOTES.md`
+
+### ⚠️ Outstanding / Follow-up
+- Update `project-docs/SPRINT_2_RUNBOOK.md` sample SQL to use snake_case JSON keys (`video_url`, `slides_url`, `learning_objectives`).
+- Mark `project-docs/06_CURRENT_SPRINT.md` status as `COMPLETED` and capture remaining backlog items before Sprint 3 planning.
+
+### 🔗 Vision Alignment
+- Mentor guardrails maintain the Socratic, mastery-first approach while controlling cost—directly supporting job-readiness.
+- Operational readiness ensures beta learners can progress sequentially with reliable support and monitoring.
+
+---
+
+## Session 004 - November 18, 2025 (Sprint 3 Kickoff)
+
+### 🎯 Sprint Goal
+Launch Sprint 3 focused on ClaimCenter content expansion and onboarding excellence so beta learners achieve early wins (<24h to first completion) and sustain momentum through 10 topics.
+
+### ✅ Completed
+1. **Roadmap Alignment**
+   - Marked Sprint 2 as complete in `project-docs/00_PROJECT_PLAN.md`; activated Sprint 3 deliverables and success metrics.
+   - Refreshed `project-docs/06_CURRENT_SPRINT.md` with new backlog, targets, and decision log.
+
+2. **Review & Risk Updates**
+   - Added Sprint 3 snapshot, action log, and risks to `project-docs/07_REVIEW_NOTES.md`.
+   - Logged planning outcomes here for Sprint history continuity.
+
+### 📝 Planned Deliverables (Sprint 3)
+- Content ingestion tooling with snake_case payloads plus updated runbook.
+- 50 ClaimCenter topics seeded with videos, slides, objectives, and prerequisites.
+- Enhanced onboarding flow (persona guidance, first-topic checklist, contextual progress nudges).
+- Automated stalled-learner reminder workflow (Supabase Edge Function + opt-in tracking).
+- Activation metrics dashboard (time-to-first-completion, topics-per-learner) feeding beta monitoring.
+
+### 🚧 Next Actions
+1. Implement ingestion tooling + update `SPRINT_2_RUNBOOK.md` sample SQL to snake_case.
+2. Curate and import initial 50 ClaimCenter topics; verify UI rendering + sequential locks.
+3. Design and ship onboarding enhancements plus analytics instrumentation.
+4. Build reminder workflow with email opt-in/out and audit logging.
+5. Define weekly beta feedback cadence and incorporate into changelog entries.
+
+### 🔗 Vision Alignment
+Enabling rich content and early learner success keeps the platform laser-focused on job readiness—structured onboarding plus reminders ensures students master fundamentals before progressing.
+
+---
+
+## Session 005 - December 2, 2025 (Sprint 3 Wrap Review)
+
+### 🎯 Sprint Goal
+Evaluate Sprint 3 outputs (ClaimCenter content expansion + onboarding improvements) and verify readiness for learner activation targets.
+
+### ⚠️ Findings
+- ❌ **Content ingestion tooling absent** – No new scripts or services exist to batch-insert topics; `modules/topics/` still only exports read/update queries.
+- ❌ **ClaimCenter topics not seeded** – Database has no additional topics; platform cannot deliver the promised 50-topic curriculum.
+- ⚠️ **Onboarding untouched** – `dashboard` and `TopicContent` UIs lack guided checklists, persona reminders, or contextual tips.
+- ⚠️ **Reminder workflow missing** – No Supabase tables/functions for opt-in email nudges; schema unchanged.
+- ⚠️ **Activation metrics missing** – Dashboard still surfaces only aggregate counts, no time-to-first-completion instrumentation.
+
+### ✅ Notable Updates
+- `project-docs/SPRINT_2_RUNBOOK.md` now uses snake_case JSON in seeding examples and calls out ingestion workflow steps.
+
+### 🚧 Required Actions (carry into Sprint 4 readiness)
+1. Ship ingestion tooling (CLI or admin UI) that validates snake_case payloads and logs imports.
+2. Seed first 50 ClaimCenter topics and QA sequential locks in staging.
+3. Implement onboarding enhancements (guided checklist, persona tips) and analytics for activation KPIs.
+4. Build stalled-learner reminder job with opt-in storage and RLS policies.
+5. Update `project-docs/06_CURRENT_SPRINT.md` to close Sprint 3 and prepare Sprint 4 backlog once deliverables land.
+
+### 🔗 Vision Alignment
+Sprint 3 outputs do not yet advance the jobs-first mission; without content and onboarding improvements, learners cannot progress toward hiring outcomes.
+
+---

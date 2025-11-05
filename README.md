@@ -59,6 +59,12 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 OPENAI_API_KEY=your_openai_key
 NEXT_PUBLIC_APP_URL=http://localhost:3000
+REMINDER_CRON_SECRET=super_secret_value
+REMINDER_THRESHOLD_HOURS=48
+REMINDER_MIN_HOURS=24
+RESEND_API_KEY=your_resend_api_key
+REMINDER_EMAIL_FROM="Guidewire Mentor Team <mentor@example.com>"
+REMINDER_CRON_TARGET_URL=http://localhost:3000/api/reminders/cron # optional for Supabase Edge cron
 ```
 
 5. **Run locally:**
@@ -67,6 +73,12 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) and create your account!
+
+6. **(Optional) Seed ClaimCenter topics:**
+```bash
+npm run seed:claimcenter
+```
+Requires `NEXT_PUBLIC_SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` in your environment—place them in `.env` or `.env.local` so the script can read them. Update `data/claimcenter-topics.json` to customize content before seeding.
 
 ### Detailed Setup Guides
 
@@ -116,6 +128,8 @@ Open [http://localhost:3000](http://localhost:3000) and create your account!
 - Completion percentage by product (CC/PC/BC)
 - Time invested tracking
 - Recent completions history
+- Activation snapshot card (time-to-first completion + topics per day)
+- Weekly beta check-in form with sentiment/confidence tracking
 
 ### 🔐 Enterprise-Ready
 - **Row Level Security** on all database tables
@@ -128,6 +142,13 @@ Open [http://localhost:3000](http://localhost:3000) and create your account!
 - User management
 - Platform analytics
 - Cost monitoring
+- Activation analytics snapshot + rolling 7-day completion trend
+
+### 🔔 Reminder Nudges
+- Learners opt into stalled-progress reminders with a single dashboard toggle
+- Emails respect a 24-hour cooldown and log to `learner_reminder_logs`
+- Supabase Edge Function keeps reminders on schedule via `REMINDER_CRON_SECRET`
+- Weekly feedback entries land in `beta_feedback_entries` for sprint changelog reviews
 
 ## Development
 

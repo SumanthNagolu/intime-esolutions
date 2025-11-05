@@ -1,23 +1,104 @@
 import { createClient } from '@/lib/supabase/server';
+import {
+  DAILY_MENTOR_MESSAGE_LIMIT,
+  getMentorUsageWindow,
+} from '@/modules/ai-mentor/queries';
+import type { Database, Json } from '@/types/database';
 import { OpenAIStream, StreamingTextResponse } from 'ai';
+import type { SupabaseClient } from '@supabase/supabase-js';
 import OpenAI from 'openai';
+import type { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
+import { z } from 'zod';
+
+const mentorRequestSchema = z.object({
+  message: z.string().min(1, 'Message is required'),
+  topicId: z.string().uuid().optional(),
+  conversationId: z.string().uuid().optional(),
+});
+
+const jsonError = (error: string, status = 400, data?: Record<string, unknown>) =>
+  Response.json(
+    {
+      success: false,
+      error,
+      ...(data ? { data } : {}),
+    },
+    { status }
+  );
+
+type ProfileSelection = Pick<
+  Database['public']['Tables']['user_profiles']['Row'],
+  'first_name' | 'assumed_persona'
+>;
+
+type TopicSelection = Pick<
+  Database['public']['Tables']['topics']['Row'],
+  'id' | 'title' | 'description'
+> & {
+  products?: { name: string } | null;
+};
+
+type ConversationInsert = Database['public']['Tables']['ai_conversations']['Insert'];
+type MessageInsert = Database['public']['Tables']['ai_messages']['Insert'];
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  !!value && typeof value === 'object' && !Array.isArray(value);
+
+const extractUsage = (value: unknown) => {
+  if (!isRecord(value) || !isRecord(value.usage)) {
+    return null;
+  }
+
+  const rawUsage = value.usage as Record<string, unknown>;
+
+  const promptTokens =
+    typeof rawUsage.prompt_tokens === 'number' ? rawUsage.prompt_tokens : undefined;
+  const completionTokens =
+    typeof rawUsage.completion_tokens === 'number'
+      ? rawUsage.completion_tokens
+      : undefined;
+  const totalTokens =
+    typeof rawUsage.total_tokens === 'number' ? rawUsage.total_tokens : undefined;
+
+  if (
+    promptTokens === undefined &&
+    completionTokens === undefined &&
+    totalTokens === undefined
+  ) {
+    return null;
+  }
+
+  return {
+    prompt_tokens: promptTokens,
+    completion_tokens: completionTokens,
+    total_tokens: totalTokens,
+  };
+};
 
 // Note: Using Node.js runtime (not Edge) because we need cookies() API for Supabase auth
 // Edge runtime would be faster but doesn't support cookies() from next/headers
 
 export async function POST(req: Request) {
   try {
-    const { message, topicId, conversationId } = await req.json();
+    const body = await req.json().catch(() => null);
+    const parsed = mentorRequestSchema.safeParse(body);
 
-    if (!message) {
-      return new Response('Message is required', { status: 400 });
+    if (!parsed.success) {
+      const firstIssue = parsed.error.issues[0]?.message ?? 'Invalid request payload';
+      return jsonError(firstIssue, 400);
     }
 
+    const { message, topicId, conversationId } = parsed.data;
+
     const supabase = await createClient();
+    // TODO: Replace this escape hatch with generated Supabase types once `supabase gen types` is integrated.
+    const db = supabase as unknown as {
+      from: (...args: any[]) => any;
+    };
 
     // Get current user
     const {
@@ -25,48 +106,79 @@ export async function POST(req: Request) {
     } = await supabase.auth.getUser();
 
     if (!user) {
-      return new Response('Unauthorized', { status: 401 });
+      return jsonError('Unauthorized', 401);
+    }
+
+    // Check daily usage window for rate limiting
+    const windowStart = new Date();
+    windowStart.setUTCHours(0, 0, 0, 0);
+
+    const usageWindow = await getMentorUsageWindow(user.id, windowStart, supabase as SupabaseClient<Database>);
+
+    if (usageWindow.messageCount >= DAILY_MENTOR_MESSAGE_LIMIT) {
+      return jsonError('Daily mentor limit reached. Try again tomorrow or contact support.', 429, {
+        limit: DAILY_MENTOR_MESSAGE_LIMIT,
+      });
     }
 
     // Get user profile and topic info
-    const [{ data: profile }, { data: topic }] = await Promise.all([
-      supabase
-        .from('user_profiles')
-        .select('first_name, assumed_persona')
-        .eq('id', user.id)
-        .single(),
-      topicId
-        ? supabase
-            .from('topics')
-            .select('title, description, content, products(name)')
-            .eq('id', topicId)
-            .single()
-        : Promise.resolve({ data: null }),
-    ]);
+    const profileResult = await db
+      .from('user_profiles')
+      .select('first_name, assumed_persona')
+      .eq('id', user.id)
+      .single();
+
+    if (profileResult.error) {
+      console.error('Failed to load user profile:', profileResult.error);
+    }
+
+    const profile = (profileResult.data as ProfileSelection | null) ?? null;
+
+    let topic: TopicSelection | null = null;
+
+    if (topicId) {
+      const topicQuery = await db
+        .from('topics')
+        .select('id, title, description, products(name)')
+        .eq('id', topicId)
+        .single();
+
+      if (topicQuery.error) {
+        console.error('Failed to load topic for mentor prompt:', topicQuery.error);
+      } else if (topicQuery.data) {
+        topic = topicQuery.data as TopicSelection;
+      }
+    }
 
     // Get or create conversation
-    let currentConversationId = conversationId;
+    let currentConversationId = conversationId ?? null;
     if (!currentConversationId) {
-      const { data: newConversation, error } = await supabase
+      const conversationInsert: ConversationInsert = {
+        user_id: user.id,
+        conversation_type: 'mentor',
+        topic_id: topicId || null,
+        status: 'active',
+      };
+
+      const { data: newConversation, error } = await db
         .from('ai_conversations')
-        .insert({
-          user_id: user.id,
-          conversation_type: 'mentor',
-          topic_id: topicId || null,
-          status: 'active',
-        })
+        .insert(conversationInsert)
         .select()
         .single();
 
       if (error || !newConversation) {
-        return new Response('Failed to create conversation', { status: 500 });
+        return jsonError('Failed to create conversation', 500);
       }
 
       currentConversationId = newConversation.id;
     }
 
+    if (!currentConversationId) {
+      return jsonError('Conversation unavailable', 500);
+    }
+
     // Get recent messages (last 6 pairs = 12 messages)
-    const { data: previousMessages } = await supabase
+    const { data: previousMessages } = await db
       .from('ai_messages')
       .select('role, content')
       .eq('conversation_id', currentConversationId)
@@ -74,7 +186,9 @@ export async function POST(req: Request) {
       .limit(12);
 
     // Build context-aware system prompt
-    const systemPrompt = `You are an expert Guidewire training mentor helping ${profile?.first_name || 'a student'}.
+    const systemPrompt = `You are an expert Guidewire training mentor helping ${
+      profile?.first_name || 'a student'
+    }.
 
 CRITICAL TEACHING RULES:
 1. NEVER give direct answers to questions
@@ -100,59 +214,135 @@ Teaching Principles:
 Respond in a supportive, encouraging tone that promotes active learning.`;
 
     // Build messages array (reverse to chronological order)
-    const messages: any[] = [
+    const historyMessages = ((previousMessages ?? []) as Array<
+      Pick<Database['public']['Tables']['ai_messages']['Row'], 'role' | 'content'>
+    >)
+      .reverse()
+      .map((msg) => ({ role: msg.role, content: msg.content }));
+
+    const messages: ChatCompletionMessageParam[] = [
       { role: 'system', content: systemPrompt },
-      ...(previousMessages?.reverse() || []),
+      ...historyMessages,
       { role: 'user', content: message },
     ];
 
     // Save user message
-    await supabase.from('ai_messages').insert({
+    const userMetadata: Record<string, unknown> = {
+      payloadType: 'user',
+      topicId: topicId ?? null,
+    };
+
+    const userMessageInsert: MessageInsert = {
       conversation_id: currentConversationId,
       role: 'user',
       content: message,
-      tokens_used: Math.ceil(message.length / 4), // Rough estimate
+      tokens_used: 0,
       model_used: 'gpt-4o-mini',
-    });
+      metadata: userMetadata as Json,
+    };
+
+    const { data: userMessageRow, error: userMessageError } = await db
+      .from('ai_messages')
+      .insert(userMessageInsert)
+      .select('id, metadata')
+      .single();
+
+    if (userMessageError || !userMessageRow) {
+      console.error('Failed to record user mentor message:', userMessageError);
+      return jsonError('Unable to record mentor question', 500);
+    }
+
+    const model = 'gpt-4o-mini';
 
     // Call OpenAI with streaming
     const response = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
+      model,
       messages,
       stream: true,
+      stream_options: { include_usage: true },
       max_tokens: 500,
       temperature: 0.7,
     });
 
     // Track tokens and response
     let fullResponse = '';
-    let tokensUsed = 0;
-
     const stream = OpenAIStream(response, {
-      onCompletion: async (completion) => {
+      onCompletion: (completion: string) => {
         fullResponse = completion;
-        tokensUsed = Math.ceil(completion.length / 4); // Rough estimate
+      },
+      onFinal: async (final: unknown) => {
+        const usage = extractUsage(final);
+        const tokensUsed =
+          usage?.total_tokens ?? Math.ceil(fullResponse.length / 4);
 
-        // Save assistant message
-        await supabase.from('ai_messages').insert({
+        const assistantMetadata = usage ? ({ usage } as Json) : undefined;
+
+        const finalRecord = isRecord(final) ? final : null;
+        const resolvedModel =
+          finalRecord && typeof finalRecord.model === 'string'
+            ? finalRecord.model
+            : model;
+
+        const assistantInsert: MessageInsert = {
           conversation_id: currentConversationId,
           role: 'assistant',
           content: fullResponse,
           tokens_used: tokensUsed,
-          model_used: 'gpt-4o-mini',
-        });
+          model_used: resolvedModel,
+          metadata: assistantMetadata,
+        };
+
+        const { error: assistantError } = await db
+          .from('ai_messages')
+          .insert(assistantInsert)
+          .select('id')
+          .single();
+
+        if (assistantError) {
+          console.error('Failed to record mentor assistant message:', assistantError);
+        }
+
+        if (usage?.prompt_tokens && userMessageRow?.id) {
+          const mergedMetadata: Record<string, unknown> = {
+            ...(userMessageRow.metadata ?? {}),
+            usage: {
+              prompt_tokens: usage.prompt_tokens,
+            },
+          };
+
+          const { error: updateError } = await db
+            .from('ai_messages')
+            .update({
+              metadata: mergedMetadata as Json,
+            })
+            .eq('id', userMessageRow.id);
+
+          if (updateError) {
+            console.error('Failed to update mentor user message metadata:', updateError);
+          }
+        }
       },
     });
 
+    const responseHeaders: Record<string, string> = {
+      'X-Conversation-Id': currentConversationId,
+      'X-RateLimit-Limit': String(DAILY_MENTOR_MESSAGE_LIMIT),
+      'X-RateLimit-Remaining': String(
+        Math.max(DAILY_MENTOR_MESSAGE_LIMIT - (usageWindow.messageCount + 1), 0)
+      ),
+      'X-Response-Meta': JSON.stringify({
+        success: true,
+        data: {
+          conversationId: currentConversationId,
+        },
+      }),
+    };
+
     // Return streaming response with conversation ID in headers
-    return new StreamingTextResponse(stream, {
-      headers: {
-        'X-Conversation-Id': currentConversationId,
-      },
-    });
+    return new StreamingTextResponse(stream, { headers: responseHeaders });
   } catch (error) {
     console.error('AI Mentor Error:', error);
-    return new Response('Internal server error', { status: 500 });
+    return jsonError('Internal server error', 500);
   }
 }
 
