@@ -41,13 +41,21 @@ export async function getTopicsByProduct(
 
   type TopicData = {
     id: string;
+    product_id: string;
     title: string;
     description: string | null;
     duration_minutes: number;
     position: number;
     prerequisites: string[];
+    content: {
+      video_url?: string;
+      slides_url?: string;
+      notes?: string;
+      learning_objectives?: string[];
+    };
+    published: boolean;
+    created_at: string;
     products: { code: string; name: string };
-    [key: string]: any;
   };
 
   let query = supabase
