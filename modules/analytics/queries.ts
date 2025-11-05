@@ -159,10 +159,18 @@ export async function getTimeToFirstCompletionData(): Promise<{
     const supabase = await createClient();
 
     // Get all user profiles with signup dates
+    type UserProfile = {
+      id: string;
+      email: string;
+      first_name: string | null;
+      created_at: string;
+    };
+
     const { data: profiles, error: profilesError } = await supabase
       .from('user_profiles')
       .select('id, email, first_name, created_at')
-      .order('created_at', { ascending: true });
+      .order('created_at', { ascending: true })
+      .returns<UserProfile[]>();
 
     if (profilesError) {
       return { success: false, error: profilesError.message };
@@ -173,11 +181,14 @@ export async function getTimeToFirstCompletionData(): Promise<{
     }
 
     // Get first completion for each user
+    type UserCompletion = { user_id: string; completed_at: string };
+
     const { data: completions, error: completionsError } = await supabase
       .from('topic_completions')
       .select('user_id, completed_at')
       .not('completed_at', 'is', null)
-      .order('completed_at', { ascending: true });
+      .order('completed_at', { ascending: true })
+      .returns<UserCompletion[]>();
 
     if (completionsError) {
       return { success: false, error: completionsError.message };
