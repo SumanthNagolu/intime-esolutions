@@ -119,7 +119,7 @@ export async function getActivationMetrics(): Promise<ActivationMetrics> {
       supabase
         .from('topic_completions')
         .select('user_id, completed_at')
-        .not('completed_at', 'is', null')
+        .not('completed_at', 'is', null)
         .returns<Completion[]>(),
       supabase
         .from('learner_reminder_settings')
@@ -198,12 +198,15 @@ export async function getCompletionTrend(
   const now = new Date();
   const startDate = new Date(now.getTime() - days * 24 * 60 * 60 * 1000);
 
+  type CompletionData = { completed_at: string };
+
   const { data, error } = await supabase
     .from('topic_completions')
     .select('completed_at')
     .not('completed_at', 'is', null)
     .gte('completed_at', startDate.toISOString())
-    .order('completed_at', { ascending: true });
+    .order('completed_at', { ascending: true })
+    .returns<CompletionData[]>();
 
   if (error || !data) {
     console.error('Completion trend query failed', error);
