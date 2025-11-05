@@ -218,6 +218,8 @@ export async function signOut(): Promise<ApiResponse> {
 export async function updateProfile(formData: FormData): Promise<ApiResponse> {
   const supabase = await createClient();
 
+  console.log('[updateProfile] Starting profile update...');
+
   // Get current user
   const {
     data: { user },
@@ -225,8 +227,11 @@ export async function updateProfile(formData: FormData): Promise<ApiResponse> {
   } = await supabase.auth.getUser();
 
   if (userError || !user) {
+    console.error('[updateProfile] Auth error:', userError);
     return { success: false, error: 'Not authenticated' };
   }
+
+  console.log('[updateProfile] User authenticated:', user.id);
 
   // Parse and validate form data
   const rawData = {
@@ -236,8 +241,11 @@ export async function updateProfile(formData: FormData): Promise<ApiResponse> {
     preferredProductId: formData.get('preferredProductId') as string,
   };
 
+  console.log('[updateProfile] Raw form data:', rawData);
+
   const validation = profileSetupSchema.safeParse(rawData);
   if (!validation.success) {
+    console.error('[updateProfile] Validation failed:', validation.error.issues);
     return {
       success: false,
       error: validation.error.issues[0].message,
@@ -246,9 +254,18 @@ export async function updateProfile(formData: FormData): Promise<ApiResponse> {
 
   const { firstName, lastName, assumedPersona, preferredProductId } = validation.data;
 
+  console.log('[updateProfile] Validated data:', {
+    firstName,
+    lastName,
+    assumedPersona,
+    preferredProductId,
+    userId: user.id,
+  });
+
   try {
     // Update user profile
-    const { error: updateError } = await (supabase
+    console.log('[updateProfile] Attempting database update...');
+    const { error: updateError, data: updatedData } = await (supabase
       .from('user_profiles') as any)
       .update({
         first_name: firstName,
@@ -258,18 +275,25 @@ export async function updateProfile(formData: FormData): Promise<ApiResponse> {
         onboarding_completed: true,
         updated_at: new Date().toISOString(),
       })
-      .eq('id', user.id);
+      .eq('id', user.id)
+      .select();
 
     if (updateError) {
+      console.error('[updateProfile] Database update error:', updateError);
       return { success: false, error: updateError.message };
     }
+
+    console.log('[updateProfile] Database updated successfully:', updatedData);
+    console.log('[updateProfile] Revalidating paths and redirecting to dashboard...');
 
     revalidatePath('/', 'layout');
     redirect('/dashboard');
   } catch (error) {
     if (error instanceof Error && error.message.includes('NEXT_REDIRECT')) {
+      console.log('[updateProfile] Redirect triggered (expected behavior)');
       throw error;
     }
+    console.error('[updateProfile] Unexpected error:', error);
     return {
       success: false,
       error: error instanceof Error ? error.message : 'An unexpected error occurred',
