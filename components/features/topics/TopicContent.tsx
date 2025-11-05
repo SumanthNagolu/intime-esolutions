@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { toast } from 'sonner';
-import { markTopicStarted, updateTopicProgress } from '@/modules/topics/queries';
+import { markTopicStarted, updateTopicProgress } from '@/modules/topics/mutations';
 import type { TopicWithProgress } from '@/modules/topics/queries';
 import { CheckCircle, CheckCircle2, Circle, FileText, Video } from 'lucide-react';
 import { useRouter } from 'next/navigation';
