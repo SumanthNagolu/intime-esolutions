@@ -4,7 +4,6 @@ import {
   getMentorUsageWindow,
 } from '@/modules/ai-mentor/queries';
 import type { Database, Json } from '@/types/database';
-import { OpenAIStream } from 'ai';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import OpenAI from 'openai';
 import type { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
@@ -263,125 +262,90 @@ Respond in a supportive, encouraging tone that promotes active learning.`;
       max_tokens: 500,
       temperature: 0.7,
     });
+    
     const encoder = new TextEncoder();
-    const decoder = new TextDecoder();
     let fullResponse = '';
+    let lastChunk: unknown = null;
 
-    const openAIStream = OpenAIStream(response, {
-      onCompletion: (completion: string) => {
-        fullResponse = completion;
-      },
-      onFinal: async (final: unknown) => {
-        const usage = extractUsage(final);
-        const tokensUsed =
-          usage?.total_tokens ?? Math.ceil(fullResponse.length / 4);
+    const persistAssistantMessage = async () => {
+      const usage = extractUsage(lastChunk);
+      const tokensUsed = usage?.total_tokens ?? Math.ceil(fullResponse.length / 4);
 
-        const assistantMetadata = usage ? ({ usage } as Json) : undefined;
+      const assistantMetadata = usage ? ({ usage } as Json) : undefined;
+      const finalRecord = isRecord(lastChunk) ? lastChunk : null;
+      const resolvedModel =
+        finalRecord && typeof finalRecord.model === 'string'
+          ? finalRecord.model
+          : model;
 
-        const finalRecord = isRecord(final) ? final : null;
-        const resolvedModel =
-          finalRecord && typeof finalRecord.model === 'string'
-            ? finalRecord.model
-            : model;
+      const assistantInsert: MessageInsert = {
+        conversation_id: currentConversationId,
+        role: 'assistant',
+        content: fullResponse,
+        tokens_used: tokensUsed,
+        model_used: resolvedModel,
+        metadata: assistantMetadata,
+      };
 
-        const assistantInsert: MessageInsert = {
-          conversation_id: currentConversationId,
-          role: 'assistant',
-          content: fullResponse,
-          tokens_used: tokensUsed,
-          model_used: resolvedModel,
-          metadata: assistantMetadata,
+      const { error: assistantError } = await db
+        .from('ai_messages')
+        .insert(assistantInsert)
+        .select('id')
+        .single();
+
+      if (assistantError) {
+        console.error('Failed to record mentor assistant message:', assistantError);
+      }
+
+      if (usage?.prompt_tokens && userMessageRow?.id) {
+        const mergedMetadata: Record<string, unknown> = {
+          ...(userMessageRow.metadata ?? {}),
+          usage: {
+            prompt_tokens: usage.prompt_tokens,
+          },
         };
 
-        const { error: assistantError } = await db
+        const { error: updateError } = await db
           .from('ai_messages')
-          .insert(assistantInsert)
-          .select('id')
-          .single();
+          .update({
+            metadata: mergedMetadata as Json,
+          })
+          .eq('id', userMessageRow.id);
 
-        if (assistantError) {
-          console.error('Failed to record mentor assistant message:', assistantError);
+        if (updateError) {
+          console.error('Failed to update mentor user message metadata:', updateError);
         }
-
-        if (usage?.prompt_tokens && userMessageRow?.id) {
-          const mergedMetadata: Record<string, unknown> = {
-            ...(userMessageRow.metadata ?? {}),
-            usage: {
-              prompt_tokens: usage.prompt_tokens,
-            },
-          };
-
-          const { error: updateError } = await db
-            .from('ai_messages')
-            .update({
-              metadata: mergedMetadata as Json,
-            })
-            .eq('id', userMessageRow.id);
-
-          if (updateError) {
-            console.error('Failed to update mentor user message metadata:', updateError);
-          }
-        }
-      },
-    });
-
-    const reader = openAIStream.getReader();
+      }
+    };
 
     const stream = new ReadableStream<Uint8Array>({
-      start(controller) {
-        controller.enqueue(
-          encoder.encode('event: start\ndata: {}\n\n')
-        );
+      async start(controller) {
+        try {
+          controller.enqueue(encoder.encode('event: start\ndata: {}\n\n'));
 
-        const read = async () => {
-          try {
-            while (true) {
-              const { value, done } = await reader.read();
-              if (done) {
-                const flushed = decoder.decode();
-                if (flushed.length > 0) {
-                  fullResponse += flushed;
-                  controller.enqueue(
-                    encoder.encode(
-                      `event: token\ndata: ${JSON.stringify({ value: flushed })}\n\n`
-                    )
-                  );
-                }
-
-                controller.enqueue(
-                  encoder.encode('event: close\ndata: {}\n\n')
-                );
-                controller.close();
-                break;
-              }
-
-              if (!value) {
-                continue;
-              }
-
-              const chunk = decoder.decode(value, { stream: true });
-              if (chunk.length > 0) {
-                fullResponse += chunk;
-                controller.enqueue(
-                  encoder.encode(
-                    `event: token\ndata: ${JSON.stringify({ value: chunk })}\n\n`
-                  )
-                );
-              }
+          for await (const chunk of response) {
+            lastChunk = chunk;
+            const content =
+              chunk?.choices?.[0]?.delta?.content ??
+              chunk?.choices?.[0]?.text ??
+              '';
+            
+            if (content) {
+              fullResponse += content;
+              controller.enqueue(
+                encoder.encode(
+                  `event: token\ndata: ${JSON.stringify({ value: content })}\n\n`
+                )
+              );
             }
-          } catch (streamError) {
-            controller.error(streamError);
           }
-        };
 
-        read().catch((streamError) => {
+          await persistAssistantMessage();
+          controller.enqueue(encoder.encode('event: close\ndata: {}\n\n'));
+          controller.close();
+        } catch (streamError) {
           controller.error(streamError);
-        });
-      },
-      cancel(reason) {
-        reader.cancel(reason).catch(() => {
-          // Ignore cancellation errors
-        });
+        }
       },
     });
 
