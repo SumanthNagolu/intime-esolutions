@@ -99,9 +99,12 @@ export async function bulkUpsertTopics(
     return { success: false, errors };
   }
 
+  type Product = { id: string; code: string };
+
   const { data: products, error: productsError } = await client
     .from('products')
-    .select('id, code');
+    .select('id, code')
+    .returns<Product[]>();
 
   if (productsError || !products?.length) {
     return {
