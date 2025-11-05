@@ -6,8 +6,8 @@ export async function markTopicStarted(
 ): Promise<{ success: boolean; error?: string }> {
   const supabase = createClient();
 
-  const { error } = await supabase
-    .from('topic_completions')
+  const { error } = await (supabase
+    .from('topic_completions') as any)
     .upsert(
       {
         user_id: userId,
