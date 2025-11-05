@@ -14,11 +14,16 @@ export async function GET(request: Request) {
 
     if (!error && data.user) {
       // Check if user profile exists
+      type UserProfile = {
+        id: string;
+        onboarding_completed: boolean;
+      };
+
       const { data: profile } = await supabase
         .from('user_profiles')
         .select('id, onboarding_completed')
         .eq('id', data.user.id)
-        .single();
+        .single<UserProfile>();
 
       // Create profile if it doesn't exist (for OAuth users)
       if (!profile) {

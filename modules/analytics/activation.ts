@@ -105,20 +105,27 @@ const computeStalledLearners = (
 export async function getActivationMetrics(): Promise<ActivationMetrics> {
   const supabase = await createClient();
 
+  type UserProfile = { id: string; created_at: string };
+  type Completion = { user_id: string; completed_at: string };
+  type ReminderSetting = { user_id: string };
+
   const [{ data: profiles, error: profilesError }, { data: completionRows, error: completionsError }, { data: reminders, error: remindersError }] =
     await Promise.all([
       supabase
         .from('user_profiles')
         .select('id, created_at')
-        .eq('role', 'user'),
+        .eq('role', 'user')
+        .returns<UserProfile[]>(),
       supabase
         .from('topic_completions')
         .select('user_id, completed_at')
-        .not('completed_at', 'is', null),
+        .not('completed_at', 'is', null')
+        .returns<Completion[]>(),
       supabase
         .from('learner_reminder_settings')
         .select('user_id')
-        .eq('opted_in', true),
+        .eq('opted_in', true)
+        .returns<ReminderSetting[]>(),
     ]);
 
   if (profilesError || completionsError || remindersError || !profiles) {
