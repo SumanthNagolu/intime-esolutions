@@ -86,11 +86,14 @@ const main = async () => {
   console.log('✅ Reminder tables exist');
 
   // Check 4: Topics table
+  type ExistingTopic = { id: string; title: string };
+
   const { data: existingTopics, error: topicsError } = await supabase
     .from('topics')
     .select('id, title')
     .eq('product_id', products[0].id as string)
-    .order('position', { ascending: true });
+    .order('position', { ascending: true })
+    .returns<ExistingTopic[]>();
 
   if (topicsError) {
     console.error('❌ Failed to query topics table:', topicsError.message);
