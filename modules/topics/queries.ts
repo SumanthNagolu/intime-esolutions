@@ -39,6 +39,17 @@ export async function getTopicsByProduct(
 ): Promise<TopicWithProgress[]> {
   const supabase = await createClient();
 
+  type TopicData = {
+    id: string;
+    title: string;
+    description: string | null;
+    duration_minutes: number;
+    position: number;
+    prerequisites: string[];
+    products: { code: string; name: string };
+    [key: string]: any;
+  };
+
   let query = supabase
     .from('topics')
     .select(`
@@ -52,7 +63,8 @@ export async function getTopicsByProduct(
     query = query.eq('products.code', productCode);
   }
 
-  const { data: topics, error } = await query;
+  const { data, error } = await query;
+  const topics = data as TopicData[] | null;
 
   if (error) {
     console.error('Error fetching topics:', error);
