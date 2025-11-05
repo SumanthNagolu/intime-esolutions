@@ -35,7 +35,7 @@ export async function updateTopicProgress(
 ): Promise<{ success: boolean; error?: string }> {
   const supabase = createClient();
 
-  const { error } = await supabase.rpc('update_topic_completion', {
+  const { error } = await (supabase.rpc as any)('update_topic_completion', {
     p_user_id: userId,
     p_topic_id: topicId,
     p_completion_percentage: completionPercentage,
