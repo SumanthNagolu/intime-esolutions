@@ -194,7 +194,7 @@ export async function getTopicById(
     .single();
 
   // Check if prerequisites are met
-  const { data: prerequisitesMet } = await supabase.rpc(
+  const { data: prerequisitesMet } = await (supabase.rpc as any)(
     'check_prerequisites',
     {
       p_user_id: userId,
@@ -216,7 +216,7 @@ export async function getNextTopic(
 ): Promise<Topic | null> {
   const supabase = await createClient();
 
-  const { data: nextTopicId } = await supabase.rpc('get_next_topic', {
+  const { data: nextTopicId } = await (supabase.rpc as any)('get_next_topic', {
     p_user_id: userId,
     p_product_id: productId,
   });
