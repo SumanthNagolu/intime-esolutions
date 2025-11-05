@@ -382,7 +382,6 @@ Respond in a supportive, encouraging tone that promotes active learning.`;
         reader.cancel(reason).catch(() => {
           // Ignore cancellation errors
         });
->>>>>>> 1680914 (feat: finalize sprint 3 content and onboarding)
       },
     });
 
@@ -400,7 +399,6 @@ Respond in a supportive, encouraging tone that promotes active learning.`;
       }),
     };
 
-<<<<<<< HEAD
     // Return SSE response with conversation ID in headers
     return new Response(stream, {
       headers: {

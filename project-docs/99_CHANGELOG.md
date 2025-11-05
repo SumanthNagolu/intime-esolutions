@@ -442,8 +442,6 @@ Evaluate Sprint 3 outputs (ClaimCenter content expansion + onboarding improvemen
 Sprint 3 outputs do not yet advance the jobs-first mission; without content and onboarding improvements, learners cannot progress toward hiring outcomes.
 
 ---
-<<<<<<< HEAD
-=======
 
 ## Session 006 - December 2, 2025 (Sprint 3 Completion)
 
@@ -466,7 +464,7 @@ Close Sprint 3 by delivering the promised content ingestion, seeded curriculum, 
 
 ### 🧪 Verification
 - Admin import tested locally (toast feedback, Supabase revalidation)
-- Topics page displays “Up next” CTA and locked-topic messaging
+- Topics page displays "Up next" CTA and locked-topic messaging
 - Dashboard surfaces activation stats + reminder opt-in
 
 ### 📌 Follow-ups Pushed to Sprint 4
@@ -478,4 +476,3 @@ Close Sprint 3 by delivering the promised content ingestion, seeded curriculum, 
 ✅ Learners now have rich content, sequential guardrails, and Socratic guidance to reach job readiness; activation metrics monitor first-topic completion inside 24 hours.
 
 ---
->>>>>>> 1680914 (feat: finalize sprint 3 content and onboarding)

@@ -108,8 +108,6 @@ VALUES
 
 ---
 
-<<<<<<< HEAD
-=======
 ## Session 006 – Gap Analysis vs End Target
 
 ### Scope of Comparison
@@ -129,8 +127,6 @@ VALUES
 - Plan execution path for assessments/interview simulator in upcoming sprint to align with master plan sequencing.
 
 ---
-
->>>>>>> 1680914 (feat: finalize sprint 3 content and onboarding)
 ## Session 002 – Sprint 2 Wrap (November 18, 2025)
 
 ### Executive Summary
