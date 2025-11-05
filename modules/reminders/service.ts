@@ -124,10 +124,13 @@ export async function sendStalledLearnerReminders(): Promise<ReminderSummary> {
     }
   });
 
+  type ReminderLog = { user_id: string; delivered_at: string };
+
   const { data: recentLogs } = await admin
     .from('learner_reminder_logs')
     .select('user_id, delivered_at')
-    .gte('delivered_at', cooldownDate.toISOString());
+    .gte('delivered_at', cooldownDate.toISOString())
+    .returns<ReminderLog[]>();
 
   const recentLogMap = new Map<string, Date>();
   recentLogs?.forEach((row) => {
