@@ -41,12 +41,14 @@ export default function SignupPage() {
       const result = await signInWithGoogle();
       if (!result.success && result.error) {
         toast.error(result.error);
+        setLoading(false);
       }
+      // On success, will redirect, so keep loading state
     } catch (error) {
-      if (error instanceof Error && !error.message.includes('NEXT_REDIRECT')) {
-        toast.error('An unexpected error occurred');
+      if (error instanceof Error && error.message.includes('NEXT_REDIRECT')) {
+        return;
       }
-    } finally {
+      toast.error('An unexpected error occurred');
       setLoading(false);
     }
   }

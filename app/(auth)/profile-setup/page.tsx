@@ -77,6 +77,13 @@ export default function ProfileSetupPage() {
       }
       // Success will redirect via server action
     } catch (error) {
+      // NEXT_REDIRECT is thrown by Next.js redirect() - this is EXPECTED, not an error
+      if (error instanceof Error && error.message.includes('NEXT_REDIRECT')) {
+        console.log('Redirecting to dashboard...');
+        return;
+      }
+      
+      // Only show actual errors
       console.error('Profile update error:', error);
       const errorMsg = error instanceof Error ? error.message : 'An unexpected error occurred';
       setError(errorMsg);

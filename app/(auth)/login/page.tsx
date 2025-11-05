@@ -25,14 +25,16 @@ export default function LoginPage() {
       const result = await signIn(formData);
       if (!result.success && result.error) {
         toast.error(result.error);
+        setLoading(false);
       }
-      // On success, signIn will redirect, so no need to show success toast
+      // On success, signIn will redirect, so no need to show success toast or stop loading
     } catch (error) {
-      // Ignore redirect errors (they're expected)
-      if (error instanceof Error && !error.message.includes('NEXT_REDIRECT')) {
-        toast.error('An unexpected error occurred');
+      // NEXT_REDIRECT is expected when redirect() is called - don't show as error
+      if (error instanceof Error && error.message.includes('NEXT_REDIRECT')) {
+        return;
       }
-    } finally {
+      // Only show actual errors
+      toast.error('An unexpected error occurred');
       setLoading(false);
     }
   }
@@ -43,12 +45,14 @@ export default function LoginPage() {
       const result = await signInWithGoogle();
       if (!result.success && result.error) {
         toast.error(result.error);
+        setLoading(false);
       }
+      // On success, will redirect, so keep loading state
     } catch (error) {
-      if (error instanceof Error && !error.message.includes('NEXT_REDIRECT')) {
-        toast.error('An unexpected error occurred');
+      if (error instanceof Error && error.message.includes('NEXT_REDIRECT')) {
+        return;
       }
-    } finally {
+      toast.error('An unexpected error occurred');
       setLoading(false);
     }
   }
