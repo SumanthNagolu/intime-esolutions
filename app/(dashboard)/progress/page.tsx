@@ -25,10 +25,18 @@ export default async function ProgressPage() {
     .single();
 
   // Get products
+  type Product = {
+    id: string;
+    name: string;
+    code: string;
+    description: string | null;
+  };
+
   const { data: products } = await supabase
     .from('products')
     .select('*')
-    .order('code');
+    .order('code')
+    .returns<Product[]>();
 
   // Get all user completions with topic info
   const { data: completions } = await supabase
