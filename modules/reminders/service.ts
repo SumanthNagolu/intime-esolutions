@@ -67,10 +67,18 @@ export async function sendStalledLearnerReminders(): Promise<ReminderSummary> {
 
   const userIds = settings.map((row) => row.user_id);
 
+  type UserProfile = {
+    id: string;
+    email: string;
+    first_name: string | null;
+    created_at: string;
+  };
+
   const { data: profiles, error: profilesError } = await admin
     .from('user_profiles')
     .select('id, email, first_name, created_at')
-    .in('id', userIds);
+    .in('id', userIds)
+    .returns<UserProfile[]>();
 
   if (profilesError) {
     errors.push(profilesError.message);
@@ -98,12 +106,15 @@ export async function sendStalledLearnerReminders(): Promise<ReminderSummary> {
     return { candidates: 0, attempts: 0, triggered: 0, skipped: 0, errors };
   }
 
+  type Completion = { user_id: string; completed_at: string };
+
   const { data: completions } = await admin
     .from('topic_completions')
     .select('user_id, completed_at')
     .in('user_id', userIds)
     .not('completed_at', 'is', null)
-    .order('completed_at', { ascending: false });
+    .order('completed_at', { ascending: false })
+    .returns<Completion[]>();
 
   const latestCompletionMap = new Map<string, Date>();
   completions?.forEach((entry) => {
