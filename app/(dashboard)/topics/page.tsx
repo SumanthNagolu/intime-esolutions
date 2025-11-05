@@ -7,10 +7,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import type { PageProps } from 'next';
 
-export default async function TopicsPage(props: PageProps<'/topics'>) {
-  const rawSearchParams = await props.searchParams;
+export default async function TopicsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ product?: string }>;
+}) {
+  const rawSearchParams = await searchParams;
   const productParam = rawSearchParams.product;
   const product = Array.isArray(productParam) ? productParam[0] : productParam;
 
@@ -25,10 +28,18 @@ export default async function TopicsPage(props: PageProps<'/topics'>) {
   }
 
   // Get products
+  type Product = {
+    id: string;
+    name: string;
+    code: string;
+    description: string | null;
+  };
+
   const { data: products } = await supabase
     .from('products')
     .select('*')
-    .order('code');
+    .order('code')
+    .returns<Product[]>();
 
   // Get topics filtered by product
   const topics = await getTopicsByProduct(product, user.id);
