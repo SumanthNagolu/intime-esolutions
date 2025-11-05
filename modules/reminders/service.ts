@@ -184,7 +184,7 @@ export async function sendStalledLearnerReminders(): Promise<ReminderSummary> {
         thresholdHours: REMINDER_THRESHOLD_HOURS,
       });
 
-      const { error: logError } = await admin.from('learner_reminder_logs').insert({
+      const { error: logError } = await (admin.from('learner_reminder_logs') as any).insert({
         ...logBase,
         delivered_at: new Date().toISOString(),
         notes: JSON.stringify({
@@ -212,7 +212,7 @@ export async function sendStalledLearnerReminders(): Promise<ReminderSummary> {
 
       errors.push(`Failed to send reminder to ${candidate.user_id}: ${message}`);
 
-      const { error: logError } = await admin.from('learner_reminder_logs').insert({
+      const { error: logError } = await (admin.from('learner_reminder_logs') as any).insert({
         ...logBase,
         delivered_at: null,
         notes: JSON.stringify({
