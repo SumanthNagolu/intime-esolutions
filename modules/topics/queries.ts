@@ -140,7 +140,26 @@ export async function getTopicById(
 ): Promise<TopicWithProgress | null> {
   const supabase = await createClient();
 
-  const { data: topic, error } = await supabase
+  type TopicData = {
+    id: string;
+    product_id: string;
+    title: string;
+    description: string | null;
+    duration_minutes: number;
+    position: number;
+    prerequisites: string[];
+    content: {
+      video_url?: string;
+      slides_url?: string;
+      notes?: string;
+      learning_objectives?: string[];
+    };
+    published: boolean;
+    created_at: string;
+    products: { code: string; name: string };
+  };
+
+  const { data, error } = await supabase
     .from('topics')
     .select(`
       *,
@@ -149,6 +168,8 @@ export async function getTopicById(
     .eq('id', topicId)
     .eq('published', true)
     .single();
+
+  const topic = data as TopicData | null;
 
   if (error || !topic) {
     console.error('Error fetching topic:', error);
