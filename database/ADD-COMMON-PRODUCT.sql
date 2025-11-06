@@ -2,13 +2,13 @@
 -- Run this BEFORE import-topics-fixed.sql
 
 -- Insert COMMON product if it doesn't exist
-INSERT INTO products (id, code, name, description, icon)
+INSERT INTO products (id, code, name, description, icon_url)
 VALUES (
   gen_random_uuid(),
   'COMMON',
   'Foundation',
   'Guidewire foundation topics including Cloud, SurePath, Developer Fundamentals, and Integration',
-  '🎓'  -- or use appropriate icon
+  NULL  -- Add icon URL later if needed
 ) ON CONFLICT (code) DO NOTHING;
 
 -- Verify all products exist
