@@ -74,19 +74,8 @@ export async function signUp(formData: FormData): Promise<ApiResponse> {
       return { success: false, error: 'Failed to create user' };
     }
 
-    // Create user profile
-    const { error: profileError } = await (supabase.from('user_profiles') as any).insert({
-      id: authData.user.id,
-      email: authData.user.email!,
-      first_name: firstName,
-      last_name: lastName,
-      role: 'user',
-      onboarding_completed: false,
-    });
-
-    if (profileError) {
-      return { success: false, error: 'Failed to create user profile' };
-    }
+    // Note: User profile is automatically created by database trigger (handle_new_user)
+    // See database/FIX-SIGNUP-TRIGGER.sql
 
     revalidatePath('/', 'layout');
     return {
