@@ -35,23 +35,40 @@ export default function ProfileCheckPage() {
           return;
         }
 
-        // Check profile
-        const { data: profile, error: profileError } = await supabase
+        // Check for duplicate profiles first
+        const { data: allProfiles, error: countError } = await supabase
           .from('user_profiles')
           .select('*')
-          .eq('id', user.id)
-          .single();
+          .eq('id', user.id);
 
-        if (profileError) {
+        if (countError) {
           setStatus({ 
             user, 
             profile: null, 
-            error: `Profile error: ${profileError.message}` 
+            error: `Profile query error: ${countError.message}` 
           });
           return;
         }
 
-        setStatus({ user, profile, error: null });
+        if (!allProfiles || allProfiles.length === 0) {
+          setStatus({ 
+            user, 
+            profile: null, 
+            error: 'No profile found. Please run the setup script in Supabase.' 
+          });
+          return;
+        }
+
+        if (allProfiles.length > 1) {
+          setStatus({ 
+            user, 
+            profile: null, 
+            error: `DUPLICATE PROFILES FOUND! You have ${allProfiles.length} profiles. Run FIX-DUPLICATE-PROFILE.sql in Supabase to fix this.` 
+          });
+          return;
+        }
+
+        setStatus({ user, profile: allProfiles[0], error: null });
       } catch (err) {
         setStatus({ 
           user: null, 
