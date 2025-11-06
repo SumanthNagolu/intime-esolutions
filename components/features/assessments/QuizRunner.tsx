@@ -54,7 +54,22 @@ export default function QuizRunner({ quiz, questions }: Props) {
 
   const formattedOptions = useMemo(() => {
     if (!currentQuestion) return [];
-    return getOptions(currentQuestion);
+    const opts = getOptions(currentQuestion);
+    // Return array of {key, value} pairs like [{key: "A", value: "Payment Processing"}, ...]
+    return opts;
+  }, [currentQuestion]);
+
+  // Get options as {key: value} object for multiple choice
+  const optionsObject = useMemo(() => {
+    if (!currentQuestion || !currentQuestion.options) return {};
+    try {
+      if (typeof currentQuestion.options === 'string') {
+        return JSON.parse(currentQuestion.options) as Record<string, string>;
+      }
+      return currentQuestion.options as Record<string, string>;
+    } catch {
+      return {};
+    }
   }, [currentQuestion]);
 
   if (!currentQuestion) {
@@ -120,9 +135,9 @@ export default function QuizRunner({ quiz, questions }: Props) {
       <div className="space-y-4">
         {currentQuestion.question_type === 'multiple_choice' && (
           <div className="space-y-2">
-            {formattedOptions.map((option) => {
-              const optionId = `${currentQuestion.id}-${option}`;
-              const selected = answers[currentQuestion.id] === option;
+            {Object.entries(optionsObject).map(([key, value]) => {
+              const optionId = `${currentQuestion.id}-${key}`;
+              const selected = answers[currentQuestion.id] === key;
               return (
                 <label
                   key={optionId}
@@ -135,12 +150,12 @@ export default function QuizRunner({ quiz, questions }: Props) {
                     id={optionId}
                     type="radio"
                     name={currentQuestion.id}
-                    value={option}
+                    value={key}
                     checked={selected}
-                    onChange={() => handleAnswerChange(currentQuestion.id, option)}
+                    onChange={() => handleAnswerChange(currentQuestion.id, key)}
                     className="h-4 w-4"
                   />
-                  <span className="text-sm font-medium">{option}</span>
+                  <span className="text-sm font-medium">{key}) {value}</span>
                 </label>
               );
             })}
