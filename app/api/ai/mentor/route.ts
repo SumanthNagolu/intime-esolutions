@@ -11,8 +11,8 @@ import { z } from 'zod';
 
 const mentorRequestSchema = z.object({
   message: z.string().min(1, 'Message is required'),
-  topicId: z.string().uuid().optional(),
-  conversationId: z.string().uuid().optional(),
+  topicId: z.string().uuid().optional().nullable(),
+  conversationId: z.string().uuid().optional().nullable(),
 });
 
 const jsonError = (error: string, status = 400, data?: Record<string, unknown>) =>
@@ -95,10 +95,13 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json().catch(() => null);
+    console.log('[AI Mentor] Request body:', JSON.stringify(body));
+    
     const parsed = mentorRequestSchema.safeParse(body);
 
     if (!parsed.success) {
       const firstIssue = parsed.error.issues[0]?.message ?? 'Invalid request payload';
+      console.error('[AI Mentor] Validation error:', parsed.error.issues);
       return jsonError(firstIssue, 400);
     }
 

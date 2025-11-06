@@ -50,20 +50,29 @@ export default function MentorChat({ topicId, topicTitle }: MentorChatProps) {
     setMessages((prev) => [...prev, { role: 'user', content: userMessage }]);
 
     try {
+      // Build request body, excluding undefined values
+      const requestBody: {
+        message: string;
+        topicId?: string;
+        conversationId?: string;
+      } = { message: userMessage };
+      
+      if (topicId) requestBody.topicId = topicId;
+      if (conversationId) requestBody.conversationId = conversationId;
+
       const response = await fetch('/api/ai/mentor', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          message: userMessage,
-          topicId,
-          conversationId,
-        }),
+        body: JSON.stringify(requestBody),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to get response');
+        const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+        const errorMessage = errorData.error || `Request failed with status ${response.status}`;
+        console.error('[AI Mentor] API error:', response.status, errorMessage);
+        throw new Error(errorMessage);
       }
 
       // Get conversation ID from headers
