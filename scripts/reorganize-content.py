@@ -453,15 +453,23 @@ if __name__ == "__main__":
     import sys
     
     if '--execute' in sys.argv:
-        print("\n⚠️  WARNING: This will reorganize all content files!")
-        response = input("Are you sure? Type 'yes' to continue: ")
-        if response.lower() == 'yes':
+        # Check if --yes flag is provided to skip confirmation
+        if '--yes' in sys.argv:
+            print("\n⚠️  Executing reorganization (--yes flag provided)...")
             structure = scan_current_structure()
             new_structure = generate_new_structure(structure)
             execute_reorganization(new_structure, dry_run=False)
             generate_import_sql(new_structure)
         else:
-            print("Cancelled.")
+            print("\n⚠️  WARNING: This will reorganize all content files!")
+            response = input("Are you sure? Type 'yes' to continue: ")
+            if response.lower() == 'yes':
+                structure = scan_current_structure()
+                new_structure = generate_new_structure(structure)
+                execute_reorganization(new_structure, dry_run=False)
+                generate_import_sql(new_structure)
+            else:
+                print("Cancelled.")
     elif '--sql' in sys.argv:
         structure = scan_current_structure()
         new_structure = generate_new_structure(structure)
