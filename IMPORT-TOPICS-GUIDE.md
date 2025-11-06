@@ -17,6 +17,23 @@ ERROR: 22P02: invalid input syntax for type uuid: "pc-04-001"
 
 ## 🚀 Import Steps (Updated)
 
+### Step 0: Add COMMON Product (if missing)
+
+Run **`database/ADD-COMMON-PRODUCT.sql`** in Supabase SQL Editor:
+
+```sql
+-- This script:
+-- ✅ Creates COMMON product for foundation content
+-- ✅ Verifies all products exist (BC, CC, COMMON, PC)
+```
+
+**To run**:
+1. Open Supabase Dashboard → SQL Editor
+2. Copy contents of `database/ADD-COMMON-PRODUCT.sql`
+3. Paste and click "Run"
+
+---
+
 ### Step 1: Add the `code` Column
 
 Run **`database/FIX-TOPICS-SCHEMA.sql`** in Supabase SQL Editor:
@@ -175,6 +192,9 @@ topics table:
 
 ## 🚨 Troubleshooting
 
+### Error: "null value in column 'product_id' violates not-null constraint"
+**Fix**: Run `ADD-COMMON-PRODUCT.sql` first (Step 0). The COMMON product is missing for foundation topics.
+
 ### Error: "column 'code' does not exist"
 **Fix**: Run `FIX-TOPICS-SCHEMA.sql` first (Step 1)
 
@@ -196,8 +216,9 @@ SELECT * FROM topics WHERE code = 'pc-04-001';
 
 ## 📦 Files You Need
 
-1. **`database/FIX-TOPICS-SCHEMA.sql`** - Adds code column (run first)
-2. **`import-topics-fixed.sql`** - Imports all 160 topics (run second)
+1. **`database/ADD-COMMON-PRODUCT.sql`** - Adds COMMON product (run first)
+2. **`database/FIX-TOPICS-SCHEMA.sql`** - Adds code column (run second)
+3. **`import-topics-fixed.sql`** - Imports all 160 topics (run third)
 
 ---
 
