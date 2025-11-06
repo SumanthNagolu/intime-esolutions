@@ -425,7 +425,7 @@ export default async function DashboardPage() {
               📊 View Detailed Progress
             </Button>
           </Link>
-          <Link href="/topics?mentor=open">
+          <Link href="/ai-mentor">
             <Button variant="outline" className="w-full justify-start">
               🤖 Ask the Mentor a Question
             </Button>
