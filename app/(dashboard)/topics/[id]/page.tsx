@@ -1,12 +1,13 @@
 import { createClient } from '@/lib/supabase/server';
 import { getTopicById } from '@/modules/topics/queries';
+import { getActiveQuizzes } from '@/modules/assessments/quizzes';
 import { redirect } from 'next/navigation';
 import TopicContent from '@/components/features/topics/TopicContent';
 import MentorChat from '@/components/features/ai-mentor/MentorChat';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { ArrowLeft, Clock } from 'lucide-react';
+import { ArrowLeft, Clock, ClipboardCheck } from 'lucide-react';
 import { type PersonaKey } from '@/modules/onboarding/persona-guidance';
 
 export default async function TopicDetailPage({
@@ -26,7 +27,10 @@ export default async function TopicDetailPage({
 
   const { id } = await params;
 
-  const topic = await getTopicById(id, user.id);
+  const [topic, quizzes] = await Promise.all([
+    getTopicById(id, user.id),
+    getActiveQuizzes({ topicId: id }),
+  ]);
 
   if (!topic) {
     return (
@@ -157,6 +161,41 @@ export default async function TopicDetailPage({
               </li>
             ))}
           </ul>
+        </div>
+      )}
+
+      {/* Available Quizzes */}
+      {quizzes && quizzes.length > 0 && (
+        <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg p-6">
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex-1">
+              <h2 className="text-lg font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                <ClipboardCheck className="h-5 w-5 text-green-600" />
+                Knowledge Check Available
+              </h2>
+              <p className="text-sm text-gray-700 mb-3">
+                Test your understanding of this topic with {quizzes.length} {quizzes.length === 1 ? 'quiz' : 'quizzes'}.
+                Passing score: {quizzes[0].passing_percentage}%
+              </p>
+              <div className="space-y-2">
+                {quizzes.map((quiz) => (
+                  <div key={quiz.id} className="flex items-center justify-between bg-white rounded-md p-3 border border-green-100">
+                    <div>
+                      <p className="font-medium text-gray-900">{quiz.title}</p>
+                      {quiz.description && (
+                        <p className="text-xs text-gray-600 mt-1">{quiz.description}</p>
+                      )}
+                    </div>
+                    <Link href={`/assessments/quizzes/${quiz.id}`}>
+                      <Button size="sm">
+                        Take Quiz
+                      </Button>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
