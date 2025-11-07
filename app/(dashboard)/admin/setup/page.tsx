@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
+import { createClient as createAdminClient } from '@supabase/supabase-js';
 import { redirect } from 'next/navigation';
 import SetupActions from '@/components/features/admin/SetupActions';
 
@@ -31,8 +32,12 @@ export default async function AdminSetupPage() {
     quizzes: false,
   };
 
-  // Check storage bucket
-  const { data: buckets } = await supabase.storage.listBuckets();
+  // Check storage bucket (requires admin client)
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+  const adminClient = createAdminClient(supabaseUrl, supabaseServiceKey);
+  
+  const { data: buckets } = await adminClient.storage.listBuckets();
   checks.storageBucket = buckets?.some((b) => b.id === 'guidewire-assistant-training-content') || false;
 
   // Check interview templates
