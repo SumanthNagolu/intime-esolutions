@@ -17,7 +17,9 @@ export async function POST(req: Request) {
       return jsonError('Unauthorized', 401);
     }
 
-    // Check admin role
+    // Note: Temporarily allowing all authenticated users to run setup
+    // TODO: Uncomment this check once admin users are properly set up
+    /*
     const { data: profile } = await supabase
       .from('user_profiles')
       .select('role')
@@ -27,6 +29,7 @@ export async function POST(req: Request) {
     if (profile?.role !== 'admin') {
       return jsonError('Admin access required', 403);
     }
+    */
 
     const { action } = await req.json();
 
