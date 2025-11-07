@@ -27,6 +27,7 @@ export default function InterviewSimulator({ templates }: Props) {
   const [selectedTemplate, setSelectedTemplate] = useState<string>(
     templates[0]?.id ?? ''
   );
+  const [selectedPersona, setSelectedPersona] = useState<string>('junior');
   const [isStreaming, setIsStreaming] = useState(false);
   const [summary, setSummary] = useState<{
     readinessScore: number;
@@ -37,10 +38,23 @@ export default function InterviewSimulator({ templates }: Props) {
   } | null>(null);
   const [isStarting, startTransition] = useTransition();
 
+  // Filter templates by selected persona
+  const filteredTemplates = useMemo(
+    () => templates.filter((t) => t.persona === selectedPersona),
+    [templates, selectedPersona]
+  );
+
   const activeTemplate = useMemo(
     () => templates.find((template) => template.id === selectedTemplate) ?? null,
     [selectedTemplate, templates]
   );
+
+  // Update selected template when persona changes
+  useEffect(() => {
+    if (filteredTemplates.length > 0 && !filteredTemplates.find((t) => t.id === selectedTemplate)) {
+      setSelectedTemplate(filteredTemplates[0].id);
+    }
+  }, [filteredTemplates, selectedTemplate]);
 
   const resetSession = () => {
     setMessages([]);
@@ -227,20 +241,43 @@ export default function InterviewSimulator({ templates }: Props) {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <p className="text-sm font-medium">Interview Template</p>
+            <p className="text-sm font-medium">Experience Level</p>
+            <Select
+              onValueChange={(value) => setSelectedPersona(value)}
+              defaultValue={selectedPersona}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select your experience level" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="junior">Junior (0-2 years)</SelectItem>
+                <SelectItem value="mid">Mid-Level (3-5 years)</SelectItem>
+                <SelectItem value="senior">Senior (5+ years)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <p className="text-sm font-medium">Interview Focus</p>
             <Select
               onValueChange={(value) => setSelectedTemplate(value)}
-              defaultValue={selectedTemplate}
+              value={selectedTemplate}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select interview focus" />
               </SelectTrigger>
               <SelectContent>
-                {templates.map((template) => (
-                  <SelectItem key={template.id} value={template.id}>
-                    {template.title}
+                {filteredTemplates.length === 0 ? (
+                  <SelectItem value="none" disabled>
+                    No templates available
                   </SelectItem>
-                ))}
+                ) : (
+                  filteredTemplates.map((template) => (
+                    <SelectItem key={template.id} value={template.id}>
+                      {template.focus_area}
+                    </SelectItem>
+                  ))
+                )}
               </SelectContent>
             </Select>
             {activeTemplate?.description && (
@@ -251,10 +288,21 @@ export default function InterviewSimulator({ templates }: Props) {
           <Button
             className="w-full"
             onClick={() => initializeInterview(selectedTemplate)}
-            disabled={isStarting || isStreaming}
+            disabled={isStarting || isStreaming || filteredTemplates.length === 0}
           >
             {isStarting ? 'Starting...' : 'Start Interview'}
           </Button>
+
+          <div className="mt-4 rounded-md bg-blue-50 p-3 text-xs space-y-2">
+            <p className="font-medium text-blue-900">💡 Tips for Better Responses:</p>
+            <ul className="text-blue-800 space-y-1 pl-4">
+              <li>• Be specific with examples from real projects</li>
+              <li>• Explain your reasoning and decision-making process</li>
+              <li>• Mention Guidewire-specific features and configurations</li>
+              <li>• Discuss trade-offs and alternatives you considered</li>
+              <li>• Show problem-solving skills, not just memorized facts</li>
+            </ul>
+          </div>
         </CardContent>
       </Card>
 
