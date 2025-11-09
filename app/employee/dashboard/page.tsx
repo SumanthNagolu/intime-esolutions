@@ -4,6 +4,7 @@ import RecruiterDashboard from '@/components/employee/dashboards/RecruiterDashbo
 import SalesDashboard from '@/components/employee/dashboards/SalesDashboard';
 import OperationsDashboard from '@/components/employee/dashboards/OperationsDashboard';
 import EmployeeDashboard from '@/components/employee/dashboards/EmployeeDashboard';
+import SourcerDashboard from '@/components/employee/dashboards/SourcerDashboard';
 
 export default async function EmployeeDashboardPage() {
   const supabase = await createClient() as any; // Type cast for CRM tables
@@ -41,15 +42,27 @@ export default async function EmployeeDashboardPage() {
     redirect('/admin');
   }
 
-  // Render role-specific dashboard
+  // Check for pod-specific role (sourcer, screener, account_manager)
+  const { data: podMember } = await supabase
+    .from('pod_members')
+    .select('role, pod_id')
+    .eq('user_id', user.id)
+    .eq('is_active', true)
+    .single();
+
+  // Route based on pod role first (more specific), then profile role
   return (
     <div className="min-h-screen bg-gray-50">
-      {profile.role === 'recruiter' && <RecruiterDashboard user={user} profile={profile} />}
-      {profile.role === 'sales' && <SalesDashboard user={user} profile={profile} />}
-      {(profile.role === 'account_manager' || profile.role === 'operations') && (
+      {/* Pod-specific roles (most specific) */}
+      {podMember?.role === 'sourcer' && <SourcerDashboard />}
+      
+      {/* Profile roles (fallback) */}
+      {!podMember && profile.role === 'recruiter' && <RecruiterDashboard user={user} profile={profile} />}
+      {!podMember && profile.role === 'sales' && <SalesDashboard user={user} profile={profile} />}
+      {!podMember && (profile.role === 'account_manager' || profile.role === 'operations') && (
         <OperationsDashboard user={user} profile={profile} />
       )}
-      {profile.role === 'employee' && <EmployeeDashboard user={user} profile={profile} />}
+      {!podMember && profile.role === 'employee' && <EmployeeDashboard user={user} profile={profile} />}
     </div>
   );
 }
