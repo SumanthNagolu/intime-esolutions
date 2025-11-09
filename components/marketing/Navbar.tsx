@@ -39,7 +39,7 @@ export default function Navbar() {
                 <div className="border-t border-gray-200 my-2"></div>
                 
                 {/* Nested Consulting Menu */}
-                <div className="relative group/consulting">
+                <div className="relative group">
                   <div className="flex items-center justify-between px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue cursor-pointer">
                     <span className="font-medium">Consulting</span>
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -48,7 +48,7 @@ export default function Navbar() {
                   </div>
                   
                   {/* Flyout Menu */}
-                  <div className="absolute left-full top-0 ml-1 w-64 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover/consulting:opacity-100 group-hover/consulting:visible transition-all duration-300 py-4">
+                  <div className="absolute left-full top-0 ml-1 w-64 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-4 z-50">
                     <Link href="/consulting/competencies" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
                       Our Competencies
                     </Link>
