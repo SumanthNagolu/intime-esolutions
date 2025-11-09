@@ -6,6 +6,8 @@ import OperationsDashboard from '@/components/employee/dashboards/OperationsDash
 import EmployeeDashboard from '@/components/employee/dashboards/EmployeeDashboard';
 import SourcerDashboard from '@/components/employee/dashboards/SourcerDashboard';
 import ScreenerDashboard from '@/components/employee/dashboards/ScreenerDashboard';
+import AccountManagerDashboard from '@/components/employee/dashboards/AccountManagerDashboard';
+import PodManagerDashboard from '@/components/employee/dashboards/PodManagerDashboard';
 
 export default async function EmployeeDashboardPage() {
   const supabase = await createClient() as any; // Type cast for CRM tables
@@ -56,8 +58,10 @@ export default async function EmployeeDashboardPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Pod-specific roles (most specific) */}
+      {podMember?.role === 'manager' && <PodManagerDashboard />}
       {podMember?.role === 'sourcer' && <SourcerDashboard />}
       {podMember?.role === 'screener' && <ScreenerDashboard />}
+      {podMember?.role === 'account_manager' && <AccountManagerDashboard />}
       
       {/* Profile roles (fallback) */}
       {!podMember && profile.role === 'recruiter' && <RecruiterDashboard user={user} profile={profile} />}
