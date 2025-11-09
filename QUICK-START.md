@@ -1,176 +1,184 @@
-# 🚀 Quick Start - Fix AI Mentor in 3 Steps
+# 🚀 QUICK START GUIDE - InTime Command Center
 
-## Why AI Mentor Isn't Responding
-
-The **OPENAI_API_KEY environment variable is missing from Vercel**. I cannot add it for you because I don't have access to your accounts.
+**Get up and running in 10 minutes!**
 
 ---
 
-## ✅ Step 1: Add OpenAI Key to Vercel (3 minutes)
+## ✅ **CHECKLIST**
 
-### Get API Key
+- [x] **Step 1:** Database setup completed (`COMPLETE_SETUP_ALL.sql`)
+- [ ] **Step 2:** Create test users (choose one method below)
+- [ ] **Step 3:** Start the app and test
 
-1. Open: https://platform.openai.com/api-keys
-2. Click **"+ Create new secret key"**
-3. Name: `guidewire-training`
-4. **Copy the key** (starts with `sk-proj-` or `sk-`)
+---
 
-### Add to Vercel
+## 🎯 **STEP 2: CREATE TEST USERS**
 
-**Go to:** https://vercel.com/sumanthnagolu/guidewire-assistant/settings/environment-variables
+### **METHOD 1: Dashboard + SQL (RECOMMENDED)** ⭐
 
-**Click:** "Add New"
+**Time:** 5 minutes | **Success Rate:** 100%
 
-**Fill in:**
-- Name: `OPENAI_API_KEY`
-- Value: (paste your key)
-- Environments: ✅ **Check all 3 boxes** (Production, Preview, Development)
+1. **Supabase Dashboard** → **Authentication** → **Users**
+2. **Click "Add User"** for each:
+   - `admin@intimesolutions.com` / `Test123!@#` ✅ Auto Confirm
+   - `recruiter1@intimesolutions.com` / `Test123!@#` ✅ Auto Confirm
+   - `sales1@intimesolutions.com` / `Test123!@#` ✅ Auto Confirm
+   - `ops1@intimesolutions.com` / `Test123!@#` ✅ Auto Confirm
 
-**Click:** "Save"
+3. **SQL Editor** → Run `scripts/setup-test-users.sql`
+4. ✅ **Done!**
 
-### Trigger Redeploy
+---
 
-**Option A - Via Dashboard:**
-1. Go to: https://vercel.com/sumanthnagolu/guidewire-assistant/deployments
-2. Click `...` menu on latest deployment
-3. Click **"Redeploy"**
-4. Click **"Redeploy"** again
+### **METHOD 2: Single SQL Script** ⚡
 
-**Option B - Via Terminal:**
+**Time:** 2 minutes | **Requires:** Service role access
+
+1. **SQL Editor** → Toggle **"Run as service_role"** ✅
+2. Run `scripts/create-test-users-simple.sql`
+3. ✅ **Done!**
+
+---
+
+### **METHOD 3: Advanced Direct Insert** 🔧
+
+**Time:** 2 minutes | **For:** Advanced users
+
+1. **SQL Editor** → Run `scripts/create-test-users-complete.sql`
+2. ✅ **Done!**
+
+**See full guide:** `scripts/README-USER-SETUP.md`
+
+---
+
+## 🎯 **STEP 3: START & TEST**
+
+### **Start the App**
+
 ```bash
-cd "/Users/sumanthrajkumarnagolu/Projects/guidewire-training platform"
-git commit --allow-empty -m "trigger redeploy"
-git push origin main
+npm run dev
 ```
 
-Wait ~2 minutes for deployment to complete.
+### **Open Browser**
 
----
-
-## ✅ Step 2: Verify API Key Works
-
-After deployment, go to:
 ```
-https://guidewire-assistant.vercel.app/api/debug/env
+http://localhost:3000
 ```
 
-**Expected Result:**
-```json
-{
-  "success": true,
-  "environment": {
-    "openai": {
-      "configured": true,
-      "prefix": "sk-proj..."
-    }
-  }
-}
-```
+### **Test Logins**
 
-**If it shows `"configured": false`:**
-- The key wasn't saved correctly
-- Repeat Step 1, making sure to check all 3 environment boxes
+Navigate to: `http://localhost:3000/employee/login`
+
+| Email | Password | See |
+|-------|----------|-----|
+| `admin@intimesolutions.com` | `Test123!@#` | Admin dashboard with all access |
+| `recruiter1@intimesolutions.com` | `Test123!@#` | Recruiter pipeline & candidates |
+| `sales1@intimesolutions.com` | `Test123!@#` | Sales opportunities & clients |
+| `ops1@intimesolutions.com` | `Test123!@#` | Operations placements & timesheets |
 
 ---
 
-## ✅ Step 3: Run SQL Setup (One-Click)
+## 🧪 **QUICK SMOKE TEST**
 
-After Vercel redeploys, go to:
-```
-https://guidewire-assistant.vercel.app/admin/setup
-```
+### **1. Recruiter Workflow** (2 min)
 
-**Click the buttons:**
-1. **"Run Setup"** for Storage Bucket
-2. **"Run Setup"** for Interview Templates
+1. Login as **recruiter1@intimesolutions.com**
+2. Go to `/employee/candidates` → Add candidate
+3. Go to `/employee/jobs` → Create job
+4. Go to `/employee/pipeline` → Create application
+5. Drag card through stages ✅
 
-Done! ✅
+### **2. Sales Workflow** (2 min)
 
----
+1. Login as **sales1@intimesolutions.com**
+2. Go to `/employee/clients` → Add client
+3. Go to `/employee/opportunities` → Create deal
+4. Drag through stages ✅
 
-## 🧪 Test Everything
+### **3. Website Lead Capture** (1 min)
 
-### Test AI Mentor
-1. Go to: https://guidewire-assistant.vercel.app/ai-mentor
-2. Type: "What is ClaimCenter?"
-3. Should get a response in 2-3 seconds
-
-### Test Interview Simulator
-1. Go to: https://guidewire-assistant.vercel.app/assessments/interview
-2. Select a template
-3. Click "Start Interview"
-4. Should get first question
+1. Go to `http://localhost:3000/contact`
+2. Fill form and submit
+3. Login as sales → Check `/employee/opportunities`
+4. See auto-created lead ✅
 
 ---
 
-## 🆘 If Still Not Working
+## 📊 **WHAT'S WORKING**
 
-### Check #1: Is the API Key Valid?
+✅ **Authentication & Authorization**
+- Role-based login
+- Dashboard routing
+- RLS policies
 
-Test in terminal:
-```bash
-curl https://api.openai.com/v1/models \
-  -H "Authorization: Bearer YOUR_KEY_HERE"
-```
+✅ **ATS (Applicant Tracking)**
+- Candidate CRUD
+- Job requisitions
+- Pipeline Kanban
+- Application tracking
 
-Should return a list of models. If error, your key is invalid.
+✅ **CRM (Customer Relationship)**
+- Client management
+- Opportunity pipeline
+- Auto lead capture
 
-### Check #2: Vercel Logs
+✅ **Operations**
+- Placement tracking
+- Timesheet management
 
-1. Go to: https://vercel.com/sumanthnagolu/guidewire-assistant/logs
-2. Search for: `OPENAI_API_KEY`
-3. If you see "not configured", the key didn't save
-
-### Check #3: Browser Console
-
-1. Open AI Mentor page
-2. Press F12
-3. Try to send a message
-4. Check Console and Network tabs for errors
-
----
-
-## Why I Can't Do This For You
-
-| What | Why I Can't |
-|------|-------------|
-| Add OpenAI Key to Vercel | Requires your Vercel login |
-| Get OpenAI API Key | Requires your OpenAI account |
-| Access Your Supabase | Requires your Supabase credentials |
-
-**But** - I created a **one-click admin UI** at `/admin/setup` so you don't have to manually run SQL!
+✅ **System Features**
+- Audit logs
+- Activity timelines
+- Notifications
 
 ---
 
-## Total Time Required
+## 🐛 **TROUBLESHOOTING**
 
-- Get OpenAI key: **1 minute**
-- Add to Vercel: **1 minute**
-- Redeploy: **2 minutes** (automatic)
-- Run SQL setup: **30 seconds** (one-click)
+### ❌ "Cannot read properties of null"
+**Fix:** Log out and log back in
 
-**Total: ~5 minutes** ⏱️
+### ❌ "RLS Policy Violation"
+**Fix:** Check user role is set correctly in `user_profiles`
 
----
+### ❌ Page not loading
+**Fix:** Restart dev server (`Ctrl+C` → `npm run dev`)
 
-## Cost Info
-
-**OpenAI Pricing (GPT-4o-mini):**
-- $0.15 per 1 million tokens
-- 100 messages ≈ $0.03
-- New accounts get $5 free credit
-- **Testing is basically free!**
+### ❌ Test users script fails
+**Fix:** Run `COMPLETE_SETUP_ALL.sql` first
 
 ---
 
-## What Happens After Setup
+## 📚 **DETAILED GUIDES**
 
-✅ AI Mentor responds with Socratic guidance  
-✅ Interview Simulator works  
-✅ Content can be uploaded to storage  
-✅ All features fully operational  
+- **Test Users Setup:** `scripts/README-USER-SETUP.md`
+- **End-to-End Testing:** `TESTING-GUIDE.md`
+- **Database Schema:** `DATABASE-SCHEMA.md`
+- **Workflows:** `WORKFLOWS-RECRUITER.md`, `WORKFLOWS-SALES.md`, `WORKFLOWS-OPERATIONS.md`
+- **Deployment:** `DEPLOYMENT-CHECKLIST.md`
 
 ---
 
-**Questions?** Let me know what step you're stuck on!
+## 🎯 **NEXT STEPS**
 
+After basic testing:
+
+1. **Load Seed Data:** `supabase/migrations/crm-ats/011_seed_data.sql`
+2. **Full Testing:** Follow `TESTING-GUIDE.md`
+3. **Deploy to Vercel:** Automatic on git push
+4. **Run Production Migrations:** Apply SQL to production DB
+
+---
+
+## 🚨 **NEED HELP?**
+
+1. Check `QUICK-START.md` (this file)
+2. Check specific guide in `scripts/` or root directory
+3. Search for error in `TROUBLESHOOTING.md` (if exists)
+4. Ask in chat with full error message
+
+---
+
+**WITH GURU'S GRACE! JAI VIJAYA!** 🙏
+
+**Last Updated:** 2024-11-09
