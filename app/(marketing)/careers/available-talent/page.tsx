@@ -13,26 +13,28 @@ export default function AvailableTalentPage() {
   const availableTalent = [
     {
       id: 1,
-      name: 'Rajesh K.',
+      slug: 'guidewire-developer-sr',
+      name: 'Rajesh M.',
       title: 'Senior Guidewire Developer',
-      location: 'Jersey City, NJ',
+      location: 'Dallas, TX (Open to Relocation)',
       availability: 'Immediate',
-      rate: '$95 - $110/hour',
+      rate: '$110 - $130/hour',
       yearsExp: 8,
-      skills: ['ClaimCenter', 'PolicyCenter', 'GOSU', 'Integration Hub', 'Java'],
-      certifications: ['Guidewire Certified', 'AWS Solutions Architect'],
-      summary: 'Expert in Guidewire suite with 8+ years insurance domain experience. Led 5+ full-cycle implementations.',
+      skills: ['PolicyCenter', 'ClaimCenter', 'BillingCenter', 'Gosu', 'Java'],
+      certifications: ['Guidewire ACE Certified', 'AWS Solutions Architect'],
+      summary: 'Expert in Guidewire suite with 8+ years insurance domain experience. Led multiple cloud migrations.',
       featured: true,
     },
     {
       id: 2,
-      name: 'Maria S.',
-      title: 'Full Stack Developer',
-      location: 'Austin, TX',
+      slug: 'full-stack-developer',
+      name: 'Maria L.',
+      title: 'Full Stack Developer (React + Node.js)',
+      location: 'Austin, TX (Remote Preferred)',
       availability: '2 weeks',
-      rate: '$80 - $95/hour',
+      rate: '$90 - $110/hour',
       yearsExp: 6,
-      skills: ['React', 'Node.js', 'TypeScript', 'AWS', 'PostgreSQL'],
+      skills: ['React 18', 'Node.js', 'TypeScript', 'Next.js', 'AWS'],
       certifications: ['AWS Certified Developer'],
       summary: 'Full-stack engineer specializing in React/Node.js microservices. Built scalable applications serving 1M+ users.',
     },
@@ -259,14 +261,17 @@ export default function AvailableTalentPage() {
                 {/* CTA */}
                 <div className="flex gap-2 pt-4 border-t border-wisdom-gray-200">
                   <Link
-                    href={`/contact?talent=${talent.id}`}
+                    href={talent.slug ? `/careers/talent/${talent.slug}` : `/contact?talent=${talent.id}`}
                     className="flex-1 bg-innovation-orange hover:bg-innovation-orange-600 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 text-center text-sm"
                   >
                     Request Interview
                   </Link>
-                  <button className="flex-1 border-2 border-innovation-orange text-innovation-orange hover:bg-innovation-orange hover:text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 text-sm">
+                  <Link
+                    href={talent.slug ? `/careers/talent/${talent.slug}` : `/contact?talent=${talent.id}`}
+                    className="flex-1 border-2 border-innovation-orange text-innovation-orange hover:bg-innovation-orange hover:text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 text-sm text-center"
+                  >
                     View Full Profile
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}

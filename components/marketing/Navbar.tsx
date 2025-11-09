@@ -120,6 +120,10 @@ export default function Navbar() {
               Academy
             </Link>
 
+            <Link href="/resources" className="text-wisdom-gray hover:text-trust-blue font-medium transition-colors">
+              Resources
+            </Link>
+
             <Link href="/company/about" className="text-wisdom-gray hover:text-trust-blue font-medium transition-colors">
               Company
             </Link>
@@ -180,6 +184,9 @@ export default function Navbar() {
             </Link>
             <Link href="/academy" className="block text-wisdom-gray hover:text-trust-blue font-medium">
               Academy
+            </Link>
+            <Link href="/resources" className="block text-wisdom-gray hover:text-trust-blue font-medium">
+              Resources
             </Link>
             
             <div>

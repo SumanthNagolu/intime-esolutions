@@ -12,18 +12,20 @@ export default function OpenPositionsPage() {
   const clientJobs = [
     {
       id: 1,
-      title: 'Senior Full Stack Developer',
-      client: 'Fortune 500 Insurance Company',
-      location: 'Boston, MA',
-      type: 'Contract (12 months)',
-      salary: '$95/hour',
+      slug: 'senior-guidewire-developer',
+      title: 'Senior Guidewire Developer (PolicyCenter)',
+      client: 'Fortune 500 Insurance Client',
+      location: 'Remote (US Only)',
+      type: 'Contract',
+      salary: '$120-140/hr on W2',
       posted: '1 day ago',
-      description: 'Build and maintain enterprise insurance platforms using React, Node.js, and AWS.',
-      requirements: ['React 18+', 'Node.js/Express', 'AWS', 'Microservices', '5+ years experience'],
+      description: 'Our Fortune 500 insurance client is seeking an experienced Guidewire PolicyCenter Developer for an immediate contract opportunity.',
+      requirements: ['PolicyCenter 10.x/11.x', 'Java/Gosu', 'REST APIs', 'P&C Insurance', '5+ years'],
       hot: true,
     },
     {
       id: 2,
+      slug: 'devops-engineer',
       title: 'DevOps Engineer',
       client: 'Leading Healthcare Technology Firm',
       location: 'Remote',
@@ -35,14 +37,15 @@ export default function OpenPositionsPage() {
     },
     {
       id: 3,
-      title: 'Guidewire PolicyCenter Developer',
-      client: 'Global Insurance Provider',
-      location: 'Hartford, CT',
-      type: 'Direct Placement',
-      salary: '$130,000 - $160,000',
+      slug: 'technical-recruiter',
+      title: 'Technical Recruiter (Guidewire Specialist)',
+      client: 'InTime eSolutions',
+      location: 'Hybrid (Irving, TX) or Remote',
+      type: 'Full-Time',
+      salary: '$70K-90K + Commission',
       posted: '5 days ago',
-      description: 'Configure and customize Guidewire PolicyCenter for a large-scale insurance modernization project.',
-      requirements: ['Guidewire PolicyCenter', 'GOSU', 'Insurance domain', 'Integration experience'],
+      description: 'InTime eSolutions is growing rapidly and we need a talented Technical Recruiter who specializes in Guidewire and insurance technology.',
+      requirements: ['2+ years recruiting', 'Technical screening', 'LinkedIn Recruiter', 'Target-driven'],
       hot: true,
     },
     {
@@ -217,7 +220,7 @@ export default function OpenPositionsPage() {
 
                   <div className="flex lg:flex-col gap-2">
                     <Link
-                      href={`/careers/open-positions/${job.id}`}
+                      href={job.slug ? `/careers/jobs/${job.slug}` : `/contact`}
                       className="bg-success-green hover:bg-success-green-600 text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl text-center whitespace-nowrap inline-flex items-center justify-center"
                     >
                       Apply Now
