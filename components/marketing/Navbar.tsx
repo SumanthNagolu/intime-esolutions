@@ -49,6 +49,9 @@ export default function Navbar() {
                 <ChevronDown className="w-4 h-4" />
               </button>
               <div className="absolute top-full left-0 mt-2 w-72 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-4 max-h-[80vh] overflow-y-auto">
+                <Link href="/industries/competencies" className="block px-6 py-2 text-sm font-semibold text-trust-blue hover:bg-trust-blue-50 border-b border-gray-200 pb-3 mb-2">
+                  View Our Competencies →
+                </Link>
                 <Link href="/industries/information-technology" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
                   Information Technology
                 </Link>
@@ -93,52 +96,6 @@ export default function Navbar() {
                 </Link>
                 <Link href="/industries/government-public-sector" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
                   Government & Public Sector
-                </Link>
-              </div>
-            </div>
-
-            {/* Competencies Dropdown */}
-            <div className="relative group">
-              <button className="flex items-center space-x-1 text-wisdom-gray hover:text-trust-blue font-medium transition-colors">
-                <span>Competencies</span>
-                <ChevronDown className="w-4 h-4" />
-              </button>
-              <div className="absolute top-full left-0 mt-2 w-72 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-4 max-h-[80vh] overflow-y-auto">
-                <Link href="/competencies/devops" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
-                  DevOps
-                </Link>
-                <Link href="/competencies/cloud-computing" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
-                  Cloud Computing
-                </Link>
-                <Link href="/competencies/ai-machine-learning" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
-                  AI & Machine Learning
-                </Link>
-                <Link href="/competencies/data-engineering-analytics" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
-                  Data Engineering & Analytics
-                </Link>
-                <Link href="/competencies/cybersecurity" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
-                  Cybersecurity
-                </Link>
-                <Link href="/competencies/quality-assurance" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
-                  Quality Assurance
-                </Link>
-                <Link href="/competencies/web-technologies" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
-                  Web Technologies
-                </Link>
-                <Link href="/competencies/enterprise-mobility" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
-                  Enterprise Mobility
-                </Link>
-                <Link href="/competencies/native-app-development" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
-                  Native App Development
-                </Link>
-                <Link href="/competencies/databases" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
-                  Databases
-                </Link>
-                <Link href="/competencies/analytics" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
-                  Analytics
-                </Link>
-                <Link href="/competencies/data-warehousing-bi" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
-                  Data Warehousing / BI
                 </Link>
               </div>
             </div>
