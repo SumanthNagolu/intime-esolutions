@@ -8,8 +8,13 @@ export async function middleware(request: NextRequest) {
   // Check if this is the academy subdomain
   const isAcademySubdomain = hostname.startsWith('academy.');
   
-  // Training app routes (auth and dashboard)
-  const isTrainingRoute = 
+  // Employee/internal routes (stay on main domain)
+  const isEmployeeRoute = 
+    pathname.startsWith('/employee') ||
+    pathname.startsWith('/admin');
+  
+  // Student training app routes (redirect to academy subdomain)
+  const isStudentRoute = 
     pathname.startsWith('/login') ||
     pathname.startsWith('/signup') ||
     pathname.startsWith('/dashboard') ||
@@ -18,18 +23,21 @@ export async function middleware(request: NextRequest) {
     pathname.startsWith('/progress') ||
     pathname.startsWith('/ai-mentor') ||
     pathname.startsWith('/setup') ||
-    pathname.startsWith('/profile') ||
-    pathname.startsWith('/admin');
+    pathname.startsWith('/profile');
 
-  // If on main domain and accessing training routes, redirect to academy subdomain
-  if (!isAcademySubdomain && isTrainingRoute && hostname.includes('intimesolutions.com')) {
+  // If on main domain and accessing student routes, redirect to academy subdomain
+  if (!isAcademySubdomain && isStudentRoute && hostname.includes('intimesolutions.com')) {
     const url = request.nextUrl.clone();
     url.host = `academy.${hostname}`;
     return NextResponse.redirect(url);
   }
 
-  // If on academy subdomain and accessing marketing routes, allow it
-  // (users can navigate back to main site)
+  // If on academy subdomain and accessing employee routes, redirect to main domain
+  if (isAcademySubdomain && isEmployeeRoute && hostname.includes('intimesolutions.com')) {
+    const url = request.nextUrl.clone();
+    url.host = hostname.replace('academy.', '');
+    return NextResponse.redirect(url);
+  }
   
   // Continue with Supabase auth
   return await updateSession(request);
