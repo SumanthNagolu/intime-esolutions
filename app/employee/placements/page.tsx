@@ -8,9 +8,10 @@ import { Plus, AlertCircle } from 'lucide-react';
 export default async function PlacementsPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const supabase = await createClient();
+  const supabase = await createClient() as any; // Type cast for CRM tables
+  const params = await searchParams;
 
   // Check authentication
   const {
@@ -24,19 +25,19 @@ export default async function PlacementsPage({
   // Get user profile
   const { data: profile } = await supabase
     .from('user_profiles')
-    .select('role, full_name')
+    .select('role')
     .eq('id', user.id)
     .single();
 
-  if (!profile || !['admin', 'recruiter', 'account_manager', 'operations'].includes(profile.role)) {
+  if (!profile?.role || !['admin', 'recruiter', 'account_manager', 'operations'].includes(profile.role)) {
     redirect('/employee/dashboard');
   }
 
   // Get search and filter params
-  const search = typeof searchParams.search === 'string' ? searchParams.search : '';
-  const status = typeof searchParams.status === 'string' ? searchParams.status : 'all';
-  const endingSoon = typeof searchParams.endingSoon === 'string' ? searchParams.endingSoon === 'true' : false;
-  const page = typeof searchParams.page === 'string' ? parseInt(searchParams.page) : 1;
+  const search = typeof params.search === 'string' ? params.search : '';
+  const status = typeof params.status === 'string' ? params.status : 'all';
+  const endingSoon = typeof params.endingSoon === 'string' ? params.endingSoon === 'true' : false;
+  const page = typeof params.page === 'string' ? parseInt(params.page) : 1;
   const perPage = 20;
 
   // Build query
@@ -46,7 +47,7 @@ export default async function PlacementsPage({
       *,
       candidate:candidates(id, first_name, last_name, email),
       job:jobs(id, title, clients(name)),
-      recruiter:user_profiles!placements_recruiter_id_fkey(id, full_name)
+      recruiter:user_profiles!placements_recruiter_id_fkey(id, first_name, last_name)
     `, { count: 'exact' })
     .is('deleted_at', null)
     .order('start_date', { ascending: false });

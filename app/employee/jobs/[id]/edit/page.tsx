@@ -4,8 +4,9 @@ import JobForm from '@/components/employee/jobs/JobForm';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 
-export default async function EditJobPage({ params }: { params: { id: string } }) {
-  const supabase = await createClient();
+export default async function EditJobPage({ params }: { params: Promise<{ id: string }> }) {
+  const supabase = await createClient() as any; // Type cast for CRM tables
+  const { id } = await params;
 
   // Check authentication
   const {
@@ -23,7 +24,7 @@ export default async function EditJobPage({ params }: { params: { id: string } }
     .eq('id', user.id)
     .single();
 
-  if (!profile || !['admin', 'recruiter', 'sales'].includes(profile.role)) {
+  if (!profile?.role || !['admin', 'recruiter', 'sales'].includes(profile.role)) {
     redirect('/employee/dashboard');
   }
 
@@ -31,7 +32,7 @@ export default async function EditJobPage({ params }: { params: { id: string } }
   const { data: job, error } = await supabase
     .from('jobs')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .is('deleted_at', null)
     .single();
 

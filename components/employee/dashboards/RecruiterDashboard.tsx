@@ -27,7 +27,7 @@ export default function RecruiterDashboard({ user, profile }: RecruiterDashboard
     placementsThisMonth: 0,
   });
   const [loading, setLoading] = useState(true);
-  const supabase = createClient();
+  const supabase = createClient() as any; // Type cast for CRM tables
 
   useEffect(() => {
     fetchMetrics();

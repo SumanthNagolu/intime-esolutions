@@ -18,7 +18,7 @@ interface JobFormProps {
 
 export default function JobForm({ userId, clients, job }: JobFormProps) {
   const router = useRouter();
-  const supabase = createClient();
+  const supabase = createClient() as any; // Type cast for CRM tables
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);

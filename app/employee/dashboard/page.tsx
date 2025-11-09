@@ -6,7 +6,7 @@ import OperationsDashboard from '@/components/employee/dashboards/OperationsDash
 import EmployeeDashboard from '@/components/employee/dashboards/EmployeeDashboard';
 
 export default async function EmployeeDashboardPage() {
-  const supabase = await createClient();
+  const supabase = await createClient() as any; // Type cast for CRM tables
 
   // Check authentication
   const {
@@ -20,7 +20,7 @@ export default async function EmployeeDashboardPage() {
   // Get user profile with role
   const { data: profile } = await supabase
     .from('user_profiles')
-    .select('role, full_name, email, department, avatar_url')
+    .select('role, first_name, last_name, email, department, avatar_url')
     .eq('id', user.id)
     .single();
 

@@ -8,9 +8,10 @@ import { Plus } from 'lucide-react';
 export default async function ClientsPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const supabase = await createClient();
+  const supabase = await createClient() as any; // Type cast for CRM tables
+  const params = await searchParams;
 
   // Check authentication
   const {
@@ -24,20 +25,20 @@ export default async function ClientsPage({
   // Get user profile
   const { data: profile } = await supabase
     .from('user_profiles')
-    .select('role, full_name')
+    .select('role')
     .eq('id', user.id)
     .single();
 
-  if (!profile || !['admin', 'recruiter', 'sales', 'account_manager'].includes(profile.role)) {
+  if (!profile?.role || !['admin', 'recruiter', 'sales', 'account_manager'].includes(profile.role)) {
     redirect('/employee/dashboard');
   }
 
   // Get search and filter params
-  const search = typeof searchParams.search === 'string' ? searchParams.search : '';
-  const status = typeof searchParams.status === 'string' ? searchParams.status : 'all';
-  const tier = typeof searchParams.tier === 'string' ? searchParams.tier : 'all';
-  const industry = typeof searchParams.industry === 'string' ? searchParams.industry : 'all';
-  const page = typeof searchParams.page === 'string' ? parseInt(searchParams.page) : 1;
+  const search = typeof params.search === 'string' ? params.search : '';
+  const status = typeof params.status === 'string' ? params.status : 'all';
+  const tier = typeof params.tier === 'string' ? params.tier : 'all';
+  const industry = typeof params.industry === 'string' ? params.industry : 'all';
+  const page = typeof params.page === 'string' ? parseInt(params.page) : 1;
   const perPage = 20;
 
   // Build query

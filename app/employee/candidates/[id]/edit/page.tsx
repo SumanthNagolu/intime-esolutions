@@ -4,8 +4,9 @@ import CandidateForm from '@/components/employee/candidates/CandidateForm';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 
-export default async function EditCandidatePage({ params }: { params: { id: string } }) {
-  const supabase = await createClient();
+export default async function EditCandidatePage({ params }: { params: Promise<{ id: string }> }) {
+  const supabase = await createClient() as any; // Type cast for CRM tables
+  const { id } = await params;
 
   // Check authentication
   const {
@@ -23,7 +24,7 @@ export default async function EditCandidatePage({ params }: { params: { id: stri
     .eq('id', user.id)
     .single();
 
-  if (!profile || !['admin', 'recruiter'].includes(profile.role)) {
+  if (!profile?.role || !['admin', 'recruiter'].includes(profile.role)) {
     redirect('/employee/dashboard');
   }
 
@@ -31,7 +32,7 @@ export default async function EditCandidatePage({ params }: { params: { id: stri
   const { data: candidate, error } = await supabase
     .from('candidates')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .is('deleted_at', null)
     .single();
 

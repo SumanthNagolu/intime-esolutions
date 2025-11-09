@@ -45,7 +45,7 @@ export default function EmployeeLoginPage() {
       // Get user profile to check role
       const { data: profile, error: profileError } = await supabase
         .from('user_profiles')
-        .select('role, full_name')
+        .select('role, first_name, last_name')
         .eq('id', data.user.id)
         .single();
 
@@ -58,7 +58,7 @@ export default function EmployeeLoginPage() {
       // Check if user is an employee (not a student)
       const employeeRoles = ['admin', 'recruiter', 'sales', 'account_manager', 'operations', 'employee'];
       
-      if (!employeeRoles.includes(profile.role)) {
+      if (!profile.role || !employeeRoles.includes(profile.role)) {
         // Student trying to access employee portal
         await supabase.auth.signOut();
         setError('Access denied. This portal is for InTime employees only. Students should use the Academy portal.');

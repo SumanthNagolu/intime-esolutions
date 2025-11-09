@@ -4,8 +4,9 @@ import { ChevronLeft, Edit, Mail, Phone, Globe, MapPin, Building2, DollarSign, U
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
-export default async function ClientDetailPage({ params }: { params: { id: string } }) {
-  const supabase = await createClient();
+export default async function ClientDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const supabase = await createClient() as any; // Type cast for CRM tables
+  const { id } = await params;
 
   // Check authentication
   const {
@@ -24,7 +25,7 @@ export default async function ClientDetailPage({ params }: { params: { id: strin
       contacts:contacts(count),
       jobs:jobs(count)
     `)
-    .eq('id', params.id)
+    .eq('id', id)
     .is('deleted_at', null)
     .single();
 

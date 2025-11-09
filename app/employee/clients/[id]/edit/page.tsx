@@ -4,8 +4,9 @@ import ClientForm from '@/components/employee/clients/ClientForm';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 
-export default async function EditClientPage({ params }: { params: { id: string } }) {
-  const supabase = await createClient();
+export default async function EditClientPage({ params }: { params: Promise<{ id: string }> }) {
+  const supabase = await createClient() as any; // Type cast for CRM tables
+  const { id } = await params;
 
   // Check authentication
   const {
@@ -23,7 +24,7 @@ export default async function EditClientPage({ params }: { params: { id: string 
     .eq('id', user.id)
     .single();
 
-  if (!profile || !['admin', 'sales', 'account_manager'].includes(profile.role)) {
+  if (!profile?.role || !['admin', 'sales', 'account_manager'].includes(profile.role)) {
     redirect('/employee/dashboard');
   }
 
@@ -31,7 +32,7 @@ export default async function EditClientPage({ params }: { params: { id: string 
   const { data: client, error } = await supabase
     .from('clients')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .is('deleted_at', null)
     .single();
 

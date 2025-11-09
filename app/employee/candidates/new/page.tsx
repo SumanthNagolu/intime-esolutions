@@ -5,7 +5,7 @@ import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function NewCandidatePage() {
-  const supabase = await createClient();
+  const supabase = await createClient() as any; // Type cast for CRM tables
 
   // Check authentication
   const {
@@ -23,7 +23,7 @@ export default async function NewCandidatePage() {
     .eq('id', user.id)
     .single();
 
-  if (!profile || !['admin', 'recruiter'].includes(profile.role)) {
+  if (!profile?.role || !['admin', 'recruiter'].includes(profile.role)) {
     redirect('/employee/dashboard');
   }
 

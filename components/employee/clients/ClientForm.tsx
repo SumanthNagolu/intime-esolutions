@@ -17,7 +17,7 @@ interface ClientFormProps {
 
 export default function ClientForm({ userId, client }: ClientFormProps) {
   const router = useRouter();
-  const supabase = createClient();
+  const supabase = createClient() as any; // Type cast for CRM tables
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);

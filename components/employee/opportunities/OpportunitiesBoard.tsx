@@ -50,7 +50,7 @@ const STAGES = [
 ];
 
 export default function OpportunitiesBoard({ opportunities, userId, userRole }: OpportunitiesBoardProps) {
-  const supabase = createClient();
+  const supabase = createClient() as any; // Type cast for CRM tables
   const [items, setItems] = useState(opportunities);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);

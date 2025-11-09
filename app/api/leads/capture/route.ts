@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     const supabase = await createClient();
 
     // Check if client already exists
-    const { data: existingClient } = await supabase
+    const { data: existingClient } = await (supabase as any)
       .from('clients')
       .select('id, name')
       .eq('email', validatedData.email)
@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
         notes: `Lead captured from website contact form.\n\nContact: ${validatedData.name}\nMessage: ${validatedData.message}\nSource: ${validatedData.source}`,
       };
 
-      const { data: newClient, error: clientError } = await supabase
+      const { data: newClient, error: clientError } = await (supabase as any)
         .from('clients')
         .insert([clientData])
         .select()
@@ -80,7 +80,7 @@ export async function POST(request: NextRequest) {
       expected_close_date: null,
     };
 
-    const { data: opportunity, error: oppError } = await supabase
+    const { data: opportunity, error: oppError } = await (supabase as any)
       .from('opportunities')
       .insert([opportunityData])
       .select()
@@ -92,7 +92,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create activity log
-    await supabase.from('activities').insert([{
+    await (supabase as any).from('activities').insert([{
       entity_type: 'opportunity',
       entity_id: opportunity.id,
       activity_type: 'lead_captured',
@@ -127,7 +127,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({
         success: false,
         message: 'Validation error',
-        errors: error.errors,
+        errors: error.issues,
       }, { status: 400 });
     }
 
