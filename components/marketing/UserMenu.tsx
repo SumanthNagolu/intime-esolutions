@@ -58,7 +58,7 @@ export default function UserMenu() {
   if (!user) {
     return (
       <Link
-        href="/login"
+        href="/employee/login"
         className="flex items-center gap-2 text-wisdom-gray hover:text-trust-blue font-medium transition-colors"
       >
         <User className="w-5 h-5" />
