@@ -51,6 +51,70 @@ CREATE TABLE IF NOT EXISTS user_profiles (
   deleted_at TIMESTAMPTZ
 );
 
+-- Add missing columns if table already existed
+DO $$ 
+BEGIN
+  -- Add manager_id if it doesn't exist
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_schema = 'public' 
+    AND table_name = 'user_profiles' 
+    AND column_name = 'manager_id'
+  ) THEN
+    ALTER TABLE user_profiles ADD COLUMN manager_id UUID REFERENCES user_profiles(id);
+  END IF;
+
+  -- Add department if it doesn't exist
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_schema = 'public' 
+    AND table_name = 'user_profiles' 
+    AND column_name = 'department'
+  ) THEN
+    ALTER TABLE user_profiles ADD COLUMN department TEXT;
+  END IF;
+
+  -- Add avatar_url if it doesn't exist
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_schema = 'public' 
+    AND table_name = 'user_profiles' 
+    AND column_name = 'avatar_url'
+  ) THEN
+    ALTER TABLE user_profiles ADD COLUMN avatar_url TEXT;
+  END IF;
+
+  -- Add timezone if it doesn't exist
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_schema = 'public' 
+    AND table_name = 'user_profiles' 
+    AND column_name = 'timezone'
+  ) THEN
+    ALTER TABLE user_profiles ADD COLUMN timezone TEXT DEFAULT 'America/New_York';
+  END IF;
+
+  -- Add is_active if it doesn't exist
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_schema = 'public' 
+    AND table_name = 'user_profiles' 
+    AND column_name = 'is_active'
+  ) THEN
+    ALTER TABLE user_profiles ADD COLUMN is_active BOOLEAN DEFAULT true;
+  END IF;
+
+  -- Add deleted_at if it doesn't exist
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_schema = 'public' 
+    AND table_name = 'user_profiles' 
+    AND column_name = 'deleted_at'
+  ) THEN
+    ALTER TABLE user_profiles ADD COLUMN deleted_at TIMESTAMPTZ;
+  END IF;
+END $$;
+
 -- Indexes
 CREATE INDEX IF NOT EXISTS idx_user_profiles_role ON user_profiles(role);
 CREATE INDEX IF NOT EXISTS idx_user_profiles_manager ON user_profiles(manager_id);
