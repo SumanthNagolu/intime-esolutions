@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
+import UserMenu from "./UserMenu";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -143,11 +144,12 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden lg:block">
+          {/* CTA Button & User Menu */}
+          <div className="hidden lg:flex items-center gap-4">
             <Link href="/contact" className="btn-primary text-sm">
               Get Started
             </Link>
+            <UserMenu />
           </div>
 
           {/* Mobile Menu Button */}

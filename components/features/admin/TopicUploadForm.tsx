@@ -7,7 +7,7 @@ import {
   importSampleTopicsAction,
   importTopicsAction,
   importTopicsInitialState,
-} from '@/app/(dashboard)/admin/topics/actions';
+} from '@/app/admin/training-content/topics/actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';

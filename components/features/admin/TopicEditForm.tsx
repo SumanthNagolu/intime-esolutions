@@ -8,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
-import { updateTopicAction } from '@/app/(dashboard)/admin/topics/[id]/actions';
+import { updateTopicAction } from '@/app/admin/training-content/topics/[id]/actions';
 import { cn } from '@/lib/utils';
 
 type TopicEditFormProps = {
