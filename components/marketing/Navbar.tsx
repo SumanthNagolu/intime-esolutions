@@ -30,9 +30,6 @@ export default function Navbar() {
                 <Link href="/solutions/it-staffing" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
                   IT Staffing
                 </Link>
-                <Link href="/solutions/consulting" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
-                  Consulting
-                </Link>
                 <Link href="/solutions/cross-border" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
                   Cross-Border Solutions
                 </Link>
@@ -49,9 +46,6 @@ export default function Navbar() {
                 <ChevronDown className="w-4 h-4" />
               </button>
               <div className="absolute top-full left-0 mt-2 w-72 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-4 max-h-[80vh] overflow-y-auto">
-                <Link href="/industries/competencies" className="block px-6 py-2 text-sm font-semibold text-trust-blue hover:bg-trust-blue-50 border-b border-gray-200 pb-3 mb-2">
-                  View Our Competencies →
-                </Link>
                 <Link href="/industries/information-technology" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
                   Information Technology
                 </Link>
@@ -100,32 +94,38 @@ export default function Navbar() {
               </div>
             </div>
 
-            {/* Services Dropdown */}
+            {/* Consulting Dropdown */}
             <div className="relative group">
               <button className="flex items-center space-x-1 text-wisdom-gray hover:text-trust-blue font-medium transition-colors">
-                <span>Services</span>
+                <span>Consulting</span>
                 <ChevronDown className="w-4 h-4" />
               </button>
               <div className="absolute top-full left-0 mt-2 w-72 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-4">
-                <Link href="/services/custom-software-development" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
+                <div className="px-6 py-2 text-xs font-semibold text-trust-blue-600 uppercase tracking-wider">Technology Competencies</div>
+                <Link href="/consulting/competencies" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
+                  View All Competencies
+                </Link>
+                <div className="border-t border-gray-200 my-2"></div>
+                <div className="px-6 py-2 text-xs font-semibold text-trust-blue-600 uppercase tracking-wider">Our Services</div>
+                <Link href="/consulting/services/custom-software-development" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
                   Custom Software Development
                 </Link>
-                <Link href="/services/system-integration" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
+                <Link href="/consulting/services/system-integration" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
                   System Integration
                 </Link>
-                <Link href="/services/quality-assurance" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
+                <Link href="/consulting/services/quality-assurance" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
                   Quality Assurance
                 </Link>
-                <Link href="/services/staff-augmentation" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
+                <Link href="/consulting/services/staff-augmentation" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
                   Staff Augmentation
                 </Link>
-                <Link href="/services/rpo" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
+                <Link href="/consulting/services/rpo" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
                   RPO
                 </Link>
-                <Link href="/services/hr-outsourcing" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
+                <Link href="/consulting/services/hr-outsourcing" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
                   HR Outsourcing
                 </Link>
-                <Link href="/services/consulting" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
+                <Link href="/consulting/services/consulting" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
                   IT Consulting
                 </Link>
               </div>
