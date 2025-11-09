@@ -250,7 +250,7 @@ CREATE TABLE IF NOT EXISTS call_logs (
   -- Participants
   user_id UUID REFERENCES user_profiles(id),
   candidate_id UUID REFERENCES candidates(id) ON DELETE SET NULL,
-  client_contact_id UUID REFERENCES client_contacts(id) ON DELETE SET NULL,
+  client_contact_id UUID REFERENCES contacts(id) ON DELETE SET NULL,
   
   -- Context
   job_id UUID REFERENCES jobs(id) ON DELETE SET NULL,
@@ -307,7 +307,7 @@ CREATE TABLE IF NOT EXISTS email_threads (
   user_id UUID REFERENCES user_profiles(id),
   candidate_id UUID REFERENCES candidates(id) ON DELETE SET NULL,
   client_id UUID REFERENCES clients(id) ON DELETE SET NULL,
-  client_contact_id UUID REFERENCES client_contacts(id) ON DELETE SET NULL,
+  client_contact_id UUID REFERENCES contacts(id) ON DELETE SET NULL,
   
   -- Context
   job_id UUID REFERENCES jobs(id) ON DELETE SET NULL,
