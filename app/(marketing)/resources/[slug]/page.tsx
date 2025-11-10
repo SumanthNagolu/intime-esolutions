@@ -1,391 +1,362 @@
-import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { Calendar, Clock, User, ArrowLeft, Share2, Bookmark } from 'lucide-react';
+import { Calendar, Clock, User, ArrowLeft, ArrowRight, Share2, Linkedin, Twitter, Facebook } from 'lucide-react';
 
 // Mock blog data - in production, this would come from CMS or database
-const blogPosts: Record<string, any> = {
-  'guidewire-talent-shortage-2025': {
+const blogPosts = [
+  {
+    id: 'guidewire-talent-shortage-2025',
+    slug: 'guidewire-talent-shortage-2025',
     title: 'The Guidewire Talent Shortage: Why 2025 is Different',
     excerpt: 'The insurance tech landscape is evolving rapidly, and the demand for Guidewire professionals has never been higher.',
     category: 'Industry Insights',
     author: 'Sumanth Nagolu',
     date: '2025-01-15',
     readTime: '8 min read',
+    image: '/blog/guidewire-shortage.jpg',
+    featured: true,
     content: `
-      <h2>The Perfect Storm</h2>
-      <p>The Guidewire talent market in 2025 is facing unprecedented challenges. With insurance companies accelerating digital transformation post-pandemic, the demand for skilled Guidewire professionals has skyrocketed by 300% since 2020.</p>
-      
-      <p>But here's the problem: supply hasn't kept pace. Universities aren't churning out Guidewire-trained graduates, and the learning curve is steep—typically 6-12 months before a developer becomes productive.</p>
-      
-      <h2>Why Traditional Recruitment is Failing</h2>
-      <p>Most companies are still using 2015 recruitment playbooks:</p>
+      <h2>The Growing Demand Crisis</h2>
+      <p>The insurance technology sector is experiencing an unprecedented surge in demand for Guidewire-certified professionals. With over 400 insurance carriers worldwide relying on the Guidewire platform, the talent gap has never been more acute.</p>
+
+      <h2>Why Traditional Recruitment Fails</h2>
+      <p>Traditional recruitment methods are struggling to keep pace with the specialized nature of Guidewire roles. Here's why:</p>
       <ul>
-        <li>Posting on job boards and waiting 90 days</li>
-        <li>Relying on referrals that rarely materialize</li>
-        <li>Competing with Fortune 500s for the same 20 candidates</li>
+        <li><strong>Niche Skillset:</strong> Guidewire expertise requires both insurance domain knowledge and technical proficiency—a rare combination.</li>
+        <li><strong>Long Ramp-Up Time:</strong> Training new developers on Guidewire takes 6-12 months, making experienced hires highly valuable.</li>
+        <li><strong>Competitive Market:</strong> Top talent is receiving multiple offers, often within 48 hours of becoming available.</li>
       </ul>
-      
-      <p>The result? Critical projects delayed, budgets blown on contractors, and executive frustration at all-time highs.</p>
-      
+
       <h2>What's Working in 2025</h2>
-      <p>Forward-thinking companies are taking a different approach:</p>
-      
-      <h3>1. Build + Borrow Strategy</h3>
-      <p>Instead of only hiring experienced Guidewire developers, they're training strong Java developers. A 12-week bootcamp can create production-ready Guidewire talent.</p>
-      
-      <h3>2. Global Talent Pools</h3>
-      <p>The best Guidewire talent isn't in your city—it's worldwide. Remote-first companies are winning by casting wider nets.</p>
-      
-      <h3>3. Talent Partners with Skin in the Game</h3>
-      <p>Generic recruiters don't cut it anymore. You need partners with deep Guidewire networks, technical screening capabilities, and speed.</p>
-      
-      <h2>The InTime Approach</h2>
-      <p>At InTime, we've cracked the code on Guidewire hiring by combining three elements:</p>
-      
+      <p>Forward-thinking companies are adopting new strategies to attract and retain Guidewire talent:</p>
       <ol>
-        <li><strong>Pre-vetted Talent Network:</strong> We maintain relationships with 500+ Guidewire professionals actively looking or open to opportunities.</li>
-        <li><strong>AI-Powered Matching:</strong> Our system screens 1,000+ profiles per hour to find the needle in the haystack.</li>
-        <li><strong>Training Pipeline:</strong> Can't find the exact skillset? We'll train someone in 90 days and place them with you.</li>
+        <li><strong>Speed Matters:</strong> Companies that move fast (24-48 hour response times) are winning the best candidates.</li>
+        <li><strong>Remote-First Approach:</strong> Geographic restrictions are outdated. The best companies hire globally and provide relocation support when needed.</li>
+        <li><strong>Career Development:</strong> Offering certification sponsorship and continuous learning paths is now table stakes.</li>
       </ol>
-      
-      <p>The result: Most clients get 3-5 qualified candidates within 48 hours, compared to the industry average of 60+ days.</p>
-      
+
+      <h2>The InTime Advantage</h2>
+      <p>At InTime eSolutions, we've specialized in Guidewire recruitment for over a decade. Our proprietary talent network and AI-powered matching enable us to deliver qualified candidates in 24-48 hours—not weeks or months.</p>
+
+      <h3>Our 3-Step Approach:</h3>
+      <ol>
+        <li><strong>Pre-Vetted Network:</strong> We maintain relationships with 2,000+ Guidewire professionals actively seeking new opportunities.</li>
+        <li><strong>Technical Screening:</strong> Every candidate undergoes rigorous technical assessment before being presented to clients.</li>
+        <li><strong>Cultural Fit Analysis:</strong> We use behavioral assessments to ensure candidates align with your company culture.</li>
+      </ol>
+
       <h2>Looking Ahead</h2>
-      <p>The Guidewire talent shortage isn't going away. If anything, it's getting worse as more insurers commit to cloud migrations. Companies that adapt their recruitment strategies now will have a significant competitive advantage.</p>
+      <p>The Guidewire talent shortage isn't going away anytime soon. In fact, with new product releases (Jutro, Guidewire Cloud) and ongoing digital transformation initiatives, demand will only intensify.</p>
       
-      <p>Those that don't? They'll be stuck paying premium rates for contractors while their competitors race ahead with fully-staffed teams.</p>
-      
-      <h2>What You Can Do Today</h2>
-      <p>If you're struggling to fill Guidewire roles:</p>
-      <ul>
-        <li>Audit your current recruitment process—how long is it really taking?</li>
-        <li>Calculate the cost of delays (hint: it's probably 10x what you think)</li>
-        <li>Explore build-or-borrow strategies (training programs, contractors, global talent)</li>
-        <li>Partner with specialists who live and breathe Guidewire hiring</li>
-      </ul>
-      
-      <p>The talent is out there. You just need the right strategy—and the right partner—to find them.</p>
+      <p>The winners in this market will be companies that partner with specialized recruiters who understand the insurance tech ecosystem and can move at the speed of modern hiring.</p>
+
+      <div class="bg-trust-blue-50 p-6 rounded-xl my-8">
+        <h3 class="text-xl font-bold text-trust-blue mb-4">Need Guidewire Talent Fast?</h3>
+        <p class="mb-4">We deliver pre-vetted, certified Guidewire professionals in 24-48 hours. No retainers. No long-term contracts. Just results.</p>
+        <a href="/contact" class="btn-primary inline-block">Get Matched with Top Talent →</a>
+      </div>
     `
   },
-  'h1b-to-canada-complete-guide': {
+  {
+    id: 'h1b-to-canada-complete-guide',
+    slug: 'h1b-to-canada-complete-guide',
     title: 'H1B to Canada: The Complete 2025 Migration Guide',
     excerpt: 'Thinking about moving from H1B to Canada? This comprehensive guide covers everything from Express Entry to job hunting.',
     category: 'Immigration',
     author: 'Sumanth Nagolu',
     date: '2025-01-12',
     readTime: '12 min read',
+    image: '/blog/h1b-canada.jpg',
+    featured: true,
     content: `
-      <h2>Why the H1B to Canada Movement is Accelerating</h2>
-      <p>Over 10,000 H1B professionals moved to Canada in 2024—a 400% increase from 2020. The reasons are clear:</p>
+      <h2>Why Tech Professionals Are Choosing Canada</h2>
+      <p>With H1B visa uncertainties and long green card wait times, thousands of tech professionals are exploring Canadian immigration. The good news? Canada actively welcomes skilled workers, especially in technology.</p>
+
+      <h2>Your Immigration Pathways</h2>
+      <h3>1. Express Entry (Most Common)</h3>
+      <p>Express Entry is Canada's flagship immigration program for skilled workers. Here's how it works:</p>
       <ul>
-        <li>Visa uncertainty and lottery stress in the US</li>
-        <li>Canada's Express Entry system offers a clear path to permanent residency</li>
-        <li>Growing tech hubs in Toronto, Vancouver, and Montreal</li>
-        <li>Quality of life, healthcare, and education advantages</li>
+        <li><strong>Comprehensive Ranking System (CRS):</strong> Points are awarded based on age, education, work experience, and language proficiency.</li>
+        <li><strong>Typical Score Range:</strong> Tech professionals usually score 450-500 points, well above the cutoff (typically 480-490).</li>
+        <li><strong>Processing Time:</strong> 6-8 months from invitation to permanent residence.</li>
       </ul>
-      
-      <h2>Understanding Your Options</h2>
-      <p>There are three main pathways from H1B to Canada:</p>
-      
-      <h3>Option 1: Express Entry (Most Popular)</h3>
-      <p>The Express Entry system is Canada's primary immigration pathway for skilled workers. You're scored on factors like age, education, work experience, and language skills.</p>
-      
-      <p><strong>Typical Timeline:</strong> 6-12 months from application to landing</p>
-      <p><strong>Success Rate:</strong> 80%+ for tech professionals with 3+ years experience</p>
-      <p><strong>Advantage:</strong> You can apply from the US while on H1B</p>
-      
-      <h3>Option 2: Provincial Nominee Program (PNP)</h3>
-      <p>Individual provinces have their own immigration programs. Ontario and British Columbia have tech-focused streams.</p>
-      
-      <p><strong>Typical Timeline:</strong> 8-14 months</p>
-      <p><strong>Advantage:</strong> Additional 600 CRS points, virtually guaranteeing selection</p>
-      
-      <h3>Option 3: Intra-Company Transfer</h3>
-      <p>If your current US employer has a Canadian office, this can be the fastest route.</p>
-      
-      <p><strong>Typical Timeline:</strong> 2-4 months for work permit</p>
-      <p><strong>Advantage:</strong> Immediate work authorization, easier PR application later</p>
-      
-      <h2>The Money Question: Salaries & Cost of Living</h2>
-      <p>Let's be honest: Canadian tech salaries are typically 20-30% lower than US equivalents. But the cost of living is also lower, and you gain:</p>
+
+      <h3>2. Provincial Nominee Programs (PNPs)</h3>
+      <p>Provinces like Ontario (OINP), British Columbia (BC PNP), and Alberta (AINP) have tech-focused streams:</p>
       <ul>
-        <li>Free healthcare (no $20K deductibles)</li>
-        <li>Subsidized childcare</li>
-        <li>Lower education costs</li>
-        <li>Path to citizenship in 3 years</li>
+        <li><strong>Lower CRS Requirements:</strong> Can add 600 points to your Express Entry profile</li>
+        <li><strong>Job Offer Advantage:</strong> Having a Canadian job offer significantly boosts your chances</li>
       </ul>
-      
-      <p><strong>Example Comparison (Software Engineer):</strong></p>
-      <table class="w-full my-6 border border-gray-300">
-        <thead>
-          <tr class="bg-gray-100">
-            <th class="p-3 text-left">Location</th>
-            <th class="p-3 text-left">Salary</th>
-            <th class="p-3 text-left">Take-Home (After Tax & Healthcare)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="border-t">
-            <td class="p-3">Bay Area, US</td>
-            <td class="p-3">$150,000</td>
-            <td class="p-3">~$90,000</td>
-          </tr>
-          <tr class="border-t">
-            <td class="p-3">Toronto, Canada</td>
-            <td class="p-3">CAD $120,000</td>
-            <td class="p-3">~CAD $82,000 (~USD $60,000)</td>
-          </tr>
-        </tbody>
-      </table>
-      
-      <p>Yes, it's less—but with PR security, healthcare, and better work-life balance, many find it worthwhile.</p>
-      
-      <h2>The Job Hunt: Before or After Moving?</h2>
-      <p>Here's the controversial advice: <strong>Start job hunting from the US.</strong></p>
-      
-      <p>Many H1B holders make the mistake of moving first, thinking jobs will come. But Canadian employers prefer candidates who are already work-authorized or close to it.</p>
-      
-      <p><strong>The Winning Strategy:</strong></p>
+
+      <h3>3. Intra-Company Transfer (ICT)</h3>
+      <p>Already working for a multinational? Ask about transferring to their Canadian office—fastest path to PR.</p>
+
+      <h2>Step-by-Step Migration Timeline</h2>
+      <h3>Month 1-2: Preparation</h3>
       <ol>
-        <li>Apply for Express Entry (can be done while on H1B)</li>
-        <li>Once you receive ITA (Invitation to Apply), start aggressively job hunting</li>
-        <li>Use your "PR in progress" status as a selling point</li>
-        <li>Many employers will wait 2-3 months for the right candidate</li>
+        <li><strong>IELTS/CELPIP Exam:</strong> Schedule and take your English proficiency test (aim for CLB 9+)</li>
+        <li><strong>Educational Credential Assessment (ECA):</strong> Get your degree evaluated by WES or ICAS</li>
+        <li><strong>Start Job Search:</strong> Update LinkedIn, apply to Canadian companies</li>
       </ol>
-      
-      <h2>How InTime Helps</h2>
-      <p>We specialize in H1B to Canada transitions. Our services include:</p>
-      <ul>
-        <li><strong>Job Placement:</strong> We have 200+ Canadian clients actively hiring</li>
-        <li><strong>Immigration Support:</strong> Partner referrals to immigration lawyers</li>
-        <li><strong>Soft Landing:</strong> Connect you with relocation resources, housing, schools</li>
-        <li><strong>Dual Market Access:</strong> Keep you in the US job market while exploring Canada</li>
-      </ul>
-      
-      <h2>Common Mistakes to Avoid</h2>
+
+      <h3>Month 3-4: Create Express Entry Profile</h3>
       <ol>
-        <li><strong>Waiting too long:</strong> Express Entry scores fluctuate. Apply when you're eligible.</li>
-        <li><strong>Burning bridges:</strong> Keep your US employer relationship strong—you might need a reference letter.</li>
-        <li><strong>Underestimating timelines:</strong> Factor in 12+ months for the full process.</li>
-        <li><strong>Ignoring French:</strong> Even basic French significantly boosts your Express Entry score.</li>
+        <li>Calculate your CRS score (use Canada's official calculator)</li>
+        <li>Create Express Entry profile</li>
+        <li>Apply for Provincial Nomination if applicable</li>
       </ol>
-      
-      <h2>The Bottom Line</h2>
-      <p>Moving from H1B to Canada isn't for everyone. You'll likely take a pay cut initially. But if visa uncertainty, long-term stability, and quality of life matter to you, it's worth serious consideration.</p>
-      
-      <p>And 2025 is an excellent time—Canada is actively recruiting tech talent, Express Entry scores are reasonable, and the job market is strong.</p>
-      
-      <p><strong>Ready to explore?</strong> <a href="/contact" class="text-trust-blue-600 underline">Book a free consultation</a> and we'll assess your profile, timeline, and job prospects.</p>
+
+      <h3>Month 5-12: Post-ITA Process</h3>
+      <ol>
+        <li>Receive Invitation to Apply (ITA)</li>
+        <li>Submit complete application with documents</li>
+        <li>Medical exams and police clearances</li>
+        <li>Receive Confirmation of Permanent Residence (COPR)</li>
+      </ol>
+
+      <h2>Job Market Reality Check</h2>
+      <p><strong>The Good News:</strong></p>
+      <ul>
+        <li>Canada has 250,000+ open tech positions</li>
+        <li>Average tech salary: CAD $85,000-$130,000</li>
+        <li>Major tech hubs: Toronto, Vancouver, Montreal, Ottawa, Calgary</li>
+      </ul>
+
+      <p><strong>The Challenges:</strong></p>
+      <ul>
+        <li>Canadian experience often preferred (plan for 1-2 steps back initially)</li>
+        <li>Salaries are 20-30% lower than US (but cost of living is also lower)</li>
+        <li>Networking is crucial—join Slack communities, attend meetups</li>
+      </ul>
+
+      <h2>Financial Considerations</h2>
+      <p><strong>Estimated Costs:</strong></p>
+      <ul>
+        <li>IELTS/CELPIP: CAD $300</li>
+        <li>ECA: CAD $200-250</li>
+        <li>Express Entry Application: CAD $1,325 (single) / $2,140 (couple)</li>
+        <li>Medical Exam: CAD $250-450 per person</li>
+        <li>Settlement Funds: CAD $13,000 (single) / $17,000 (couple) — proof of funds required</li>
+      </ul>
+
+      <h2>InTime's Cross-Border Solutions</h2>
+      <p>We specialize in helping H1B professionals transition to Canada with our comprehensive support package:</p>
+      <ul>
+        <li><strong>Job Placement:</strong> Access to 500+ Canadian employers actively hiring international talent</li>
+        <li><strong>Resume Optimization:</strong> Canadian-format resumes that get interviews</li>
+        <li><strong>Immigration Guidance:</strong> Partner referrals to licensed immigration consultants</li>
+        <li><strong>Relocation Support:</strong> Housing, banking, and settling-in assistance</li>
+      </ul>
+
+      <div class="bg-success-green-50 p-6 rounded-xl my-8">
+        <h3 class="text-xl font-bold text-success-green mb-4">Ready to Make the Move?</h3>
+        <p class="mb-4">Book a free consultation with our cross-border specialists. We'll assess your profile, provide a realistic timeline, and connect you with Canadian employers.</p>
+        <a href="/solutions/cross-border" class="btn-primary inline-block">Explore Cross-Border Solutions →</a>
+      </div>
     `
   },
-  // More blog posts with full content can be added here
-  'ai-recruitment-transformation': {
+  {
+    id: 'ai-recruitment-transformation',
+    slug: 'ai-recruitment-transformation',
     title: 'How AI is Transforming Tech Recruitment in 2025',
     excerpt: 'From resume screening to candidate matching, AI is revolutionizing how we find and place talent.',
     category: 'Technology',
     author: 'Sumanth Nagolu',
     date: '2025-01-10',
     readTime: '6 min read',
+    image: '/blog/ai-recruitment.jpg',
+    featured: false,
     content: `
       <h2>The AI Revolution in Recruitment</h2>
-      <p>Artificial Intelligence has moved from buzzword to business-critical in tech recruitment. Here's how it's changing the game in 2025.</p>
+      <p>Artificial Intelligence is fundamentally changing how we source, screen, and match tech talent. What used to take weeks now happens in hours—without sacrificing quality.</p>
+
+      <h2>Key AI Applications in Modern Recruitment</h2>
       
-      <h2>1. Resume Screening at Scale</h2>
-      <p>Traditional recruiters can review 50-100 resumes per day. AI systems? Thousands per hour—with higher accuracy.</p>
-      
-      <p>At InTime, our AI screens candidates based on:</p>
+      <h3>1. Intelligent Resume Screening</h3>
+      <p>Traditional keyword matching is dead. Modern AI analyzes:</p>
       <ul>
-        <li>Technical skills match (not just keywords, but semantic understanding)</li>
-        <li>Career trajectory patterns</li>
-        <li>Project complexity indicators</li>
-        <li>Cultural fit signals from writing style</li>
+        <li>Skill progression and growth trajectory</li>
+        <li>Project complexity and impact</li>
+        <li>Technology stack evolution</li>
+        <li>Cultural indicators and soft skills</li>
       </ul>
-      
-      <h2>2. Predictive Candidate Matching</h2>
-      <p>The real magic isn't finding candidates—it's predicting who will succeed. Our AI analyzes:</p>
+
+      <h3>2. Predictive Candidate Matching</h3>
+      <p>Our AI models predict candidate success by analyzing:</p>
       <ul>
-        <li>Past placement data (200,000+ hires)</li>
-        <li>Interview performance patterns</li>
-        <li>Tenure predictions</li>
-        <li>Team compatibility scores</li>
+        <li>Historical placement data (10+ years of successful placements)</li>
+        <li>Company culture signals</li>
+        <li>Team composition and dynamics</li>
+        <li>Career motivation patterns</li>
       </ul>
-      
-      <p>Result: 85% of our placements stay 2+ years, vs. industry average of 45%.</p>
-      
-      <h2>3. The Human Touch Still Matters</h2>
-      <p>AI handles the heavy lifting, but humans close the deal. Our process:</p>
-      <ol>
-        <li><strong>AI:</strong> Screens 10,000 profiles → 100 matches</li>
-        <li><strong>Human:</strong> Interviews 100 → 20 top candidates</li>
-        <li><strong>AI:</strong> Ranks by fit → Top 5</li>
-        <li><strong>Human:</strong> Relationship building, negotiation, onboarding</li>
-      </ol>
-      
-      <h2>The 48-Hour Promise</h2>
-      <p>How can we deliver candidates in 48 hours when others take 60 days? AI makes it possible.</p>
-      
-      <p>We're not faster because we cut corners. We're faster because we're better prepared.</p>
-      
-      <h2>What This Means for You</h2>
-      <p><strong>For Employers:</strong> Faster fills, better matches, lower turnover.</p>
-      <p><strong>For Candidates:</strong> Jobs that actually fit, less interview fatigue, faster offers.</p>
-      
-      <p>The future of recruitment is here. And it's powered by AI + human expertise.</p>
+
+      <h3>3. Automated Outreach & Engagement</h3>
+      <p>Personalized, timely communication at scale—without sounding robotic.</p>
+
+      <h2>The Human Touch Still Matters</h2>
+      <p>AI accelerates the process, but human judgment remains crucial for:</p>
+      <ul>
+        <li>Assessing cultural fit nuances</li>
+        <li>Negotiating complex compensation packages</li>
+        <li>Navigating sensitive career transitions</li>
+        <li>Building long-term relationships</li>
+      </ul>
+
+      <h2>InTime's AI-Powered Approach</h2>
+      <p>We've invested heavily in proprietary AI tools that:</p>
+      <ul>
+        <li>Screen 1,000+ resumes in minutes (not days)</li>
+        <li>Match candidates with 95% accuracy</li>
+        <li>Predict offer acceptance probability</li>
+        <li>Optimize compensation packages for mutual benefit</li>
+      </ul>
+
+      <div class="bg-innovation-orange-50 p-6 rounded-xl my-8">
+        <h3 class="text-xl font-bold text-innovation-orange mb-4">Experience AI-Powered Recruitment</h3>
+        <p class="mb-4">See how we deliver vetted candidates in 24-48 hours using AI + human expertise.</p>
+        <a href="/contact" class="btn-primary inline-block">Request Demo →</a>
+      </div>
     `
   }
-};
+];
 
-interface PageProps {
-  params: Promise<{
-    slug: string;
-  }>;
-}
-
-export default async function BlogPostPage({ params }: PageProps) {
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = blogPosts[slug];
-
+  
+  const post = blogPosts.find(p => p.slug === slug);
+  
   if (!post) {
-    notFound();
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-wisdom-gray-700 mb-4">Article Not Found</h1>
+          <p className="text-wisdom-gray-600 mb-8">The article you're looking for doesn't exist yet.</p>
+          <Link href="/resources" className="btn-primary inline-flex items-center">
+            <ArrowLeft className="mr-2 h-5 w-5" />
+            Back to Resources
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Back Button */}
-      <div className="section-container py-6">
-        <Link
-          href="/resources"
-          className="inline-flex items-center gap-2 text-trust-blue-600 hover:text-trust-blue-700 font-medium"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Resources
-        </Link>
+      {/* Hero Section */}
+      <section className="bg-gradient-to-br from-trust-blue-600 to-trust-blue-700 text-white py-16">
+        <div className="section-container">
+          <Link href="/resources" className="inline-flex items-center text-white/80 hover:text-white mb-6 transition-colors">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Resources
+          </Link>
+          
+          <div className="max-w-4xl">
+            <div className="inline-block bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-4">
+              <span className="text-sm font-semibold">{post.category}</span>
+            </div>
+            
+            <h1 className="text-4xl md:text-5xl font-heading font-bold mb-6 leading-tight">
+              {post.title}
+            </h1>
+            
+            <div className="flex flex-wrap items-center gap-6 text-white/80">
+              <div className="flex items-center gap-2">
+                <User className="h-5 w-5" />
+                <span>{post.author}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Calendar className="h-5 w-5" />
+                <span>{new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Clock className="h-5 w-5" />
+                <span>{post.readTime}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Image */}
+      <div className="section-container -mt-16 mb-12">
+        <div className="max-w-4xl mx-auto">
+          <div className="aspect-video bg-gradient-to-br from-trust-blue-100 to-innovation-orange-100 rounded-2xl shadow-2xl overflow-hidden">
+            <img 
+              src={post.image} 
+              alt={post.title}
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+                if (e.currentTarget.parentElement) {
+                  e.currentTarget.parentElement.innerHTML = '<div class="flex items-center justify-center h-full"><span class="text-8xl">📰</span></div>';
+                }
+              }}
+            />
+          </div>
+        </div>
       </div>
 
-      {/* Article Header */}
+      {/* Article Content */}
       <article className="section-container py-12">
         <div className="max-w-4xl mx-auto">
-          {/* Category Badge */}
-          <div className="mb-6">
-            <span className="px-4 py-2 bg-trust-blue-100 text-trust-blue-700 rounded-full text-sm font-semibold">
-              {post.category}
-            </span>
+          <div className="prose prose-lg prose-trust-blue max-w-none">
+            <div 
+              dangerouslySetInnerHTML={{ __html: post.content }}
+              className="article-content"
+            />
           </div>
 
-          {/* Title */}
-          <h1 className="text-4xl md:text-5xl font-heading font-bold text-gray-900 mb-6 leading-tight">
-            {post.title}
-          </h1>
-
-          {/* Excerpt */}
-          <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-            {post.excerpt}
-          </p>
-
-          {/* Meta Info */}
-          <div className="flex flex-wrap items-center gap-6 text-gray-600 pb-8 border-b border-gray-200 mb-8">
-            <div className="flex items-center gap-2">
-              <User className="w-5 h-5" />
-              <span className="font-medium">{post.author}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Calendar className="w-5 h-5" />
-              <span>{new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Clock className="w-5 h-5" />
-              <span>{post.readTime}</span>
+          {/* Share Section */}
+          <div className="mt-12 pt-8 border-t border-gray-200">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-wisdom-gray-700">Share this article</h3>
+              <div className="flex gap-3">
+                <button className="h-10 w-10 rounded-full bg-trust-blue-100 hover:bg-trust-blue text-trust-blue hover:text-white flex items-center justify-center transition-colors">
+                  <Linkedin className="h-5 w-5" />
+                </button>
+                <button className="h-10 w-10 rounded-full bg-trust-blue-100 hover:bg-trust-blue text-trust-blue hover:text-white flex items-center justify-center transition-colors">
+                  <Twitter className="h-5 w-5" />
+                </button>
+                <button className="h-10 w-10 rounded-full bg-trust-blue-100 hover:bg-trust-blue text-trust-blue hover:text-white flex items-center justify-center transition-colors">
+                  <Facebook className="h-5 w-5" />
+                </button>
+              </div>
             </div>
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex gap-4 mb-12">
-            <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-              <Share2 className="w-4 h-4" />
-              Share
-            </button>
-            <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-              <Bookmark className="w-4 h-4" />
-              Save
-            </button>
+          {/* Author Bio */}
+          <div className="mt-12 p-6 bg-wisdom-gray-50 rounded-2xl">
+            <div className="flex items-start gap-4">
+              <div className="h-16 w-16 rounded-full bg-trust-blue text-white flex items-center justify-center text-2xl font-bold flex-shrink-0">
+                {post.author.charAt(0)}
+              </div>
+              <div>
+                <h3 className="text-xl font-heading font-bold text-wisdom-gray-700 mb-2">{post.author}</h3>
+                <p className="text-wisdom-gray-600">
+                  CEO & Founder at InTime eSolutions. Over a decade of experience in tech staffing, cross-border hiring, and Guidewire consulting. Passionate about connecting talent with opportunity.
+                </p>
+              </div>
+            </div>
           </div>
 
-          {/* Article Content */}
-          <div 
-            className="prose prose-lg max-w-none
-              prose-headings:font-heading prose-headings:font-bold prose-headings:text-gray-900
-              prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6
-              prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4
-              prose-p:text-gray-700 prose-p:leading-relaxed prose-p:mb-6
-              prose-a:text-trust-blue-600 prose-a:no-underline hover:prose-a:underline
-              prose-ul:my-6 prose-ul:list-disc prose-ul:pl-6
-              prose-ol:my-6 prose-ol:list-decimal prose-ol:pl-6
-              prose-li:text-gray-700 prose-li:mb-2
-              prose-strong:text-gray-900 prose-strong:font-semibold
-              prose-blockquote:border-l-4 prose-blockquote:border-trust-blue-500 prose-blockquote:pl-6 prose-blockquote:italic"
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
-        </div>
-      </article>
-
-      {/* CTA Section */}
-      <section className="bg-gray-50 py-16">
-        <div className="section-container">
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-gradient-to-br from-trust-blue-600 to-innovation-orange-500 rounded-2xl p-8 md:p-12 text-center text-white">
-              <h2 className="text-3xl font-heading font-bold mb-4">
-                Ready to Transform Your Hiring?
-              </h2>
-              <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-                Let's discuss how InTime can help you find the right talent in 48 hours, not 60 days.
-              </p>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-white text-trust-blue-600 rounded-lg font-semibold hover:shadow-xl transition-all"
-              >
-                Book Free Consultation
-                <ArrowLeft className="w-5 h-5 rotate-180" />
+          {/* CTA */}
+          <div className="mt-12 p-8 bg-gradient-to-r from-trust-blue to-trust-blue-600 rounded-2xl text-white text-center">
+            <h3 className="text-2xl font-heading font-bold mb-4">Ready to Take Action?</h3>
+            <p className="mb-6 text-white/90">
+              Whether you're looking for talent or seeking your next opportunity, we're here to help.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/contact" className="btn-secondary inline-flex items-center justify-center">
+                Get in Touch
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+              <Link href="/resources" className="btn-outline inline-flex items-center justify-center">
+                Read More Articles
               </Link>
             </div>
           </div>
         </div>
-      </section>
+      </article>
 
-      {/* Related Articles */}
-      <section className="section-container py-16">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-heading font-bold text-gray-900 mb-8">
-            Related Articles
-          </h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {Object.entries(blogPosts)
-              .filter(([key]) => key !== slug)
-              .slice(0, 2)
-              .map(([key, relatedPost]) => (
-                <Link
-                  key={key}
-                  href={`/resources/${key}`}
-                  className="group p-6 border border-gray-200 rounded-xl hover:border-trust-blue-300 hover:shadow-lg transition-all"
-                >
-                  <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-semibold">
-                    {relatedPost.category}
-                  </span>
-                  <h3 className="text-xl font-heading font-bold text-gray-900 mt-4 mb-3 group-hover:text-trust-blue-600 transition-colors">
-                    {relatedPost.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                    {relatedPost.excerpt}
-                  </p>
-                  <div className="flex items-center gap-2 text-trust-blue-600 font-medium text-sm">
-                    Read More
-                    <ArrowLeft className="w-4 h-4 rotate-180 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </Link>
-              ))}
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
-

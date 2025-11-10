@@ -329,7 +329,7 @@ export default function HomePage() {
             </div>
             
             <div className="mt-12 text-gray-200">
-              Or call us: <a href="tel:1-800-468-4631" className="font-mono font-bold text-white hover:text-success-green">1-800-INTIME1 (468-4631)</a>
+              Or call us: <a href="tel:+13076502850" className="font-mono font-bold text-white hover:text-success-green">+1 307-650-2850</a>
             </div>
           </div>
         </div>

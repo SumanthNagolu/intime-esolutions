@@ -77,6 +77,10 @@
     @apply border-border;
   }
   
+  html {
+    scroll-behavior: smooth;
+  }
+  
   body {
     @apply bg-background text-foreground font-sans antialiased;
   }
@@ -105,6 +109,36 @@
   
   .btn-outline {
     @apply border-2 border-white text-white hover:bg-white hover:text-trust-blue font-semibold py-3 px-8 rounded-full transition-all duration-300;
+  }
+  
+  /* Article Content Styles */
+  .article-content h2 {
+    @apply text-4xl font-bold text-trust-blue mt-10 mb-4 leading-tight;
+  }
+  
+  .article-content h3 {
+    @apply text-2xl font-semibold text-trust-blue mt-8 mb-3;
+  }
+  
+  .article-content p {
+    @apply text-lg leading-relaxed text-wisdom-gray-600 mb-6;
+  }
+  
+  .article-content ul,
+  .article-content ol {
+    @apply ml-6 mb-6;
+  }
+  
+  .article-content li {
+    @apply text-lg leading-relaxed text-wisdom-gray-600 mb-3;
+  }
+  
+  .article-content strong {
+    @apply text-trust-blue font-semibold;
+  }
+  
+  .article-content a {
+    @apply text-trust-blue underline hover:text-innovation-orange transition-colors;
   }
 }
 

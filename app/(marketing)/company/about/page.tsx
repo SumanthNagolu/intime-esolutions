@@ -27,7 +27,7 @@ export default function AboutPage() {
       </section>
 
       {/* Our Story */}
-      <section className="py-20 bg-white">
+      <section id="about" className="py-20 bg-white scroll-mt-24">
         <div className="section-container">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
@@ -64,7 +64,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-20 bg-wisdom-gray-50">
+      <section id="mission" className="py-20 bg-wisdom-gray-50 scroll-mt-24">
         <div className="section-container">
           <div className="grid md:grid-cols-2 gap-12">
             {/* Mission */}
@@ -215,7 +215,7 @@ export default function AboutPage() {
       </section>
 
       {/* Leadership */}
-      <section className="py-20 bg-wisdom-gray-50">
+      <section id="leadership" className="py-20 bg-wisdom-gray-50 scroll-mt-24">
         <div className="section-container">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-heading font-bold text-wisdom-gray-700 mb-4">

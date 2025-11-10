@@ -34,9 +34,9 @@ export default function Footer() {
           <div>
             <h3 className="font-heading font-semibold text-lg mb-6">Company</h3>
             <ul className="space-y-3">
-              <li><Link href="/company/about" className="text-gray-300 hover:text-success-green transition-colors">About InTime</Link></li>
-              <li><Link href="/company/about" className="text-gray-300 hover:text-success-green transition-colors">Mission & Values</Link></li>
-              <li><Link href="/company/about" className="text-gray-300 hover:text-success-green transition-colors">Leadership Team</Link></li>
+              <li><Link href="/company/about#about" className="text-gray-300 hover:text-success-green transition-colors">About InTime</Link></li>
+              <li><Link href="/company/about#mission" className="text-gray-300 hover:text-success-green transition-colors">Mission & Values</Link></li>
+              <li><Link href="/company/about#leadership" className="text-gray-300 hover:text-success-green transition-colors">Leadership Team</Link></li>
               <li><Link href="/careers" className="text-gray-300 hover:text-success-green transition-colors">Careers</Link></li>
               <li><Link href="/contact" className="text-gray-300 hover:text-success-green transition-colors">Contact Us</Link></li>
             </ul>
