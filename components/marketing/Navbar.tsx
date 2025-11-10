@@ -29,19 +29,14 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-trust-blue rounded-lg flex items-center justify-center relative">
-              {/* Cross/X icon representing collaboration */}
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-white">
-                <path d="M4 8 L12 12 L20 8 M4 16 L12 12 L20 16" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
-                <circle cx="4" cy="8" r="2" fill="#FF6B35"/>
-                <circle cx="20" cy="8" r="2" fill="#FF6B35"/>
-                <circle cx="4" cy="16" r="2" fill="#FF6B35"/>
-                <circle cx="20" cy="16" r="2" fill="#FF6B35"/>
-              </svg>
-            </div>
+            <img 
+              src="/logo-icon.svg" 
+              alt="InTime Logo" 
+              className="w-12 h-12"
+            />
             <div className="text-2xl font-heading font-bold">
               <span className="text-trust-blue">InTime</span>{" "}
-              <span className="text-innovation-orange font-light">{getSecondWord()}</span>
+              <span className="font-light" style={{ color: '#FF6B35' }}>{getSecondWord()}</span>
             </div>
           </Link>
 

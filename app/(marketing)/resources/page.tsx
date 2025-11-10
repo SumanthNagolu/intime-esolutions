@@ -203,9 +203,17 @@ export default function ResourcesPage() {
                 href={`/resources/${post.slug}`}
                 className="group bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-2xl hover:border-trust-blue-300 transition-all"
               >
-                {/* Placeholder for image */}
-                <div className="h-64 bg-gradient-to-br from-trust-blue-100 to-innovation-orange-100 flex items-center justify-center">
-                  <span className="text-6xl">📰</span>
+                {/* Article Image */}
+                <div className="h-64 bg-gradient-to-br from-trust-blue-100 to-innovation-orange-100 relative overflow-hidden">
+                  <img 
+                    src={post.image} 
+                    alt={post.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      e.currentTarget.parentElement.innerHTML = '<div class="flex items-center justify-center h-full"><span class="text-6xl">📰</span></div>';
+                    }}
+                  />
                 </div>
                 
                 <div className="p-6">
@@ -262,9 +270,17 @@ export default function ResourcesPage() {
                 href={`/resources/${post.slug}`}
                 className="group bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200 hover:shadow-lg hover:border-trust-blue-300 transition-all"
               >
-                {/* Placeholder for image */}
-                <div className="h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                  <span className="text-5xl">📄</span>
+                {/* Article Image */}
+                <div className="h-48 bg-gradient-to-br from-gray-100 to-gray-200 relative overflow-hidden">
+                  <img 
+                    src={post.image} 
+                    alt={post.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      e.currentTarget.parentElement.innerHTML = '<div class="flex items-center justify-center h-full"><span class="text-5xl">📄</span></div>';
+                    }}
+                  />
                 </div>
                 
                 <div className="p-6">
