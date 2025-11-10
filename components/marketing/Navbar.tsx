@@ -28,12 +28,12 @@ export default function Navbar() {
       <div className="section-container">
         <div className="flex items-center h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3">
-            <img 
-              src="/logo2.png" 
-              alt="InTime Logo" 
-              className="h-12 w-auto"
-            />
+                  <Link href="/" className="flex items-center gap-3">
+                    <img 
+                      src="/logo4.png" 
+                      alt="InTime Logo" 
+                      className="h-12 w-auto"
+                    />
             <div className="flex items-center h-12">
               <div className="text-3xl font-heading font-bold leading-none">
                 <span className="text-trust-blue">InTime</span>{" "}
@@ -55,7 +55,7 @@ export default function Navbar() {
               </Link>
               <div className="absolute top-full left-0 mt-2 w-72 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-4">
                 {/* Nested Staffing Menu */}
-                <div className="relative group">
+                <div className="relative group/staffing">
                   <Link href="/solutions/it-staffing" className="flex items-center justify-between px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
                     <span className="font-medium">Staffing</span>
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -64,7 +64,7 @@ export default function Navbar() {
                   </Link>
                   
                   {/* Staffing Flyout Menu */}
-                  <div className="absolute left-full top-0 ml-1 w-64 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-4 z-50">
+                  <div className="absolute left-full top-0 ml-1 w-64 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover/staffing:opacity-100 group-hover/staffing:visible transition-all duration-300 py-4 z-50">
                     <Link href="/solutions/it-staffing#contract" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
                       Contract Staffing
                     </Link>
@@ -78,7 +78,7 @@ export default function Navbar() {
                 </div>
                 
                 {/* Nested Consulting Menu */}
-                <div className="relative group">
+                <div className="relative group/consulting">
                   <Link href="/consulting" className="flex items-center justify-between px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
                     <span className="font-medium">Consulting</span>
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -87,7 +87,7 @@ export default function Navbar() {
                   </Link>
                   
                   {/* Consulting Flyout Menu */}
-                  <div className="absolute left-full top-0 ml-1 w-64 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-4 z-50">
+                  <div className="absolute left-full top-0 ml-1 w-64 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover/consulting:opacity-100 group-hover/consulting:visible transition-all duration-300 py-4 z-50">
                     <Link href="/consulting/competencies" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
                       Our Competencies
                     </Link>
