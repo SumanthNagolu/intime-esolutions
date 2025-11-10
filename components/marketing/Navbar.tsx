@@ -187,10 +187,8 @@ export default function Navbar() {
             <Link href="/academy" className="text-wisdom-gray hover:text-trust-blue font-medium transition-colors">
               Academy
             </Link>
-          </div>
 
-          {/* User Menu */}
-          <div className="hidden lg:flex items-center gap-4">
+            {/* User Menu with same spacing */}
             <UserMenu />
           </div>
 

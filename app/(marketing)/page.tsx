@@ -115,13 +115,13 @@ export default function HomePage() {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Card 1: IT Staffing Excellence */}
+            {/* Card 1: Staffing Excellence */}
             <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-shadow duration-300 border-t-4 border-trust-blue">
               <div className="w-14 h-14 mb-6 bg-trust-blue-50 rounded-xl flex items-center justify-center">
                 <Briefcase className="w-8 h-8 text-trust-blue" />
               </div>
               <h3 className="text-2xl font-heading font-semibold text-wisdom-gray-700 mb-4">
-                IT Staffing Excellence
+                Staffing Excellence
               </h3>
               <ul className="space-y-2 mb-6 text-wisdom-gray">
                 <li className="flex items-start">
