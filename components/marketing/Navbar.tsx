@@ -24,28 +24,30 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-gradient-to-r from-[#0A5C7A] to-[#0E7490] sticky top-0 z-50 shadow-lg">
+    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
       <div className="section-container">
-        <div className="flex items-center justify-between h-20">
-          {/* Spacer for right alignment - Logo on left, nav on right */}
+        <div className="flex items-center h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
             <img 
-              src="/logo.png" 
+              src="/logo3.png" 
               alt="InTime Logo" 
               className="h-12 w-auto"
             />
             <div className="text-2xl font-heading font-bold">
-              <span className="text-white">InTime</span>{" "}
-              <span className="text-white font-light">{getSecondWord()}</span>
+              <span className="text-trust-blue">InTime</span>{" "}
+              <span className="font-light" style={{ color: '#0E7490' }}>{getSecondWord()}</span>
             </div>
           </Link>
+          
+          {/* Spacer to push nav to right */}
+          <div className="flex-1"></div>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-8">
             {/* Solutions Dropdown */}
             <div className="relative group">
-              <Link href="/solutions" className="flex items-center space-x-1 text-white hover:text-sky-blue-500 font-medium transition-colors">
+              <Link href="/solutions" className="flex items-center space-x-1 font-medium transition-colors" style={{ color: '#0E7490' }}>
                 <span>Staffing</span>
                 <ChevronDown className="w-4 h-4" />
               </Link>
@@ -104,7 +106,7 @@ export default function Navbar() {
 
             {/* Industries Dropdown */}
             <div className="relative group">
-              <Link href="/industries" className="flex items-center space-x-1 text-white hover:text-sky-blue-500 font-medium transition-colors">
+              <Link href="/industries" className="flex items-center space-x-1 font-medium transition-colors" style={{ color: '#0E7490' }}>
                 <span>Industries</span>
                 <ChevronDown className="w-4 h-4" />
               </Link>
@@ -159,7 +161,7 @@ export default function Navbar() {
 
             {/* Careers Dropdown */}
             <div className="relative group">
-              <Link href="/careers" className="flex items-center space-x-1 text-white hover:text-sky-blue-500 font-medium transition-colors">
+              <Link href="/careers" className="flex items-center space-x-1 font-medium transition-colors" style={{ color: '#0E7490' }}>
                 <span>Careers</span>
                 <ChevronDown className="w-4 h-4" />
               </Link>
@@ -176,11 +178,11 @@ export default function Navbar() {
               </div>
             </div>
 
-            <Link href="/resources" className="text-white hover:text-sky-blue-500 font-medium transition-colors">
+            <Link href="/resources" className="font-medium transition-colors hover:opacity-70" style={{ color: '#0E7490' }}>
               Resources
             </Link>
 
-            <Link href="/academy" className="text-white hover:text-sky-blue-500 font-medium transition-colors">
+            <Link href="/academy" className="font-medium transition-colors hover:opacity-70" style={{ color: '#0E7490' }}>
               Academy
             </Link>
           </div>
@@ -193,7 +195,8 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-md text-white hover:bg-white/10"
+            className="lg:hidden p-2 rounded-md hover:bg-gray-100"
+            style={{ color: '#0E7490' }}
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
