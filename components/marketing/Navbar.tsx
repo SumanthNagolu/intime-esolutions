@@ -23,8 +23,8 @@ export default function Navbar() {
     return 'eSolutions';
   };
 
-  return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+    return (
+    <nav className="bg-gradient-to-r from-trust-blue via-trust-blue-600 to-success-green sticky top-0 z-50 shadow-lg backdrop-blur-sm">
       <div className="section-container">
         <div className="flex items-center h-20">
           {/* Logo */}
@@ -36,7 +36,7 @@ export default function Navbar() {
                     />
             <div className="flex items-center h-12">
               <div className="text-3xl font-heading font-bold leading-none">
-                <span className="text-trust-blue">InTime</span>{" "}
+                <span className="text-white">InTime</span>{" "}
                 <span className="text-innovation-orange font-light">{getSecondWord()}</span>
               </div>
             </div>
@@ -49,7 +49,7 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center space-x-8">
             {/* Solutions Dropdown */}
             <div className="relative group">
-              <Link href="/solutions" className="flex items-center space-x-1 text-wisdom-gray hover:text-trust-blue font-medium transition-colors">
+              <Link href="/solutions" className="flex items-center space-x-1 text-white hover:text-innovation-orange font-medium transition-colors">
                 <span>Solutions</span>
                 <ChevronDown className="w-4 h-4" />
               </Link>
@@ -108,7 +108,7 @@ export default function Navbar() {
 
             {/* Industries Dropdown */}
             <div className="relative group">
-              <Link href="/industries" className="flex items-center space-x-1 text-wisdom-gray hover:text-trust-blue font-medium transition-colors">
+              <Link href="/industries" className="flex items-center space-x-1 text-white hover:text-innovation-orange font-medium transition-colors">
                 <span>Industries</span>
                 <ChevronDown className="w-4 h-4" />
               </Link>
@@ -163,7 +163,7 @@ export default function Navbar() {
 
             {/* Careers Dropdown */}
             <div className="relative group">
-              <Link href="/careers" className="flex items-center space-x-1 text-wisdom-gray hover:text-trust-blue font-medium transition-colors">
+              <Link href="/careers" className="flex items-center space-x-1 text-white hover:text-innovation-orange font-medium transition-colors">
                 <span>Careers</span>
                 <ChevronDown className="w-4 h-4" />
               </Link>
@@ -180,11 +180,11 @@ export default function Navbar() {
               </div>
             </div>
 
-            <Link href="/resources" className="text-wisdom-gray hover:text-trust-blue font-medium transition-colors">
+            <Link href="/resources" className="text-white hover:text-innovation-orange font-medium transition-colors">
               Resources
             </Link>
 
-            <Link href="/academy" className="text-wisdom-gray hover:text-trust-blue font-medium transition-colors">
+            <Link href="/academy" className="text-white hover:text-innovation-orange font-medium transition-colors">
               Academy
             </Link>
 
@@ -195,7 +195,7 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-md text-wisdom-gray hover:bg-gray-100"
+            className="lg:hidden p-2 rounded-md text-white hover:bg-white/10"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -204,40 +204,40 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-t border-gray-200">
+        <div className="lg:hidden bg-trust-blue-700 border-t border-white/10">
           <div className="section-container py-6 space-y-4">
-            <Link href="/solutions/it-staffing" className="block text-wisdom-gray hover:text-trust-blue font-medium">
+            <Link href="/solutions/it-staffing" className="block text-white hover:text-innovation-orange font-medium">
               IT Staffing
             </Link>
-            <Link href="/solutions/consulting" className="block text-wisdom-gray hover:text-trust-blue font-medium">
+            <Link href="/solutions/consulting" className="block text-white hover:text-innovation-orange font-medium">
               Consulting
             </Link>
-            <Link href="/solutions/cross-border" className="block text-wisdom-gray hover:text-trust-blue font-medium">
+            <Link href="/solutions/cross-border" className="block text-white hover:text-innovation-orange font-medium">
               Cross-Border Solutions
             </Link>
-            <Link href="/solutions/training" className="block text-wisdom-gray hover:text-trust-blue font-medium">
+            <Link href="/solutions/training" className="block text-white hover:text-innovation-orange font-medium">
               Training & Development
             </Link>
             
             <div>
-              <div className="text-trust-blue font-semibold mb-2 text-sm uppercase tracking-wider">Careers</div>
+              <div className="text-innovation-orange font-semibold mb-2 text-sm uppercase tracking-wider">Careers</div>
               <div className="pl-4 space-y-2">
-                <Link href="/careers/join-our-team" className="block text-wisdom-gray hover:text-trust-blue font-medium text-sm">
+                <Link href="/careers/join-our-team" className="block text-white hover:text-innovation-orange font-medium text-sm">
                   Join Our Team
                 </Link>
-                <Link href="/careers/open-positions" className="block text-wisdom-gray hover:text-trust-blue font-medium text-sm">
+                <Link href="/careers/open-positions" className="block text-white hover:text-innovation-orange font-medium text-sm">
                   Open Positions
                 </Link>
-                <Link href="/careers/available-talent" className="block text-wisdom-gray hover:text-trust-blue font-medium text-sm">
+                <Link href="/careers/available-talent" className="block text-white hover:text-innovation-orange font-medium text-sm">
                   Available Talent
                 </Link>
               </div>
             </div>
             
-            <Link href="/resources" className="block text-wisdom-gray hover:text-trust-blue font-medium">
+            <Link href="/resources" className="block text-white hover:text-innovation-orange font-medium">
               Resources
             </Link>
-            <Link href="/academy" className="block text-wisdom-gray hover:text-trust-blue font-medium">
+            <Link href="/academy" className="block text-white hover:text-innovation-orange font-medium">
               Academy
             </Link>
             <Link href="/contact" className="block btn-primary text-center text-sm mt-4">
