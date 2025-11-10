@@ -11,7 +11,7 @@ const jobData: Record<string, any> = {
     company: 'Fortune 500 Insurance Client',
     location: 'Remote (US Only)',
     type: 'Contract',
-    salary: '$120-140/hr on W2',
+    salary: '$95-115/hr on W2',
     posted: '2025-01-15',
     urgency: 'Immediate Need',
     description: `
@@ -63,7 +63,7 @@ const jobData: Record<string, any> = {
     company: 'InTime eSolutions',
     location: 'Hybrid (Irving, TX) or Remote',
     type: 'Full-Time',
-    salary: '$70K-90K + Commission',
+      salary: '$60K-80K + Commission',
     posted: '2025-01-12',
     urgency: null,
     description: `

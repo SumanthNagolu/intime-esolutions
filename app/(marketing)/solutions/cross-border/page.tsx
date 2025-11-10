@@ -1,364 +1,321 @@
 import Link from "next/link";
-import { Globe, Plane, FileText, Home, TrendingUp, Users, CheckCircle2, ArrowRight } from "lucide-react";
+import { Globe, Plane, FileText, Home, TrendingUp, Users, CheckCircle2, ArrowRight, MapPin, Clock, Shield } from "lucide-react";
 
 export const metadata = {
-  title: "Cross-Border Solutions - InTime eSolutions",
-  description: "Your Bridge Between USA and Canada Talent Markets - Specialized expertise in H1B to Canada transitions and cross-border placements.",
+  title: "Global Mobility & Cross-Border Solutions - InTime eSolutions",
+  description: "Complete cross-border talent solutions. H1B to Canada, India to North America, intra-company transfers, and global mobility consulting.",
 };
 
 export default function CrossBorderPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-innovation-orange to-trust-blue text-white py-20">
+      <section className="bg-gradient-to-br from-innovation-orange via-trust-blue to-success-green text-white py-20">
         <div className="section-container">
           <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-block bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold mb-6">
+              🌍 GLOBAL MOBILITY EXPERTS
+            </div>
             <h1 className="text-5xl md:text-6xl font-heading font-bold mb-6">
-              Your Bridge Between USA and Canada Talent Markets
+              Your Partner for Global Talent Mobility
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-gray-100">
-              Specialized expertise in H1B to Canada transitions and cross-border placements. Navigate immigration, maximize opportunity.
+              From India to USA, H1B to Canada, or anywhere in between—we make cross-border talent movement seamless, compliant, and fast.
             </p>
             
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-8 max-w-2xl mx-auto">
-              <p className="text-lg italic">
-                "The only staffing firm with dedicated cross-border specialists and partnerships on both sides of the border."
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-8 max-w-3xl mx-auto">
+              <p className="text-lg">
+                <strong>Our Promise:</strong> Speed, Transparency, End-to-End Support.<br />
+                We handle immigration, job placement, relocation—so you can focus on your career or business.
               </p>
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/contact?type=crossborder" className="btn-accent bg-white text-innovation-orange hover:bg-gray-100">
-                Get Cross-Border Support
+              <Link href="/contact?type=crossborder" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-trust-blue-600 rounded-lg font-semibold hover:shadow-xl transition-all">
+                Start Your Journey
+                <ArrowRight className="w-5 h-5" />
               </Link>
-              <button className="btn-outline">
-                Download Immigration Guide
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* H1B to Canada Fast Track */}
-      <section className="py-20 bg-white">
-        <div className="section-container">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="inline-block bg-success-green text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
-                MOST POPULAR SERVICE
-              </div>
-              <h2 className="text-4xl md:text-5xl font-heading font-bold text-wisdom-gray-700 mb-6">
-                H1B to Canada Fast Track
-              </h2>
-              <p className="text-xl text-wisdom-gray mb-8">
-                For H1B visa holders seeking Canadian permanent residence and career opportunities
-              </p>
-              
-              <div className="space-y-6 mb-8">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-success-green-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Plane className="w-6 h-6 text-success-green" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-wisdom-gray-700 mb-2">Pre-arrival job placement</h3>
-                    <p className="text-wisdom-gray">Secure your position before you arrive in Canada</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-success-green-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <FileText className="w-6 h-6 text-success-green" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-wisdom-gray-700 mb-2">Work permit sponsorship</h3>
-                    <p className="text-wisdom-gray">Complete LMIA and work permit support</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-success-green-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Home className="w-6 h-6 text-success-green" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-wisdom-gray-700 mb-2">Relocation assistance</h3>
-                    <p className="text-wisdom-gray">Housing, schooling, and settlement support</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-success-green-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <TrendingUp className="w-6 h-6 text-success-green" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-wisdom-gray-700 mb-2">PR pathway guidance</h3>
-                    <p className="text-wisdom-gray">Express Entry and Provincial Nominee support</p>
-                  </div>
-                </div>
-              </div>
-              
-              <Link href="/contact?service=h1b-canada" className="btn-secondary">
-                Start Your Journey to Canada →
-              </Link>
-            </div>
-            
-            <div className="bg-gradient-to-br from-success-green-50 to-trust-blue-50 rounded-3xl p-8">
-              <h3 className="text-2xl font-heading font-bold text-wisdom-gray-700 mb-6">
-                Process Timeline
-              </h3>
-              
-              <div className="space-y-6">
-                <div className="flex gap-4">
-                  <div className="flex flex-col items-center">
-                    <div className="w-10 h-10 bg-success-green text-white rounded-full flex items-center justify-center font-semibold">1</div>
-                    <div className="w-0.5 h-full bg-success-green-200 mt-2"></div>
-                  </div>
-                  <div className="pb-6">
-                    <div className="font-semibold text-wisdom-gray-700">Month 1</div>
-                    <div className="text-wisdom-gray">Job matching and offer letter</div>
-                  </div>
-                </div>
-                
-                <div className="flex gap-4">
-                  <div className="flex flex-col items-center">
-                    <div className="w-10 h-10 bg-success-green text-white rounded-full flex items-center justify-center font-semibold">2</div>
-                    <div className="w-0.5 h-full bg-success-green-200 mt-2"></div>
-                  </div>
-                  <div className="pb-6">
-                    <div className="font-semibold text-wisdom-gray-700">Month 2</div>
-                    <div className="text-wisdom-gray">Work permit application processing</div>
-                  </div>
-                </div>
-                
-                <div className="flex gap-4">
-                  <div className="flex flex-col items-center">
-                    <div className="w-10 h-10 bg-success-green text-white rounded-full flex items-center justify-center font-semibold">3-4</div>
-                    <div className="w-0.5 h-full bg-success-green-200 mt-2"></div>
-                  </div>
-                  <div className="pb-6">
-                    <div className="font-semibold text-wisdom-gray-700">Month 3-4</div>
-                    <div className="text-wisdom-gray">Approval and relocation to Canada</div>
-                  </div>
-                </div>
-                
-                <div className="flex gap-4">
-                  <div className="flex flex-col items-center">
-                    <div className="w-10 h-10 bg-success-green text-white rounded-full flex items-center justify-center font-semibold">5+</div>
-                  </div>
-                  <div>
-                    <div className="font-semibold text-wisdom-gray-700">Month 5+</div>
-                    <div className="text-wisdom-gray">Begin PR process (Express Entry)</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="mt-8 bg-white rounded-xl p-6 border-2 border-success-green">
-                <div className="text-center">
-                  <div className="text-4xl font-heading font-bold text-success-green mb-2">90%</div>
-                  <div className="text-wisdom-gray">Placement within 60 days</div>
-                </div>
-              </div>
-              
-              <div className="mt-6 bg-innovation-orange-50 rounded-xl p-4 border-l-4 border-innovation-orange">
-                <p className="text-sm font-semibold text-wisdom-gray-700 mb-1">Special Program</p>
-                <p className="text-sm text-wisdom-gray">
-                  Canada has allocated special work permits for H1B holders. We help you leverage this opportunity.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Canada to USA Placement */}
-      <section className="py-20 bg-wisdom-gray-50">
-        <div className="section-container">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="order-2 lg:order-1">
-              <div className="bg-gradient-to-br from-trust-blue-50 to-innovation-orange-50 rounded-3xl p-8">
-                <h3 className="text-2xl font-heading font-bold text-wisdom-gray-700 mb-6">
-                  Top Demand Skills
-                </h3>
-                
-                <div className="grid grid-cols-2 gap-4 mb-8">
-                  {[
-                    "Software Development",
-                    "Data Science",
-                    "Healthcare IT",
-                    "Cloud Architecture",
-                    "Cybersecurity",
-                    "AI/ML Engineering"
-                  ].map((skill) => (
-                    <div key={skill} className="bg-white rounded-xl p-4 border-l-4 border-trust-blue">
-                      <div className="flex items-center gap-2">
-                        <CheckCircle2 className="w-5 h-5 text-success-green flex-shrink-0" />
-                        <span className="text-sm font-medium text-wisdom-gray-700">{skill}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="bg-white rounded-xl p-6 border-2 border-trust-blue text-center">
-                  <div className="text-4xl font-heading font-bold text-trust-blue mb-2">35-50%</div>
-                  <div className="text-wisdom-gray">Average salary increase</div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="order-1 lg:order-2">
-              <div className="inline-block bg-trust-blue text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
-                HIGH SALARY POTENTIAL
-              </div>
-              <h2 className="text-4xl md:text-5xl font-heading font-bold text-wisdom-gray-700 mb-6">
-                Canada to USA Placement
-              </h2>
-              <p className="text-xl text-wisdom-gray mb-8">
-                For Canadian professionals seeking US opportunities with higher compensation
-              </p>
-              
-              <div className="space-y-4 mb-8">
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-6 h-6 text-trust-blue mt-0.5 flex-shrink-0" />
-                  <div>
-                    <span className="font-semibold text-wisdom-gray-700">TN visa sponsorship</span>
-                    <p className="text-wisdom-gray text-sm">Fast-track work authorization under NAFTA/USMCA</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-6 h-6 text-trust-blue mt-0.5 flex-shrink-0" />
-                  <div>
-                    <span className="font-semibold text-wisdom-gray-700">H1B lottery preparation</span>
-                    <p className="text-wisdom-gray text-sm">Strategic timing and documentation support</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-6 h-6 text-trust-blue mt-0.5 flex-shrink-0" />
-                  <div>
-                    <span className="font-semibold text-wisdom-gray-700">L1 transfer facilitation</span>
-                    <p className="text-wisdom-gray text-sm">For professionals with qualifying experience</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-6 h-6 text-trust-blue mt-0.5 flex-shrink-0" />
-                  <div>
-                    <span className="font-semibold text-wisdom-gray-700">Job matching with visa sponsors</span>
-                    <p className="text-wisdom-gray text-sm">Access to our network of US employers</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-6 h-6 text-trust-blue mt-0.5 flex-shrink-0" />
-                  <div>
-                    <span className="font-semibold text-wisdom-gray-700">Immigration attorney network</span>
-                    <p className="text-wisdom-gray text-sm">Pre-vetted legal experts in US immigration</p>
-                  </div>
-                </div>
-              </div>
-              
-              <Link href="/contact?service=canada-usa" className="btn-primary">
-                Explore USA Opportunities →
+              <Link href="/resources" className="inline-flex items-center gap-2 px-8 py-4 border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-trust-blue-600 transition-all">
+                Download Immigration Guides
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Global Mobility Consulting */}
-      <section className="py-20 bg-white">
+      {/* Our Cross-Border Services */}
+      <section className="py-20 bg-gray-50">
         <div className="section-container">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-heading font-bold text-wisdom-gray-700 mb-4">
-              Global Mobility Consulting
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-heading font-bold text-gray-900 mb-4">
+              Comprehensive Global Mobility Solutions
             </h2>
-            <p className="text-xl text-wisdom-gray">
-              Complete cross-border workforce solutions for companies and professionals
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              We don't just fill positions. We build bridges between countries, careers, and opportunities.
             </p>
           </div>
-          
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* For Companies */}
-            <div className="bg-trust-blue-50 rounded-2xl p-8 border-2 border-trust-blue">
-              <div className="w-16 h-16 bg-trust-blue text-white rounded-2xl flex items-center justify-center mb-6">
-                <Users className="w-8 h-8" />
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* H1B to Canada */}
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-shadow border-t-4 border-success-green">
+              <div className="w-12 h-12 bg-success-green-100 rounded-xl flex items-center justify-center mb-6">
+                <Plane className="w-6 h-6 text-success-green-600" />
               </div>
-              <h3 className="text-3xl font-heading font-bold text-wisdom-gray-700 mb-6">
-                For Companies
+              <h3 className="text-2xl font-heading font-bold text-gray-900 mb-4">
+                H1B to Canada Fast Track
               </h3>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-start gap-3">
-                  <ArrowRight className="w-5 h-5 text-trust-blue mt-0.5 flex-shrink-0" />
-                  <span>Build distributed teams across borders</span>
+              <p className="text-gray-600 mb-6">
+                Escape H1B lottery stress. Secure Canadian PR + job placement in 6-12 months.
+              </p>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-start gap-2 text-sm text-gray-700">
+                  <CheckCircle2 className="w-5 h-5 text-success-green-600 flex-shrink-0 mt-0.5" />
+                  <span>Pre-arrival job placement</span>
                 </li>
-                <li className="flex items-start gap-3">
-                  <ArrowRight className="w-5 h-5 text-trust-blue mt-0.5 flex-shrink-0" />
-                  <span>Access global talent pools efficiently</span>
+                <li className="flex items-start gap-2 text-sm text-gray-700">
+                  <CheckCircle2 className="w-5 h-5 text-success-green-600 flex-shrink-0 mt-0.5" />
+                  <span>Express Entry support</span>
                 </li>
-                <li className="flex items-start gap-3">
-                  <ArrowRight className="w-5 h-5 text-trust-blue mt-0.5 flex-shrink-0" />
-                  <span>Manage compliance and immigration</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <ArrowRight className="w-5 h-5 text-trust-blue mt-0.5 flex-shrink-0" />
-                  <span>Optimize costs with strategic placements</span>
+                <li className="flex items-start gap-2 text-sm text-gray-700">
+                  <CheckCircle2 className="w-5 h-5 text-success-green-600 flex-shrink-0 mt-0.5" />
+                  <span>Relocation assistance</span>
                 </li>
               </ul>
-              <Link href="/contact?type=company-mobility" className="btn-primary">
-                Book Consultation →
+              <Link href="/resources/h1b-to-canada-complete-guide" className="text-success-green-600 font-semibold flex items-center gap-2 hover:gap-3 transition-all">
+                Learn More <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            
-            {/* For Professionals */}
-            <div className="bg-success-green-50 rounded-2xl p-8 border-2 border-success-green">
-              <div className="w-16 h-16 bg-success-green text-white rounded-2xl flex items-center justify-center mb-6">
-                <Globe className="w-8 h-8" />
+
+            {/* Canada to USA */}
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-shadow border-t-4 border-trust-blue-600">
+              <div className="w-12 h-12 bg-trust-blue-100 rounded-xl flex items-center justify-center mb-6">
+                <TrendingUp className="w-6 h-6 text-trust-blue-600" />
               </div>
-              <h3 className="text-3xl font-heading font-bold text-wisdom-gray-700 mb-6">
-                For Professionals
+              <h3 className="text-2xl font-heading font-bold text-gray-900 mb-4">
+                Canada to USA Placement
               </h3>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-start gap-3">
-                  <ArrowRight className="w-5 h-5 text-success-green mt-0.5 flex-shrink-0" />
-                  <span>Career strategy and pathway planning</span>
+              <p className="text-gray-600 mb-6">
+                Leverage Canadian experience for higher-paying US roles. TN visa, H1B, or L1 support.
+              </p>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-start gap-2 text-sm text-gray-700">
+                  <CheckCircle2 className="w-5 h-5 text-trust-blue-600 flex-shrink-0 mt-0.5" />
+                  <span>TN visa sponsorship</span>
                 </li>
-                <li className="flex items-start gap-3">
-                  <ArrowRight className="w-5 h-5 text-success-green mt-0.5 flex-shrink-0" />
-                  <span>Market comparison and analysis</span>
+                <li className="flex items-start gap-2 text-sm text-gray-700">
+                  <CheckCircle2 className="w-5 h-5 text-trust-blue-600 flex-shrink-0 mt-0.5" />
+                  <span>30-50% salary increase</span>
                 </li>
-                <li className="flex items-start gap-3">
-                  <ArrowRight className="w-5 h-5 text-success-green mt-0.5 flex-shrink-0" />
-                  <span>Compensation benchmarking</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <ArrowRight className="w-5 h-5 text-success-green mt-0.5 flex-shrink-0" />
-                  <span>Cultural preparation and integration</span>
+                <li className="flex items-start gap-2 text-sm text-gray-700">
+                  <CheckCircle2 className="w-5 h-5 text-trust-blue-600 flex-shrink-0 mt-0.5" />
+                  <span>H1B lottery support</span>
                 </li>
               </ul>
-              <Link href="/contact?type=professional-mobility" className="btn-secondary">
-                Book Consultation →
+              <Link href="/contact" className="text-trust-blue-600 font-semibold flex items-center gap-2 hover:gap-3 transition-all">
+                Explore Opportunities <ArrowRight className="w-4 h-4" />
               </Link>
+            </div>
+
+            {/* India to USA */}
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-shadow border-t-4 border-innovation-orange">
+              <div className="w-12 h-12 bg-innovation-orange-100 rounded-xl flex items-center justify-center mb-6">
+                <Globe className="w-6 h-6 text-innovation-orange-600" />
+              </div>
+              <h3 className="text-2xl font-heading font-bold text-gray-900 mb-4">
+                India to USA (H1B Sponsorship)
+              </h3>
+              <p className="text-gray-600 mb-6">
+                Direct H1B sponsorship for qualified IT professionals. We handle cap-subject, cap-exempt, and transfers.
+              </p>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-start gap-2 text-sm text-gray-700">
+                  <CheckCircle2 className="w-5 h-5 text-innovation-orange-600 flex-shrink-0 mt-0.5" />
+                  <span>H1B cap filing (April 2025)</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm text-gray-700">
+                  <CheckCircle2 className="w-5 h-5 text-innovation-orange-600 flex-shrink-0 mt-0.5" />
+                  <span>Cap-exempt options (universities)</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm text-gray-700">
+                  <CheckCircle2 className="w-5 h-5 text-innovation-orange-600 flex-shrink-0 mt-0.5" />
+                  <span>Post-placement support</span>
+                </li>
+              </ul>
+              <Link href="/contact" className="text-innovation-orange-600 font-semibold flex items-center gap-2 hover:gap-3 transition-all">
+                Apply Now <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            {/* India to Canada */}
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-shadow border-t-4 border-success-green">
+              <div className="w-12 h-12 bg-success-green-100 rounded-xl flex items-center justify-center mb-6">
+                <MapPin className="w-6 h-6 text-success-green-600" />
+              </div>
+              <h3 className="text-2xl font-heading font-bold text-gray-900 mb-4">
+                India to Canada (Express Entry)
+              </h3>
+              <p className="text-gray-600 mb-6">
+                Skip the H1B lottery. Move directly to Canada with PR pathway and job placement.
+              </p>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-start gap-2 text-sm text-gray-700">
+                  <CheckCircle2 className="w-5 h-5 text-success-green-600 flex-shrink-0 mt-0.5" />
+                  <span>Express Entry profile optimization</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm text-gray-700">
+                  <CheckCircle2 className="w-5 h-5 text-success-green-600 flex-shrink-0 mt-0.5" />
+                  <span>Job offer to boost CRS score</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm text-gray-700">
+                  <CheckCircle2 className="w-5 h-5 text-success-green-600 flex-shrink-0 mt-0.5" />
+                  <span>Faster than US green card</span>
+                </li>
+              </ul>
+              <Link href="/contact" className="text-success-green-600 font-semibold flex items-center gap-2 hover:gap-3 transition-all">
+                Start Application <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            {/* UK/Europe to North America */}
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-shadow border-t-4 border-trust-blue-600">
+              <div className="w-12 h-12 bg-trust-blue-100 rounded-xl flex items-center justify-center mb-6">
+                <Plane className="w-6 h-6 text-trust-blue-600" />
+              </div>
+              <h3 className="text-2xl font-heading font-bold text-gray-900 mb-4">
+                UK/Europe to North America
+              </h3>
+              <p className="text-gray-600 mb-6">
+                Transition from UK/EU markets to USA or Canada. Visa sponsorship + job matching.
+              </p>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-start gap-2 text-sm text-gray-700">
+                  <CheckCircle2 className="w-5 h-5 text-trust-blue-600 flex-shrink-0 mt-0.5" />
+                  <span>H1B/TN visa support (USA)</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm text-gray-700">
+                  <CheckCircle2 className="w-5 h-5 text-trust-blue-600 flex-shrink-0 mt-0.5" />
+                  <span>Express Entry (Canada)</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm text-gray-700">
+                  <CheckCircle2 className="w-5 h-5 text-trust-blue-600 flex-shrink-0 mt-0.5" />
+                  <span>Pre-vetted job opportunities</span>
+                </li>
+              </ul>
+              <Link href="/contact" className="text-trust-blue-600 font-semibold flex items-center gap-2 hover:gap-3 transition-all">
+                Get Started <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            {/* Intra-Company Transfers */}
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-shadow border-t-4 border-innovation-orange">
+              <div className="w-12 h-12 bg-innovation-orange-100 rounded-xl flex items-center justify-center mb-6">
+                <Users className="w-6 h-6 text-innovation-orange-600" />
+              </div>
+              <h3 className="text-2xl font-heading font-bold text-gray-900 mb-4">
+                Intra-Company Transfers (L1/ICT)
+              </h3>
+              <p className="text-gray-600 mb-6">
+                Move key employees across borders. L1 (USA) or ICT (Canada) visa consulting.
+              </p>
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-start gap-2 text-sm text-gray-700">
+                  <CheckCircle2 className="w-5 h-5 text-innovation-orange-600 flex-shrink-0 mt-0.5" />
+                  <span>L1A (managers) & L1B (specialists)</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm text-gray-700">
+                  <CheckCircle2 className="w-5 h-5 text-innovation-orange-600 flex-shrink-0 mt-0.5" />
+                  <span>Canadian ICT work permits</span>
+                </li>
+                <li className="flex items-start gap-2 text-sm text-gray-700">
+                  <CheckCircle2 className="w-5 h-5 text-innovation-orange-600 flex-shrink-0 mt-0.5" />
+                  <span>Compliance & documentation</span>
+                </li>
+              </ul>
+              <Link href="/contact" className="text-innovation-orange-600 font-semibold flex items-center gap-2 hover:gap-3 transition-all">
+                Consult Now <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why InTime for Cross-Border */}
+      <section className="py-20 bg-white">
+        <div className="section-container">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-heading font-bold text-gray-900 mb-4">
+              Why Choose InTime for Global Mobility?
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              We're not just recruiters. We're immigration-savvy talent strategists with offices in USA, Canada, and India.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-success-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Clock className="w-8 h-8 text-success-green-600" />
+              </div>
+              <h3 className="text-xl font-heading font-bold text-gray-900 mb-2">Speed</h3>
+              <p className="text-gray-600">
+                Average 60-90 days from application to job offer. Competitors take 6+ months.
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-trust-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Shield className="w-8 h-8 text-trust-blue-600" />
+              </div>
+              <h3 className="text-xl font-heading font-bold text-gray-900 mb-2">Compliance</h3>
+              <p className="text-gray-600">
+                100% immigration compliance. We work with licensed attorneys in USA, Canada, and India.
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-innovation-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="w-8 h-8 text-innovation-orange-600" />
+              </div>
+              <h3 className="text-xl font-heading font-bold text-gray-900 mb-2">End-to-End Support</h3>
+              <p className="text-gray-600">
+                From visa filing to first paycheck—housing, schools, banking, we handle it all.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-innovation-orange to-trust-blue text-white">
-        <div className="section-container">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-heading font-bold mb-6">
-              Ready to Cross Borders and Expand Opportunities?
-            </h2>
-            <p className="text-xl mb-8 text-gray-100">
-              Let our cross-border specialists guide you through the entire process, from job placement to settlement.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/contact?type=crossborder" className="btn-accent bg-white text-innovation-orange hover:bg-gray-100">
-                Get Started Today
-              </Link>
-              <button className="btn-outline">
-                Schedule Free Assessment
-              </button>
+      <section className="py-20 bg-gradient-to-r from-trust-blue-600 to-innovation-orange-500 text-white">
+        <div className="section-container text-center">
+          <h2 className="text-4xl font-heading font-bold mb-6">
+            Ready to Make Your Global Move?
+          </h2>
+          <p className="text-xl mb-8 max-w-2xl mx-auto text-white/90">
+            Schedule a free 30-minute consultation with our immigration-certified recruitment specialists.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/contact?type=crossborder" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-trust-blue-600 rounded-lg font-semibold hover:shadow-xl transition-all">
+              Book Free Consultation
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+            <Link href="/careers/open-positions" className="inline-flex items-center gap-2 px-8 py-4 border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-trust-blue-600 transition-all">
+              View Open Positions
+            </Link>
+          </div>
+
+          <div className="mt-12 grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+            <div>
+              <div className="text-3xl font-bold mb-2">🇺🇸 USA</div>
+              <a href="tel:+13076502850" className="text-white/90 hover:text-white">+1 307-650-2850</a>
+            </div>
+            <div>
+              <div className="text-3xl font-bold mb-2">🇨🇦 Canada</div>
+              <a href="tel:+12892369000" className="text-white/90 hover:text-white">+1 289-236-9000</a>
+            </div>
+            <div>
+              <div className="text-3xl font-bold mb-2">🇮🇳 India</div>
+              <a href="tel:+917981666144" className="text-white/90 hover:text-white">+91 798-166-6144</a>
             </div>
           </div>
         </div>

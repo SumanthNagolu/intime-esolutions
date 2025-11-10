@@ -12,44 +12,48 @@ export default function JoinOurTeamPage() {
   const internalJobs = [
     {
       id: 1,
+      slug: 'senior-guidewire-developer',
       title: 'Senior Guidewire Developer',
       department: 'Engineering',
       location: 'Remote',
       type: 'Full-time',
-      salary: '$120,000 - $160,000',
+      salary: '$95,000 - $125,000',
       posted: '2 days ago',
       description: 'Lead Guidewire ClaimCenter implementations and mentor junior developers.',
       requirements: ['5+ years Guidewire experience', 'GOSU expertise', 'ClaimCenter certification'],
     },
     {
       id: 2,
+      slug: 'technical-recruiter',
       title: 'Technical Recruiter',
       department: 'Human Resources',
-      location: 'Hybrid - New York, NY',
+      location: 'Hybrid (Irving, TX) or Remote',
       type: 'Full-time',
-      salary: '$80,000 - $100,000',
+      salary: '$60,000 - $80,000 + Commission',
       posted: '5 days ago',
       description: 'Source and recruit top IT talent for our growing consulting practice.',
-      requirements: ['3+ years technical recruiting', 'IT staffing experience', 'ATS proficiency'],
+      requirements: ['2+ years technical recruiting', 'IT staffing experience', 'ATS proficiency'],
     },
     {
       id: 3,
+      slug: 'sales-executive',
       title: 'Sales Executive - IT Staffing',
       department: 'Sales',
       location: 'Remote',
       type: 'Full-time',
-      salary: '$90,000 - $140,000 + Commission',
+      salary: '$70,000 - $95,000 + Commission',
       posted: '1 week ago',
       description: 'Drive revenue growth by building relationships with enterprise clients.',
-      requirements: ['5+ years IT staffing sales', 'Proven track record', 'Client relationship management'],
+      requirements: ['3+ years IT staffing sales', 'Proven track record', 'Client relationship management'],
     },
     {
       id: 4,
+      slug: 'qa-engineer',
       title: 'Quality Assurance Engineer',
       department: 'Engineering',
-      location: 'San Francisco, CA',
+      location: 'Remote',
       type: 'Full-time',
-      salary: '$100,000 - $130,000',
+      salary: '$85,000 - $110,000',
       posted: '3 days ago',
       description: 'Build and maintain automated testing frameworks for enterprise applications.',
       requirements: ['Selenium/Cypress expertise', 'CI/CD experience', 'Agile methodology'],
@@ -178,15 +182,18 @@ export default function JoinOurTeamPage() {
 
                   <div className="flex lg:flex-col gap-2">
                     <Link
-                      href={`/careers/join-our-team/${job.id}`}
+                      href={job.slug ? `/careers/jobs/${job.slug}` : `/contact`}
                       className="btn-primary text-center whitespace-nowrap inline-flex items-center justify-center"
                     >
                       Apply Now
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
-                    <button className="border-2 border-trust-blue text-trust-blue hover:bg-trust-blue hover:text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 text-sm">
+                    <Link
+                      href={job.slug ? `/careers/jobs/${job.slug}` : `/contact`}
+                      className="border-2 border-trust-blue text-trust-blue hover:bg-trust-blue hover:text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 text-sm text-center"
+                    >
                       Learn More
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
