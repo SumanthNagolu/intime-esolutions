@@ -24,9 +24,10 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+    <nav className="bg-gradient-to-r from-[#0A5C7A] to-[#0E7490] sticky top-0 z-50 shadow-lg">
       <div className="section-container">
         <div className="flex items-center justify-between h-20">
+          {/* Spacer for right alignment - Logo on left, nav on right */}
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
             <img 
@@ -35,8 +36,8 @@ export default function Navbar() {
               className="h-12 w-auto"
             />
             <div className="text-2xl font-heading font-bold">
-              <span className="text-trust-blue">InTime</span>{" "}
-              <span className="font-light" style={{ color: '#FF6B35' }}>{getSecondWord()}</span>
+              <span className="text-white">InTime</span>{" "}
+              <span className="text-white font-light">{getSecondWord()}</span>
             </div>
           </Link>
 
@@ -44,17 +45,33 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center space-x-8">
             {/* Solutions Dropdown */}
             <div className="relative group">
-              <Link href="/solutions" className="flex items-center space-x-1 text-wisdom-gray hover:text-trust-blue font-medium transition-colors">
-                <span>Solutions</span>
+              <Link href="/solutions" className="flex items-center space-x-1 text-white hover:text-sky-blue-500 font-medium transition-colors">
+                <span>Staffing</span>
                 <ChevronDown className="w-4 h-4" />
               </Link>
               <div className="absolute top-full left-0 mt-2 w-72 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-4">
-                <Link href="/solutions" className="block px-6 py-3 text-sm font-semibold text-trust-blue hover:bg-gray-50 border-b border-gray-100">
-                  → View All Solutions
-                </Link>
-                <Link href="/solutions/it-staffing" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
-                  IT Staffing
-                </Link>
+                {/* Nested Staffing Menu */}
+                <div className="relative group">
+                  <Link href="/solutions/it-staffing" className="flex items-center justify-between px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
+                    <span className="font-medium">Staffing</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                  
+                  {/* Staffing Flyout Menu */}
+                  <div className="absolute left-full top-0 ml-1 w-64 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-4 z-50">
+                    <Link href="/solutions/it-staffing#contract" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
+                      Contract Staffing
+                    </Link>
+                    <Link href="/solutions/it-staffing#contract-to-hire" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
+                      Contract-to-Hire
+                    </Link>
+                    <Link href="/solutions/it-staffing#direct-placement" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
+                      Direct Placement
+                    </Link>
+                  </div>
+                </div>
                 
                 {/* Nested Consulting Menu */}
                 <div className="relative group">
@@ -65,11 +82,8 @@ export default function Navbar() {
                     </svg>
                   </Link>
                   
-                  {/* Flyout Menu */}
+                  {/* Consulting Flyout Menu */}
                   <div className="absolute left-full top-0 ml-1 w-64 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-4 z-50">
-                    <Link href="/consulting" className="block px-6 py-3 text-sm font-semibold text-trust-blue hover:bg-gray-50 border-b border-gray-100">
-                      → View All Consulting
-                    </Link>
                     <Link href="/consulting/competencies" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
                       Our Competencies
                     </Link>
@@ -90,14 +104,11 @@ export default function Navbar() {
 
             {/* Industries Dropdown */}
             <div className="relative group">
-              <Link href="/industries" className="flex items-center space-x-1 text-wisdom-gray hover:text-trust-blue font-medium transition-colors">
+              <Link href="/industries" className="flex items-center space-x-1 text-white hover:text-sky-blue-500 font-medium transition-colors">
                 <span>Industries</span>
                 <ChevronDown className="w-4 h-4" />
               </Link>
               <div className="absolute top-full left-0 mt-2 w-72 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-4 max-h-[80vh] overflow-y-auto">
-                <Link href="/industries" className="block px-6 py-3 text-sm font-semibold text-trust-blue hover:bg-gray-50 border-b border-gray-100 sticky top-0 bg-white">
-                  → View All Industries
-                </Link>
                 <Link href="/industries/information-technology" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
                   Information Technology
                 </Link>
@@ -148,14 +159,11 @@ export default function Navbar() {
 
             {/* Careers Dropdown */}
             <div className="relative group">
-              <Link href="/careers" className="flex items-center space-x-1 text-wisdom-gray hover:text-trust-blue font-medium transition-colors">
+              <Link href="/careers" className="flex items-center space-x-1 text-white hover:text-sky-blue-500 font-medium transition-colors">
                 <span>Careers</span>
                 <ChevronDown className="w-4 h-4" />
               </Link>
               <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-4 z-50">
-                <Link href="/careers" className="block px-6 py-3 text-sm font-semibold text-trust-blue hover:bg-gray-50 border-b border-gray-100">
-                  → View All Career Paths
-                </Link>
                 <Link href="/careers/join-our-team" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
                   Join Our Team
                 </Link>
@@ -168,11 +176,11 @@ export default function Navbar() {
               </div>
             </div>
 
-            <Link href="/resources" className="text-wisdom-gray hover:text-trust-blue font-medium transition-colors">
+            <Link href="/resources" className="text-white hover:text-sky-blue-500 font-medium transition-colors">
               Resources
             </Link>
 
-            <Link href="/academy" className="text-wisdom-gray hover:text-trust-blue font-medium transition-colors">
+            <Link href="/academy" className="text-white hover:text-sky-blue-500 font-medium transition-colors">
               Academy
             </Link>
           </div>
@@ -185,7 +193,7 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-md text-wisdom-gray hover:bg-gray-100"
+            className="lg:hidden p-2 rounded-md text-white hover:bg-white/10"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
