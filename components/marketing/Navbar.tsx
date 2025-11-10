@@ -28,12 +28,12 @@ export default function Navbar() {
       <div className="section-container">
         <div className="flex items-center h-20">
           {/* Logo */}
-                  <Link href="/" className="flex items-center gap-3">
-                    <img 
-                      src="/logo6.png" 
-                      alt="InTime Logo" 
-                      className="h-12 w-auto"
-                    />
+                <Link href="/" className="flex items-center gap-3">
+                  <img 
+                    src="/logo-transparent.png" 
+                    alt="InTime Logo" 
+                    className="h-12 w-auto"
+                  />
             <div className="flex items-center h-12">
               <div className="text-3xl font-heading leading-none">
                 <span className="text-white font-bold">InTime</span>{" "}
