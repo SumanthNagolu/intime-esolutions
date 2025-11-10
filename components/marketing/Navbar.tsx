@@ -58,7 +58,7 @@ export default function Navbar() {
       <div className="section-container">
         <div className="flex items-center h-20">
           {/* Logo */}
-                <Link href="/" className="flex items-center gap-3">
+                <Link href="/" className="flex items-center gap-1">
                   <img 
                     src="/logo8.png" 
                     alt="InTime Logo" 
