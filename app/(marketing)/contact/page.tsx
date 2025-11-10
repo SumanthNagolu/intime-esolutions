@@ -97,44 +97,28 @@ export default function ContactPage() {
                 Office Locations
               </h2>
               
-              {/* Global Headquarters */}
-              <div className="bg-gradient-to-br from-innovation-orange-50 to-trust-blue-50 rounded-2xl p-6 border-2 border-trust-blue">
-                <div className="flex items-start gap-3 mb-4">
-                  <MapPin className="w-6 h-6 text-trust-blue flex-shrink-0 mt-1" />
-                  <div>
-                    <h3 className="font-heading font-semibold text-wisdom-gray-700 mb-1">
-                      Global Headquarters
-                    </h3>
-                    <p className="text-wisdom-gray text-sm">Hyderabad, India</p>
-                  </div>
-                </div>
-                <div className="space-y-2 text-sm text-wisdom-gray">
-                  <div className="flex items-center gap-2">
-                    <Phone className="w-4 h-4 text-trust-blue" />
-                    <span>+91 [Phone]</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-trust-blue" />
-                    <span>24/7 Operations</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* USA Operations */}
+              {/* USA Office */}
               <div className="bg-gradient-to-br from-success-green-50 to-trust-blue-50 rounded-2xl p-6 border-2 border-success-green">
                 <div className="flex items-start gap-3 mb-4">
                   <MapPin className="w-6 h-6 text-success-green flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-heading font-semibold text-wisdom-gray-700 mb-1">
-                      USA Operations
+                    <h3 className="font-heading font-semibold text-wisdom-gray-700 mb-2">
+                      🇺🇸 USA Office
                     </h3>
-                    <p className="text-wisdom-gray text-sm">New York, NY</p>
+                    <p className="text-wisdom-gray text-sm leading-relaxed">
+                      30 N Gould St Ste R<br />
+                      Sheridan, WY 82801
+                    </p>
                   </div>
                 </div>
                 <div className="space-y-2 text-sm text-wisdom-gray">
                   <div className="flex items-center gap-2">
                     <Phone className="w-4 h-4 text-success-green" />
-                    <span>1-800-INTIME1</span>
+                    <a href="tel:+13076502850" className="hover:text-success-green-600">+1 307-650-2850</a>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Mail className="w-4 h-4 text-success-green" />
+                    <a href="mailto:info@intimeesolutions.com" className="hover:text-success-green-600">info@intimeesolutions.com</a>
                   </div>
                   <div className="flex items-center gap-2">
                     <Clock className="w-4 h-4 text-success-green" />
@@ -143,25 +127,63 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* Canada Operations */}
+              {/* Canada Office */}
               <div className="bg-gradient-to-br from-trust-blue-50 to-innovation-orange-50 rounded-2xl p-6 border-2 border-innovation-orange">
                 <div className="flex items-start gap-3 mb-4">
                   <MapPin className="w-6 h-6 text-innovation-orange flex-shrink-0 mt-1" />
                   <div>
-                    <h3 className="font-heading font-semibold text-wisdom-gray-700 mb-1">
-                      Canada Operations
+                    <h3 className="font-heading font-semibold text-wisdom-gray-700 mb-2">
+                      🇨🇦 Canada Office
                     </h3>
-                    <p className="text-wisdom-gray text-sm">Toronto, ON</p>
+                    <p className="text-wisdom-gray text-sm leading-relaxed">
+                      330 Gillespie Drive<br />
+                      Brantford, ON N3T 0X1
+                    </p>
                   </div>
                 </div>
                 <div className="space-y-2 text-sm text-wisdom-gray">
                   <div className="flex items-center gap-2">
                     <Phone className="w-4 h-4 text-innovation-orange" />
-                    <span>+1 [Phone]</span>
+                    <a href="tel:+12892369000" className="hover:text-innovation-orange-600">+1 289-236-9000</a>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Mail className="w-4 h-4 text-innovation-orange" />
+                    <a href="mailto:canada@intimeesolutions.com" className="hover:text-innovation-orange-600">canada@intimeesolutions.com</a>
                   </div>
                   <div className="flex items-center gap-2">
                     <Clock className="w-4 h-4 text-innovation-orange" />
                     <span>Mon-Fri 9am-6pm EST</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* India Office (Global HQ) */}
+              <div className="bg-gradient-to-br from-innovation-orange-50 to-trust-blue-50 rounded-2xl p-6 border-2 border-trust-blue">
+                <div className="flex items-start gap-3 mb-4">
+                  <MapPin className="w-6 h-6 text-trust-blue flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="font-heading font-semibold text-wisdom-gray-700 mb-2">
+                      🇮🇳 India Office (Global HQ)
+                    </h3>
+                    <p className="text-wisdom-gray text-sm leading-relaxed">
+                      606 DSL Abacus IT Park<br />
+                      Uppal, Hyderabad<br />
+                      Telangana 500039
+                    </p>
+                  </div>
+                </div>
+                <div className="space-y-2 text-sm text-wisdom-gray">
+                  <div className="flex items-center gap-2">
+                    <Phone className="w-4 h-4 text-trust-blue" />
+                    <a href="tel:+917981666144" className="hover:text-trust-blue-600">+91 798-166-6144</a>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Mail className="w-4 h-4 text-trust-blue" />
+                    <a href="mailto:india@intimeesolutions.com" className="hover:text-trust-blue-600">india@intimeesolutions.com</a>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Clock className="w-4 h-4 text-trust-blue" />
+                    <span>24/7 Operations</span>
                   </div>
                 </div>
               </div>
