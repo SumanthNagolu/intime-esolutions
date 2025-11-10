@@ -50,7 +50,7 @@ export default function Navbar() {
             {/* Solutions Dropdown */}
             <div className="relative group">
               <Link href="/solutions" className="flex items-center space-x-1 text-wisdom-gray hover:text-trust-blue font-medium transition-colors">
-                <span>Staffing</span>
+                <span>Solutions</span>
                 <ChevronDown className="w-4 h-4" />
               </Link>
               <div className="absolute top-full left-0 mt-2 w-72 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-4">

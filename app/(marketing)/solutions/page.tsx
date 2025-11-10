@@ -11,7 +11,7 @@ export default function SolutionsPage() {
   const solutions = [
     {
       icon: <Users className="h-8 w-8" />,
-      title: 'IT Staffing',
+      title: 'Staffing',
       slug: 'it-staffing',
       description: 'Contract, contract-to-hire, and direct placement for all tech roles. 95% first-submission success. 24-hour placement guarantee.',
       features: ['24-48 hour placements', '95% first-submission success', '90-day warranty', 'All tech stacks'],
@@ -55,19 +55,6 @@ export default function SolutionsPage() {
 
   return (
     <>
-      {/* Trending Banner */}
-      <div className="bg-gradient-to-r from-innovation-orange-500 to-trust-blue-600 text-white py-3 overflow-hidden">
-        <div className="animate-marquee whitespace-nowrap flex items-center gap-12">
-          {[...trending, ...trending].map((item, index) => (
-            <div key={index} className="inline-flex items-center gap-3">
-              <span className="text-2xl">{item.icon}</span>
-              <span className="font-semibold">{item.text}</span>
-              <span className="px-3 py-1 bg-white/20 rounded-full text-xs font-bold">{item.badge}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-trust-blue-600 via-trust-blue to-trust-blue-700 text-white py-24">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
@@ -77,10 +64,10 @@ export default function SolutionsPage() {
               <span className="text-sm font-semibold">💼 COMPLETE WORKFORCE SOLUTIONS</span>
             </div>
             <h1 className="text-5xl md:text-7xl font-heading font-bold mb-6 leading-tight">
-              Four Solutions. One Partner. Infinite Possibilities.
+              One Partner. Infinite Possibilities.
             </h1>
             <p className="text-xl md:text-2xl mb-10 text-gray-100 max-w-4xl mx-auto">
-              From emergency contractor placements to global talent mobility, enterprise consulting to Guidewire training—InTime delivers the full spectrum of workforce solutions. Choose one. Choose all. We scale with you.
+              From emergency contractor placements to global talent mobility, enterprise consulting to training programs—InTime delivers the full spectrum of workforce solutions. No scope limitations. We scale with you.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/contact" className="btn-secondary inline-flex items-center gap-2 text-lg px-8 py-4">
@@ -94,6 +81,19 @@ export default function SolutionsPage() {
           </div>
         </div>
       </section>
+
+      {/* Trending Banner */}
+      <div className="bg-gradient-to-r from-innovation-orange-500 to-trust-blue-600 text-white py-3 overflow-hidden">
+        <div className="animate-marquee whitespace-nowrap flex items-center gap-12">
+          {[...trending, ...trending].map((item, index) => (
+            <div key={index} className="inline-flex items-center gap-3">
+              <span className="text-2xl">{item.icon}</span>
+              <span className="font-semibold">{item.text}</span>
+              <span className="px-3 py-1 bg-white/20 rounded-full text-xs font-bold">{item.badge}</span>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* Solutions Grid */}
       <section className="py-20 bg-white">
