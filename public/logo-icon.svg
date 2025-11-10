@@ -1,0 +1,15 @@
+<svg width="48" height="48" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="100" fill="#0A5C7A"/>
+  <g transform="translate(100, 100)">
+    <!-- X symbol with people/collaboration -->
+    <path d="M156 50 L256 150 L356 50 M156 262 L256 162 L356 262" stroke="white" stroke-width="32" stroke-linecap="round"/>
+    <circle cx="156" cy="50" r="24" fill="white"/>
+    <circle cx="356" cy="50" r="24" fill="white"/>
+    <circle cx="156" cy="262" r="24" fill="white"/>
+    <circle cx="356" cy="262" r="24" fill="white"/>
+    <!-- Center sparkle/innovation -->
+    <circle cx="256" cy="156" r="16" fill="#FF6B35"/>
+    <path d="M240 156h32 M256 140v32" stroke="#FF6B35" stroke-width="4" stroke-linecap="round"/>
+  </g>
+</svg>
+

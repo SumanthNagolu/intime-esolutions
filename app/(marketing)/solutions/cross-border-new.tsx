@@ -31,11 +31,11 @@ export default function CrossBorderPage() {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/contact?type=crossborder" className="btn-secondary inline-flex items-center gap-2">
+              <Link href="/contact?type=crossborder" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-trust-blue-600 rounded-lg font-semibold hover:shadow-xl transition-all">
                 Start Your Journey
                 <ArrowRight className="w-5 h-5" />
               </Link>
-              <Link href="/resources" className="btn-outline inline-flex items-center gap-2">
+              <Link href="/resources" className="inline-flex items-center gap-2 px-8 py-4 border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-trust-blue-600 transition-all">
                 Download Immigration Guides
               </Link>
             </div>
@@ -295,11 +295,11 @@ export default function CrossBorderPage() {
             Schedule a free 30-minute consultation with our immigration-certified recruitment specialists.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact?type=crossborder" className="btn-secondary inline-flex items-center gap-2">
+            <Link href="/contact?type=crossborder" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-trust-blue-600 rounded-lg font-semibold hover:shadow-xl transition-all">
               Book Free Consultation
               <ArrowRight className="w-5 h-5" />
             </Link>
-            <Link href="/careers/open-positions" className="btn-outline inline-flex items-center gap-2">
+            <Link href="/careers/open-positions" className="inline-flex items-center gap-2 px-8 py-4 border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-trust-blue-600 transition-all">
               View Open Positions
             </Link>
           </div>

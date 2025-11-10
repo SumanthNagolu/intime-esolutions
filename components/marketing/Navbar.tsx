@@ -13,7 +13,10 @@ export default function Navbar() {
       <div className="section-container">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-trust-blue rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-xl">I</span>
+            </div>
             <div className="text-2xl font-heading font-bold">
               <span className="text-trust-blue">InTime</span>{" "}
               <span className="text-innovation-orange font-light">eSolutions</span>
@@ -31,12 +34,6 @@ export default function Navbar() {
               <div className="absolute top-full left-0 mt-2 w-72 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-4">
                 <Link href="/solutions/it-staffing" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
                   IT Staffing
-                </Link>
-                <Link href="/solutions/cross-border" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
-                  Cross-Border Solutions
-                </Link>
-                <Link href="/solutions/training" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
-                  Training & Development
                 </Link>
                 
                 {/* Nested Consulting Menu */}
@@ -58,6 +55,13 @@ export default function Navbar() {
                     </Link>
                   </div>
                 </div>
+
+                <Link href="/solutions/cross-border" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
+                  Cross-Border Solutions
+                </Link>
+                <Link href="/solutions/training" className="block px-6 py-2 text-sm text-wisdom-gray hover:bg-gray-50 hover:text-trust-blue">
+                  Training & Development
+                </Link>
               </div>
             </div>
 
