@@ -14,13 +14,13 @@ export default function CrossBorderPage() {
         <div className="section-container">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-block bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold mb-6">
-              🌍 GLOBAL MOBILITY EXPERTS
+              🌍 GLOBAL WORKFORCE ARCHITECTS
             </div>
-            <h1 className="text-5xl md:text-6xl font-heading font-bold mb-6">
-              Your Partner for Global Talent Mobility
+            <h1 className="text-5xl md:text-7xl font-heading font-bold mb-6 leading-tight">
+              Move Top Talent Anywhere. Fast.
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-gray-100">
-              From India to USA, H1B to Canada, or anywhere in between—we make cross-border talent movement seamless, compliant, and fast.
+            <p className="text-xl md:text-2xl mb-8 text-gray-100 max-w-4xl">
+              Deploy skilled professionals across 50+ countries. We handle visas, compliance, relocation, and placement—from boardroom strategists to boots-on-the-ground engineers. When borders can't slow your business down, you call InTime.
             </p>
             
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-8 max-w-3xl mx-auto">
